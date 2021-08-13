@@ -1,25 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Breadcrumb, Layout, Menu } from 'antd';
+
+import 'antd/dist/antd.css';
+import './index.css';
+
+const { Header, Content, Footer } = Layout;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Romo y mujere gorda
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout className="layout">
+      <Header>
+        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['home']}>
+          <Menu.Item key="home">Home</Menu.Item>
+          <Menu.Item key="campaigns">Campaigns</Menu.Item>
+        </Menu>
+      </Header>
+
+      <Content style={{ padding: '0 50px' }}>
+        <Breadcrumb style={{ margin: '16px 0' }}>
+          <Breadcrumb.Item>Home</Breadcrumb.Item>
+          <Breadcrumb.Item>List</Breadcrumb.Item>
+          <Breadcrumb.Item>App</Breadcrumb.Item>
+        </Breadcrumb>
+        <div className="site-layout-content">Content</div>
+      </Content>
+
+      <Footer style={{ textAlign: 'center' }}></Footer>
+    </Layout>
   );
 }
 
