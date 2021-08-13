@@ -1,5 +1,6 @@
 import React from 'react';
-import { Breadcrumb, Layout, Menu } from 'antd';
+import { Breadcrumb, Button, Layout, Menu } from 'antd';
+import { settings } from './settings';
 
 import 'antd/dist/antd.css';
 import './index.css';
@@ -22,7 +23,11 @@ function App() {
           <Breadcrumb.Item>List</Breadcrumb.Item>
           <Breadcrumb.Item>App</Breadcrumb.Item>
         </Breadcrumb>
-        <div className="site-layout-content">Content</div>
+        <div className="site-layout-content">
+          Testing a request:
+
+          <Button onClick={() => getLocations()}>Get Locations</Button>
+        </div>
       </Content>
 
       <Footer style={{ textAlign: 'center' }}></Footer>
