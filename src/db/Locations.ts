@@ -7,7 +7,7 @@ export const getLocations = async () => {
   const { uri, apiKey } = settings.supabase;
   const supabase = createClient(uri, apiKey);
 
-  const { data, error } = await supabase.from('Locations').select();
+  const { data, error } = await supabase.from<definitions['Locations']>('Locations').select();
   return data;
 }
 
@@ -29,5 +29,5 @@ export const insertNewLocation = async (name: string, address: string, lat: numb
     throw new Error('Could not insert location')
   }
 
-  return data;
+  return true;
 }
