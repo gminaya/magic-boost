@@ -13,10 +13,10 @@ function NewLocationForm() {
     const [latitude, setLatitude] = useState(0);
     const [longitude, setLongitude] = useState(0);
     const success = () => {
-        message.success('Your new location have been saved :D');
+        message.success('Your new location have been saved 😁');
     };
     const error = () => {
-        message.error('oh no! something went wrong');
+        message.error('oh no! something went wrong 😩');
     };
     const handleSaveSummit = async () => {
         const response = await insertNewLocation(name, adress, latitude, longitude);
@@ -27,52 +27,72 @@ function NewLocationForm() {
             error()
         }
     }
+    const onFinishFailed = (errorInfo: any) => {
+        console.log('Failed:', errorInfo);
+      };
+
 
     return (
         <Form
+        
             form={form}
             onFinish={handleSaveSummit}
+            onFinishFailed={onFinishFailed}
             layout={'vertical'}
             initialValues={{ requiredMarkValue: requiredMark }}
             requiredMark={requiredMark}>
             <Form.Item
                 requiredMark={true}
-                label="Location Name" required
-                tooltip="The name most be a location fisical adress reference">
-                <Input placeholder="Type location name"
+                label="Location Name"
+                name="name"
+                tooltip="The name most be a location fisical adress reference"
+                rules={[{ required: true, message: 'Name can not be empty 🤨' }]}
+                >
+                    
+                <Input
+                    placeholder="Type location name"
                     onChange={e => setName(e.target.value)} />
             </Form.Item>
 
             <Form.Item
                 requiredMark={true}
-                label="Location Adress" required
-                tooltip="Use an accurate address">
-                <Input placeholder="Type location fisical adress"
+                label="Location Adress" 
+                tooltip="Use an accurate address"
+                name="adress"
+                rules={[{ required: true, message: 'Adress can not be empty 😒' }]}>
+                <Input
+                    placeholder="Type location fisical adress"
                     onChange={e => setAdress(e.target.value)} />
             </Form.Item>
 
             <Form.Item
                 requiredMark={true}
-                label="Location Latitude" required
-                tooltip="Use grades and minutes dedimals formart (DMM)">
-                <Input name="locationLatitude"
-                    placeholder="Type location latitude ex. 41 24.2028"
-                    onChange={e => setLatitude(Number(e.target.value))} />
+                label="Location Latitude"
+                tooltip="Use grades and minutes dedimals formart (DMM)"
+                name="latitude"
+                rules={[{ required: true, message: 'Latitude can not be empty 🤦‍♀️' }]}>
+                <Input
+                    placeholder="Type location latitude ex. 18.4651167"
+                    onChange={e => setLatitude(Number(e.target.value))} 
+                    type="number"/>
             </Form.Item>
 
             <Form.Item
                 requiredMark={true}
                 label="Location longitude" required
-                tooltip="Use grades and minutes dedimals formart (DMM)">
+                tooltip="Use grades and minutes dedimals formart (DMM)"
+                name="longitude"
+                rules={[{ required: true, message: 'Longitude can not be empty 🤦' }]}>
 
-                <Input name="locationLongitude"
-                    placeholder="Type location longitude ex. 2 10.4418"
+                <Input
+                    placeholder="Type location longitude ex. -69.9341466"
                     onChange={e => setLongitude(Number(e.target.value))}
+                    type="number"
                 />
             </Form.Item>
 
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button type="primary" htmlType="submit">
+            <Form.Item wrapperCol={{ }}>
+                <Button type="primary" htmlType="submit" style={{float:'right'}}>
                     Submit
                 </Button>
             </Form.Item>
