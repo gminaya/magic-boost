@@ -1,7 +1,7 @@
 import { Table, Button, Popconfirm, message } from 'antd';
 import { DeleteTwoTone } from '@ant-design/icons';
 import { getLocations } from '../db/Locations';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { definitions } from '../db/supabase';
 import { deleteLocation } from '../db/Locations';
 import ViewOnGoogleMaps from './ViewOnGoogleMaps'
@@ -12,21 +12,20 @@ type LocationsResult = Array<definitions['Locations']>;
 export const LocationList = () => {
     const [locations, setLocations] = useState<LocationsResult>();
 
+    const triggerGetLocations = useCallback(async () => {
+        const results = await getLocations();
+        if (results == null) {
+            return;
+        }
+        setLocations(results);
+    }, [getLocations, setLocations]);
 
-    // same as ComponentDidMount
     useEffect(() => {
-        const triggerGetLocations = async () => {
-            const results = await getLocations();
-            if (results == null) {
-                return;
-            }
-            setLocations(results);
-        };
         triggerGetLocations();
-    }, [locations]);
+    }, []);
 
     const columns = [
-        // {
+        // 
         //     title: 'Llave',
         //     dataIndex: 'id',
         //     key: 'id',
@@ -54,7 +53,6 @@ export const LocationList = () => {
             }
         },
         {
-            //deleteLocation(record.id)
             title: 'Remove',
             dataIndex: 'remove',
             key: 'remove',
@@ -62,11 +60,13 @@ export const LocationList = () => {
                 return (
                     <Popconfirm
                         title="Are you sure to delete this location 🧐 ?"
-                        onConfirm={() => deleteLocation(record.id)}
-                        // onCancel={cancel}
+                        onConfirm={() => {
+                            deleteLocation(record.id);
+                            triggerGetLocations();
+                        }}
                         okText="Yes"
                         cancelText="No"
-                    > <DeleteTwoTone  />
+                    > <DeleteTwoTone />
 
                     </Popconfirm>
                 )

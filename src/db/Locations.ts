@@ -44,8 +44,7 @@ export const deleteLocation = async (id: number) =>{
 const { data, error } = await supabase.from('Locations').delete().eq('id', id)
 
 if(error){
-  return false;
-  //throw new Error('Could not delete location')
+  throw new Error('Could not delete location')
 }
 
 return true;

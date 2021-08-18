@@ -13,7 +13,7 @@ function NewLocationForm() {
     const [latitude, setLatitude] = useState(0);
     const [longitude, setLongitude] = useState(0);
     const success = () => {
-        message.success('Your new location have been saved 😁');
+        message.success('Your new location has saved 😁');
     };
     const error = () => {
         message.error('oh no! something went wrong 😩');
