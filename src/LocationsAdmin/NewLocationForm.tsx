@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
@@ -21,21 +22,22 @@ function NewLocationForm() {
     const handleSaveSummit = async () => {
         const response = await insertNewLocation(name, adress, latitude, longitude);
         if (response) {
-            success()
+            success();
         }
         else {
-            error()
+            error();
         }
-    }
+    };
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
-      };
+    };
 
 
     return (
         <Form
         
             form={form}
+            autoComplete={'false'}
             onFinish={handleSaveSummit}
             onFinishFailed={onFinishFailed}
             layout={'vertical'}
@@ -47,7 +49,7 @@ function NewLocationForm() {
                 name="name"
                 tooltip="The name most be a location fisical adress reference"
                 rules={[{ required: true, message: 'Name can not be empty 🤨' }]}
-                >
+            >
                     
                 <Input
                     placeholder="Type location name"
@@ -98,7 +100,7 @@ function NewLocationForm() {
             </Form.Item>
 
         </Form>
-    )
+    );
 
 }
 

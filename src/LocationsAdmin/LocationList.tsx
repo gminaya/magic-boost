@@ -1,13 +1,14 @@
-import { Table, Button, Popconfirm, message } from 'antd';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React from 'react';
+import { Table, Popconfirm } from 'antd';
 import { DeleteTwoTone } from '@ant-design/icons';
 import { getLocations } from '../db/Locations';
 import { useCallback, useEffect, useState } from 'react';
 import { definitions } from '../db/supabase';
 import { deleteLocation } from '../db/Locations';
-import ViewOnGoogleMaps from './ViewOnGoogleMaps'
+import ViewOnGoogleMaps from './ViewOnGoogleMaps';
 
 type LocationsResult = Array<definitions['Locations']>;
-
 
 export const LocationList = () => {
     const [locations, setLocations] = useState<LocationsResult>();
@@ -25,11 +26,7 @@ export const LocationList = () => {
     }, []);
 
     const columns = [
-        // 
-        //     title: 'Llave',
-        //     dataIndex: 'id',
-        //     key: 'id',
-        // },
+
         {
             title: 'Name',
             dataIndex: 'name',
@@ -48,9 +45,9 @@ export const LocationList = () => {
                 return (
                     //TODO: Change to show a map, or link to map
                     <ViewOnGoogleMaps lat={record.lon} lon={record.lat} />
-                    //<span>{record.lat},{record.lon}</span>
-                )
-            }
+                   
+                );
+            },
         },
         {
             title: 'Remove',
@@ -66,24 +63,16 @@ export const LocationList = () => {
                         }}
                         okText="Yes"
                         cancelText="No"
-                    > <DeleteTwoTone />
-
+                    >
+                        {' '}
+                        <DeleteTwoTone />
                     </Popconfirm>
-                )
-            }
-        }
+                );
+            },
+        },
     ];
 
-
     return (
-
-
-        <Table style={{ margin: 5 }} bordered
-            loading={locations == null}
-            dataSource={locations}
-            columns={columns}
-        />
-
-    )
-
-}
+        <Table style={{ margin: 5 }} bordered loading={locations == null} dataSource={locations} columns={columns} />
+    );
+};
