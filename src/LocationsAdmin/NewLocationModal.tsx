@@ -9,14 +9,15 @@ function NewLocationModal() {
     const showModal = () => {
         setIsModalVisible(true);
     };
-    const handleOk = () => { setIsModalVisible(false); };
-    const handleCancel = () => { setIsModalVisible(false); };
+    const handleOk = () => {
+        setIsModalVisible(false);
+    };
+    const handleCancel = () => {
+        setIsModalVisible(false);
+    };
     return (
         <>
-            <Button type="primary"
-                icon={<PlusOutlined />}
-                size={'small'}
-                onClick={showModal}>
+            <Button type="primary" icon={<PlusOutlined />} size={'small'} onClick={showModal}>
                 ADD LOCATION
             </Button>
 
@@ -27,7 +28,6 @@ function NewLocationModal() {
                 onCancel={handleCancel}
                 footer={null}
             >
-
                 <NewLocationForm />
             </Modal>
         </>

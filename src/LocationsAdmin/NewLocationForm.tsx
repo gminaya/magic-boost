@@ -37,7 +37,7 @@ function NewLocationForm() {
         <Form
         
             form={form}
-            autoComplete={'false'}
+            preserve={false}
             onFinish={handleSaveSummit}
             onFinishFailed={onFinishFailed}
             layout={'vertical'}

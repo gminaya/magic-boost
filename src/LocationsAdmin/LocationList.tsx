@@ -2,31 +2,15 @@
 import React from 'react';
 import { Table, Popconfirm } from 'antd';
 import { DeleteTwoTone } from '@ant-design/icons';
-import { getLocations } from '../db/Locations';
-import { useCallback, useEffect, useState } from 'react';
 import { definitions } from '../db/supabase';
-import { deleteLocation } from '../db/Locations';
 import ViewOnGoogleMaps from './ViewOnGoogleMaps';
-
-type LocationsResult = Array<definitions['Locations']>;
+import { useLocations } from '../db/hooks/getLocations';
+import { deleteLocation } from '../db/Locations';
 
 export const LocationList = () => {
-    const [locations, setLocations] = useState<LocationsResult>();
-
-    const triggerGetLocations = useCallback(async () => {
-        const results = await getLocations();
-        if (results == null) {
-            return;
-        }
-        setLocations(results);
-    }, [getLocations, setLocations]);
-
-    useEffect(() => {
-        triggerGetLocations();
-    }, []);
-
+    const { locations, refreshLocations } = useLocations();
+    
     const columns = [
-
         {
             title: 'Name',
             dataIndex: 'name',
@@ -45,7 +29,6 @@ export const LocationList = () => {
                 return (
                     //TODO: Change to show a map, or link to map
                     <ViewOnGoogleMaps lat={record.lon} lon={record.lat} />
-                   
                 );
             },
         },
@@ -57,9 +40,9 @@ export const LocationList = () => {
                 return (
                     <Popconfirm
                         title="Are you sure to delete this location 🧐 ?"
-                        onConfirm={() => {
-                            deleteLocation(record.id);
-                            triggerGetLocations();
+                        onConfirm={async () => {
+                            await deleteLocation(record.id);
+                            refreshLocations();
                         }}
                         okText="Yes"
                         cancelText="No"
