@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useCallback, useEffect, useState } from 'react';
-import { Table, Popconfirm, Button } from 'antd';
-import { DeleteOutlined, CheckCircleTwoTone, HourglassTwoTone, ExclamationCircleTwoTone } from '@ant-design/icons';
-import { getCampaigns, deleteCampaign } from '../db/Campaigns';
+import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
+import { Table, Button } from 'antd';
+import { DeleteOutlined, EyeOutlined } from '@ant-design/icons';
+import { getCampaigns } from '../db/Campaigns';
 import { definitions } from '../db/supabase';
+import moment from 'moment';
 
 type CampaignsResult = Array<definitions['Campaigns']>;
 
@@ -29,35 +31,51 @@ export const CampaignList = () => {
             key: 'name',
         },
         {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
+            title: 'Due Date',
+            dataIndex: 'dueDate',
+            key: 'dueDate',
             render: (_: any, record: definitions['Campaigns']) => {
-                switch (record.status) {
-                case 'done':
-                    return <CheckCircleTwoTone style={{fontSize:'1.5rem'}} twoToneColor="#1ac425" />;
-                    break;
-                case 'overdue':
-                    return <ExclamationCircleTwoTone style={{fontSize:'1.5rem'}}  twoToneColor="#eb2f96" />;
-                    break;
-                case 'pending':
-                    return <HourglassTwoTone style={{fontSize:'1.5rem'}}  twoToneColor="#c1c41a" />;
-                    break;
-                
-                }
+                return moment(record.dueDate).format('MMMM Do YYYY');
             },
         },
         {
-            title: 'Remove',
-            dataIndex: 'remove',
-            key: 'remove',
+            title: 'Delete',
+            dataIndex: 'delete',
+            key: 'delete',
             render: (_: any, record: definitions['Campaigns']) => {
-                return <Button type="primary" icon={<DeleteOutlined />} size={'large'} />;
+                return (
+                    <Button type="primary" icon={<DeleteOutlined />} size={'small'}>
+                        delete
+                    </Button>
+                );
+            },
+        },
+        {
+            title: 'Details',
+            dataIndex: 'details',
+            key: 'details',
+            render: (_: any, record: definitions['Campaigns']) => {
+                return (
+                    <Link target={'_blank'} key={record.id} to={`/CampaignsAdmin/${record.id}`}>
+                        <Button type="primary" icon={<EyeOutlined />} size={'small'}></Button>
+                    </Link>
+                );
             },
         },
     ];
 
     return (
-        <Table style={{ margin: 5 }} bordered loading={campaigns == null} dataSource={campaigns} columns={columns} />
+        <>
+            <Router>
+                <Table
+                    size={'small'}
+                    style={{ margin: 5 }}
+                    bordered
+                    loading={campaigns == null}
+                    dataSource={campaigns}
+                    columns={columns}
+                />
+            </Router>
+        </>
     );
 };

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
 import { Form, Input, Button, message } from 'antd';
-import { InfoCircleOutlined } from '@ant-design/icons';
 import { insertNewLocation } from '../db/Locations';
 
 type RequiredMark = boolean | 'optional';
@@ -19,7 +18,9 @@ function NewLocationForm() {
     const error = () => {
         message.error('oh no! something went wrong 😩');
     };
-    const handleSaveSummit = async () => {
+
+    //Saves new location in DB
+    const onSummit = async () => {
         const response = await insertNewLocation(name, adress, latitude, longitude);
         if (response) {
             success();
@@ -38,7 +39,7 @@ function NewLocationForm() {
         
             form={form}
             preserve={false}
-            onFinish={handleSaveSummit}
+            onFinish={onSummit}
             onFinishFailed={onFinishFailed}
             layout={'vertical'}
             initialValues={{ requiredMarkValue: requiredMark }}

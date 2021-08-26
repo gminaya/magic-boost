@@ -5,6 +5,7 @@ import { Breadcrumb, Layout, Menu } from 'antd';
 import { HomeOutlined } from '@ant-design/icons';
 import LocationsAdmin from './LocationsAdmin/LocationsAdmin';
 import CampaignAdmin from './CampaignsAdmin/CampaignAdmin';
+import { CampaignDetails } from './CampaignsAdmin/CampaignDetails';
 import 'antd/dist/antd.css';
 import './index.css';
 const { Header, Content, Footer } = Layout;
@@ -25,24 +26,29 @@ function App() {
 
             <Content style={{ padding: '0 50px', margin: '5px 0px', textAlign: 'right' }}>
                 <Breadcrumb style={{ margin: '5px 0' }}>
-                    <Breadcrumb.Item><HomeOutlined /></Breadcrumb.Item>
+                    <Breadcrumb.Item>
+                        <HomeOutlined />
+                    </Breadcrumb.Item>
                     <Breadcrumb.Item>Campaigns</Breadcrumb.Item>
                 </Breadcrumb>
             </Content>
-            <div style={{ padding: '0px 0px 20px 0px'}} className="site-layout-content">
-                <Layout className="layout">
-                    <div style={{ margin: '5%'}}>
+            <div style={{ padding: '0px 0px 20px 0px' }} className="site-layout-content">
+                <Layout style={{height:'auto'}} className="layout">
+                    <div style={{ margin: '0 5%' }}>
                         <Switch>
                             <Route path="/LocationsAdmin" exact component={LocationsAdmin} />
-                            <Route path="/CampaignsAdmin"  component={CampaignAdmin} />
+                            <Route path="/CampaignsAdmin" exact component={CampaignAdmin} />
+                            <Route path="/CampaignsAdmin/:id"  component={CampaignDetails} />
                         </Switch>
                     </div>
+
+                    <Footer
+                        style={{ textAlign: 'center', backgroundColor: '#173057', color: 'white', fontSize: '1em' }}
+                    >
+                        What do we say to the Footer God? NOT TODAY
+                    </Footer>
                 </Layout>
             </div>
-
-            <Footer style={{ textAlign: 'center', backgroundColor: '#173057', color: 'white', fontSize: '1em' }}>
-                What do we say to the Footer God? NOT TODAY
-            </Footer>
         </Router>
     );
 }
