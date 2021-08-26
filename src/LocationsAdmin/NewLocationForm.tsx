@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
 import { Form, Input, Button, message } from 'antd';
-import { InfoCircleOutlined } from '@ant-design/icons';
 import { insertNewLocation } from '../db/Locations';
 
 type RequiredMark = boolean | 'optional';
@@ -13,30 +13,33 @@ function NewLocationForm() {
     const [latitude, setLatitude] = useState(0);
     const [longitude, setLongitude] = useState(0);
     const success = () => {
-        message.success('Your new location have been saved 😁');
+        message.success('Your new location has saved 😁');
     };
     const error = () => {
         message.error('oh no! something went wrong 😩');
     };
-    const handleSaveSummit = async () => {
+
+    //Saves new location in DB
+    const onSummit = async () => {
         const response = await insertNewLocation(name, adress, latitude, longitude);
         if (response) {
-            success()
+            success();
         }
         else {
-            error()
+            error();
         }
-    }
+    };
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
-      };
+    };
 
 
     return (
         <Form
         
             form={form}
-            onFinish={handleSaveSummit}
+            preserve={false}
+            onFinish={onSummit}
             onFinishFailed={onFinishFailed}
             layout={'vertical'}
             initialValues={{ requiredMarkValue: requiredMark }}
@@ -47,7 +50,7 @@ function NewLocationForm() {
                 name="name"
                 tooltip="The name most be a location fisical adress reference"
                 rules={[{ required: true, message: 'Name can not be empty 🤨' }]}
-                >
+            >
                     
                 <Input
                     placeholder="Type location name"
@@ -98,7 +101,7 @@ function NewLocationForm() {
             </Form.Item>
 
         </Form>
-    )
+    );
 
 }
 

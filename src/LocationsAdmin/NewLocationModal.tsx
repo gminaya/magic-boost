@@ -1,22 +1,23 @@
-import React, { useState } from "react";
-import NewLocationForm from "./NewLocationForm";
-import { Modal, Button } from "antd";
+import React, { useState } from 'react';
+import NewLocationForm from './NewLocationForm';
+import { Modal, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 function NewLocationModal() {
     const [isModalVisible, setIsModalVisible] = useState(false);
 
     const showModal = () => {
-        setIsModalVisible(true)
+        setIsModalVisible(true);
     };
-    const handleOk = () => { setIsModalVisible(false) };
-    const handleCancel = () => { setIsModalVisible(false) };
+    const handleOk = () => {
+        setIsModalVisible(false);
+    };
+    const handleCancel = () => {
+        setIsModalVisible(false);
+    };
     return (
         <>
-            <Button type="primary"
-                icon={<PlusOutlined />}
-                size={'small'}
-                onClick={showModal}>
+            <Button type="primary" icon={<PlusOutlined />} size={'small'} onClick={showModal}>
                 ADD LOCATION
             </Button>
 
@@ -26,8 +27,7 @@ function NewLocationModal() {
                 onOk={handleOk}
                 onCancel={handleCancel}
                 footer={null}
-                >
-
+            >
                 <NewLocationForm />
             </Modal>
         </>

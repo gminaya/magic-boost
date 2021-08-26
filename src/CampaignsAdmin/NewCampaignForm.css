@@ -1,0 +1,25 @@
+.form-row{
+    background-color: #ffffff;
+    padding: 2% !important;
+    box-shadow: 0px 1px 2px 2px rgba(0,0,0,0.1);
+    border-radius: 3px;
+    margin: 0 10% !important;
+    
+   
+}
+
+.location-table{
+    padding: 1%;
+    
+    border-radius: 5px;
+}
+
+.added-locations{
+    padding: 1%;
+    
+    border-radius: 5px;
+}
+
+.added-locations li{
+    background-color: white;
+} 
