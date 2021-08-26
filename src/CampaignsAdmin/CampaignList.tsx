@@ -10,72 +10,72 @@ import moment from 'moment';
 type CampaignsResult = Array<definitions['Campaigns']>;
 
 export const CampaignList = () => {
-    const [campaigns, setCampaigns] = useState<CampaignsResult>();
+  const [campaigns, setCampaigns] = useState<CampaignsResult>();
 
-    const triggerGetCampaigns = useCallback(async () => {
-        const results = await getCampaigns();
-        if (results == null) {
-            return;
-        }
-        setCampaigns(results);
-    }, [getCampaigns, setCampaigns]);
+  const triggerGetCampaigns = useCallback(async () => {
+    const results = await getCampaigns();
+    if (results == null) {
+      return;
+    }
+    setCampaigns(results);
+  }, [getCampaigns, setCampaigns]);
 
-    useEffect(() => {
-        triggerGetCampaigns();
-    }, []);
+  useEffect(() => {
+    triggerGetCampaigns();
+  }, []);
 
-    const columns = [
-        {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-        },
-        {
-            title: 'Due Date',
-            dataIndex: 'dueDate',
-            key: 'dueDate',
-            render: (_: any, record: definitions['Campaigns']) => {
-                return moment(record.dueDate).format('MMMM Do YYYY');
-            },
-        },
-        {
-            title: 'Delete',
-            dataIndex: 'delete',
-            key: 'delete',
-            render: (_: any, record: definitions['Campaigns']) => {
-                return (
-                    <Button type="primary" icon={<DeleteOutlined />} size={'small'}>
-                        delete
-                    </Button>
-                );
-            },
-        },
-        {
-            title: 'Details',
-            dataIndex: 'details',
-            key: 'details',
-            render: (_: any, record: definitions['Campaigns']) => {
-                return (
-                    <Link target={'_blank'} key={record.id} to={`/CampaignsAdmin/${record.id}`}>
-                        <Button type="primary" icon={<EyeOutlined />} size={'small'}></Button>
-                    </Link>
-                );
-            },
-        },
-    ];
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Due Date',
+      dataIndex: 'dueDate',
+      key: 'dueDate',
+      render: (_: any, record: definitions['Campaigns']) => {
+        return moment(record.dueDate).format('MMMM Do YYYY');
+      },
+    },
+    {
+      title: 'Delete',
+      dataIndex: 'delete',
+      key: 'delete',
+      render: (_: any, record: definitions['Campaigns']) => {
+        return (
+          <Button type="primary" icon={<DeleteOutlined />} size={'small'}>
+            delete
+          </Button>
+        );
+      },
+    },
+    {
+      title: 'Details',
+      dataIndex: 'details',
+      key: 'details',
+      render: (_: any, record: definitions['Campaigns']) => {
+        return (
+          <Link target={'_blank'} key={record.id} to={`/CampaignsAdmin/${record.id}`}>
+            <Button type="primary" icon={<EyeOutlined />} size={'small'}></Button>
+          </Link>
+        );
+      },
+    },
+  ];
 
-    return (
-        <>
-            <Router>
-                <Table
-                    size={'small'}
-                    style={{ margin: 5 }}
-                    bordered
-                    loading={campaigns == null}
-                    dataSource={campaigns}
-                    columns={columns}
-                />
-            </Router>
-        </>
-    );
+  return (
+    <>
+      <Router>
+        <Table
+          size={'small'}
+          style={{ margin: 5 }}
+          bordered
+          loading={campaigns == null}
+          dataSource={campaigns}
+          columns={columns}
+        />
+      </Router>
+    </>
+  );
 };
