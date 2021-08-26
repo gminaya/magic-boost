@@ -23,7 +23,7 @@ module.exports = {
     'rules': {
         'indent': [
             'error',
-            4
+            2
         ],
         'react/display-name': ['off'],
         'linebreak-style': [
