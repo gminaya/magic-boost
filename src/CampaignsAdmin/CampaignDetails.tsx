@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
-import { settings } from '../settings';
-import { definitions } from '../db/supabase';
+import { useCampaigID } from '../db/hooks/getCampaignDetailsByID';
 import { useParams } from 'react-router-dom';
 import { CampaignLocationInfo } from '../models/CampaignLocationInfo';
-import { Table, Divider } from 'antd';
-import { DueDateStatus } from './DueDateStatus';
+import { definitions } from '../db/supabase';
+import { Table, Divider, Tag } from 'antd';
+
+
+const today = new Date();
+
+interface CampaignDetails {
+  locationList: JSON;
+}
 
 export function CampaignDetails() {
-  const [locationName, setLocationName] = useState<string>();
-  const [dueDate, setDueDate] = useState<Date>();
-  const [campaignLocationInfo, setCampaignLocationInfo] = useState<CampaignLocationInfo[]>();
+  const [campaignName, setCampaignName] = useState<definitions['Campaigns']['name']>();
+  const [dueDate, setDueDate] = useState<definitions['Campaigns']['dueDate']>();
+  const [campaignLocationInfo, setCampaignLocationInfo] = useState<CampaignLocationInfo[]>([]);
+  
   type CampaignParams = {
     id: string;
   };
@@ -32,42 +38,51 @@ export function CampaignDetails() {
       key: 'photoURL',
     },
   ];
-
-  useEffect(() => {
-    getCampaignDetails();
-  }, [id]);
-
-  const getCampaignDetails = async () => {
-    const { uri, apiKey } = settings.supabase;
-    const supabase = createClient(uri, apiKey);
-
-    //TODO: Encapsulate into its own hook?
-    const { data } = await supabase.from<definitions['Campaigns']>('Campaigns').select().eq('id', Number(id)).single();
-
-    if (data !== null) {
-      setLocationName(data.name);
-      setDueDate(data.dueDate as any);
-      setCampaignLocationInfo(JSON.parse(data.location_config || ''));
+  const {campaign} = useCampaigID(Number(id));
+  
+  useEffect(()=>{
+    setCampaignName(campaign?.name);
+    setDueDate(campaign?.dueDate);
+    
+    if (campaign?.location_config) {
+      const locationInfo = JSON.parse(campaign.location_config) as CampaignLocationInfo[];
+      setCampaignLocationInfo(locationInfo);
     }
+
+  },[campaign]);
+
+  const getDueDateStatus = () =>{
+    
+    if (!dueDate) {
+      return <Tag color="geekblue">UNKNOW</Tag>;
+    }
+
+    const formatedDueDate = new Date(dueDate);
+    return today < formatedDueDate 
+      ? <Tag color="green">ON TIME</Tag> 
+      : <Tag color="volcano">OVERDUE</Tag>;
   };
   return (
     <>
       <Divider orientation={'left'}>
         <span>You are seeing the campaign locations info of:</span>
-        <h1> {locationName} </h1>
+        <h1> {campaignName} </h1>
       </Divider>
 
       <span>
-        The status of this report is <DueDateStatus reportDueDate={dueDate} />
+        The status of this report is {getDueDateStatus()} 
       </span>
+      
       <Table
-        size={'small'}
+        size="small"
         style={{ margin: 5 }}
         bordered
         loading={campaignLocationInfo == null}
         dataSource={campaignLocationInfo}
         columns={columns}
+        rowKey="id"
       />
     </>
   );
 }
+
