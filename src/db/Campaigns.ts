@@ -29,6 +29,18 @@ export const insertNewCampaign = async (name: string, status = '', location_conf
   return true;
 };
 
+//gets an especific campaign by its ID
+export const getCampaignByID = async (id:number) => {
+  const { uri, apiKey } = settings.supabase;
+  const supabase = createClient(uri, apiKey);
+
+  //TODO: Encapsulate into its own hook?
+  const { data } = await supabase.from<definitions['Campaigns']>('Campaigns').select().eq('id', Number(id)).single();
+
+  if (data !== null) {
+    return data;
+  }
+};
 //Deletes a row based on it's ID
 
 export const deleteCampaign = async (id: number) => {
