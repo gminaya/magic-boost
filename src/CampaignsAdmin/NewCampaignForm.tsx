@@ -103,7 +103,7 @@ export const NewCampaignForm = () => {
         initialValues={{ requiredMarkValue: 'optional' }}
         requiredMark={true}
       >
-        <h2>Create new campaign</h2>
+       
         <Row>
           <Col span={5}>
             <Form.Item
