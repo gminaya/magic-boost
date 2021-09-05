@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useCampaignById } from '../db/hooks/getCampaignDetailsByID';
 import { useParams } from 'react-router-dom';
 import { CampaignLocationInfo } from '../models/CampaignLocationInfo';
 import { Table, Divider, Tag, Button } from 'antd';
-import { definitions } from '../db/supabase';
-
-const today = new Date();
 
 interface CampaignDetails {
   locationList: JSON;
@@ -15,35 +12,37 @@ type CampaignParams = {
   id: string;
 };
 
-const columns = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'adress',
-  },
-  {
-    title: 'Photo',
-    dataIndex: 'photoURL',
-    key: 'photoURL',
-    render: (_: any, record: CampaignLocationInfo) => {
-      return (
-        //por que se ejecuta en todas las filas en la primera vez que renderiza?
-        <Button type="primary" onClick={() => {alert(record.name);}} size={'small'}>
-          ADD
-        </Button>
-      );
-    },
-  },
-];
-
 export function CampaignDetails() {
   const { id } = useParams<CampaignParams>();
   const { campaign } = useCampaignById(Number(id));
+
+  const columns = useMemo(() => {
+    return [
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+      },
+      {
+        title: 'Address',
+        dataIndex: 'address',
+        key: 'adress',
+      },
+      {
+        title: 'Photo',
+        dataIndex: 'photoURL',
+        key: 'photoURL',
+        render: (_: unknown, record: CampaignLocationInfo) => {
+          return (
+            //por que se ejecuta en todas las filas en la primera vez que renderiza?
+            <Button type="primary" onClick={() => {alert(record.name);}} size={'small'}>
+              ADD
+            </Button>
+          );
+        },
+      },
+    ];
+  }, []);
 
   return (
     <>
@@ -75,6 +74,8 @@ interface DateLabelProps {
 }
 
 const DueDateLabel = ({ date }: DateLabelProps) => {
+  const today = useMemo(() => new Date(), []);
+
   if (!date) {
     return <Tag color="geekblue">UNKNOW</Tag>;
   }
