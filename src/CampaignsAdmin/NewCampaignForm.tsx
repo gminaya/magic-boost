@@ -5,10 +5,11 @@ import { useLocations } from '../db/hooks/getLocations';
 import { definitions } from '../db/supabase';
 import { insertNewCampaign } from '../db/Campaigns';
 import { CampaignLocationInfo } from '../models/CampaignLocationInfo';
+import { ValidateErrorEntity } from 'rc-field-form/lib/interface';
 import './NewCampaignForm.css';
+import { CampaignModel } from '../models/CampaignModel';
 
 export const NewCampaignForm = () => {
-  //date to initialise dueDate state  
   const [name, setName] = useState('');
   const [dueDate, setDueDate] = useState(new Date());
   
@@ -38,7 +39,8 @@ export const NewCampaignForm = () => {
     ]);
   };
 
-  const onFinishFailed = (errorInfo: any) => {
+  //TODO: Amhed: Update to use correct model
+  const onFinishFailed = (errorInfo: ValidateErrorEntity<CampaignModel>) => {
     console.log('Failed:', errorInfo);
   };
 
@@ -57,7 +59,7 @@ export const NewCampaignForm = () => {
       title: 'Add',
       name: 'add',
       key: 'add',
-      render: (_: any, record: definitions['Locations']) => {
+      render: (_: unknown, record: definitions['Locations']) => {
         return (
           //por que se ejecuta en todas las filas en la primera vez que renderiza?
           <Button

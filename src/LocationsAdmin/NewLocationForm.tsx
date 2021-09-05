@@ -7,7 +7,8 @@ type RequiredMark = boolean | 'optional';
 
 function NewLocationForm() {
   const [form] = Form.useForm();
-  const [requiredMark, setRequiredMarkType] = useState<RequiredMark>('optional');
+  //TODO: Gabriel: Why is this needed?
+  const [requiredMark] = useState<RequiredMark>('optional');
   const [name, setName] = useState('');
   const [adress, setAdress] = useState('');
   const [latitude, setLatitude] = useState(0);
@@ -36,7 +37,6 @@ function NewLocationForm() {
 
   return (
     <Form
-
       form={form}
       preserve={false}
       onFinish={onSummit}
@@ -44,6 +44,7 @@ function NewLocationForm() {
       layout={'vertical'}
       initialValues={{ requiredMarkValue: requiredMark }}
       requiredMark={requiredMark}>
+
       <Form.Item
         requiredMark={true}
         label="Location Name"
@@ -51,7 +52,6 @@ function NewLocationForm() {
         tooltip="The name most be a location fisical adress reference"
         rules={[{ required: true, message: 'Name can not be empty 🤨' }]}
       >
-
         <Input
           placeholder="Type location name"
           onChange={e => setName(e.target.value)} />

@@ -8,6 +8,11 @@ export const getLocations = async () => {
   const supabase = createClient(uri, apiKey);
 
   const { data, error } = await supabase.from<definitions['Locations']>('Locations').select();
+
+  if (error) {
+    //TODO: Gabriel: Handle error on sentry.io (here and below)
+  }
+
   return data;
 };
 
@@ -16,7 +21,7 @@ export const insertNewLocation = async (name: string, address: string, lat: numb
   const { uri, apiKey } = settings.supabase;
   const supabase = createClient(uri, apiKey);
 
-  const { data, error } = await supabase.from<definitions['Locations']>('Locations').insert([
+  const { error } = await supabase.from<definitions['Locations']>('Locations').insert([
     {
       name,
       address,
@@ -38,7 +43,7 @@ export const deleteLocation = async (id: number) => {
   const { uri, apiKey } = settings.supabase;
   const supabase = createClient(uri, apiKey);
 
-  const { data, error } = await supabase.from('Locations').delete().eq('id', id);
+  const { error } = await supabase.from('Locations').delete().eq('id', id);
 
   if (error) {
     throw new Error('Could not delete location');
