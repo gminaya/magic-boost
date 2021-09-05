@@ -7,9 +7,9 @@ export const settings = {
   googleMaps: {
     apiKey: process.env.REACT_APP_MAGIC_BOOST_GOOGLE_MAPS_API!,
     defaultCenter: {
-      lat: 59.95, 
-      lng: 30.33
-    }
+      lat: 18.4658543, 
+      lng: -69.9343296
+    },
+    defaultZoom: 13
   }
 };
-

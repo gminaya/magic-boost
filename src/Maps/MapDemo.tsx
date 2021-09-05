@@ -4,22 +4,21 @@ import { settings } from '../settings';
 import { MapMarker, MapMarkerProps } from './MapMarker';
 
 interface MapDemoProps {
-  center: {
+  center?: {
     lat: number
     lng: number
   },
-  zoom: number
+  zoom?: number
 }
 
 export const MapDemo = (props: MapDemoProps) => {
+  const defaultCenter = settings.googleMaps.defaultCenter;
   const [cursorPosition, setCursorPosition] = useState<MapMarkerProps>({
-    lat: props.center?.lat || settings.googleMaps.defaultCenter.lat,
-    lng: props.center?.lng || settings.googleMaps.defaultCenter.lng,
+    lat: props.center?.lat || defaultCenter.lat,
+    lng: props.center?.lng || defaultCenter.lng,
     text: 'cursor',
     visible: false
   });
-
-  console.log(cursorPosition);
 
   const handleMapClick = (event: GoogleMapReact.ClickEventValue) => {
     setCursorPosition({
@@ -34,8 +33,8 @@ export const MapDemo = (props: MapDemoProps) => {
     <div style={{ height: '100vh', width: '100%' }}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: settings.googleMaps.apiKey }}
-        defaultCenter={props.center}
-        defaultZoom={props.zoom}
+        defaultCenter={settings.googleMaps.defaultCenter}
+        defaultZoom={props.zoom || settings.googleMaps.defaultZoom}
         onClick={handleMapClick}
       >
         <MapMarker {...cursorPosition} />

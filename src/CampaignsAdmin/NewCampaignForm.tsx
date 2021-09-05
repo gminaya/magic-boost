@@ -5,6 +5,7 @@ import { useLocations } from '../db/hooks/getLocations';
 import { definitions } from '../db/supabase';
 import { insertNewCampaign } from '../db/Campaigns';
 import { CampaignLocationInfo } from '../models/CampaignLocationInfo';
+import { ValidateErrorEntity } from 'rc-field-form/lib/interface';
 import './NewCampaignForm.css';
 
 export const NewCampaignForm = () => {
@@ -38,7 +39,8 @@ export const NewCampaignForm = () => {
     ]);
   };
 
-  const onFinishFailed = (errorInfo: any) => {
+  //TODO: Amhed: Update to use correct model
+  const onFinishFailed = (errorInfo: ValidateErrorEntity<any>) => {
     console.log('Failed:', errorInfo);
   };
 
