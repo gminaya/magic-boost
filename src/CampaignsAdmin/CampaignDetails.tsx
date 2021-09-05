@@ -34,7 +34,6 @@ export function CampaignDetails() {
         key: 'photoURL',
         render: (_: unknown, record: CampaignLocationInfo) => {
           return (
-            //por que se ejecuta en todas las filas en la primera vez que renderiza?
             <Button type="primary" onClick={() => {alert(record.name);}} size={'small'}>
               ADD
             </Button>
