@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { getLocations } from '../Locations';
 import { definitions } from '../supabase';
 

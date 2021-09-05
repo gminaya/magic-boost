@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { CampaignLocationInfo } from '../../models/CampaignLocationInfo';
 import { CampaignModel } from '../../models/CampaignModel';
 import { getCampaignByID } from '../Campaigns';

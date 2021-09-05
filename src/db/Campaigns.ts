@@ -1,7 +1,6 @@
 import { definitions } from './supabase';
 import { settings } from '../settings';
 import { createClient } from '@supabase/supabase-js';
-import { CampaignModel } from '../models/CampaignModel';
 
 // Gets a list of all campaigns
 export const getCampaigns = async () => {
