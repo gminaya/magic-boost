@@ -73,6 +73,7 @@ export const CampaignList = () => {
           loading={campaigns == null}
           dataSource={campaigns}
           columns={columns}
+          rowKey="id"
         />
       </Router>
     </>
