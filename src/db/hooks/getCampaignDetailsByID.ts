@@ -1,13 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { CampaignLocationInfo } from '../../models/CampaignLocationInfo';
+import { CampaignModel } from '../../models/CampaignModel';
 import { getCampaignByID } from '../Campaigns';
-import { definitions } from '../supabase';
-
-//TODO: Move this to models folder
-type SupabaseCampaignDefinition = definitions['Campaigns'];
-interface CampaignModel extends SupabaseCampaignDefinition {
-  locationInfo: CampaignLocationInfo[];
-}
 
 export const useCampaignById = (id: number) => {
   const [campaign, setCampaign] = useState<CampaignModel>();
