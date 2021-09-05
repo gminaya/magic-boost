@@ -1,20 +1,29 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { CampaignLocationInfo } from '../../models/CampaignLocationInfo';
 import { getCampaignByID } from '../Campaigns';
 import { definitions } from '../supabase';
 
+//TODO: Move this to models folder
+type SupabaseCampaignDefinition = definitions['Campaigns'];
+interface CampaignModel extends SupabaseCampaignDefinition {
+  locationInfo: CampaignLocationInfo[];
+}
 
-type CampaignResult = definitions['Campaigns'];
-
-export const useCampaigID = (id: number) => {
-  const [campaign, setCampaign] = useState<CampaignResult>();
+export const useCampaignById = (id: number) => {
+  const [campaign, setCampaign] = useState<CampaignModel>();
 
   const refreshCampaign = useCallback(async () => {
-    const result = await getCampaignByID(id);
+    const result = (await getCampaignByID(id)) as CampaignModel;
 
     if(result == null){
       return;
     }
     
+    if (result?.location_config) {
+      const locationInfo = JSON.parse(result.location_config) as CampaignLocationInfo[];
+      result.locationInfo = locationInfo;
+    }
+
     setCampaign(result);
   },[getCampaignByID, setCampaign]);
 

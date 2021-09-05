@@ -1,34 +1,44 @@
-import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import { Divider, Button } from 'antd';
+import React, { useState } from 'react';
+import { Divider, Button, Drawer } from 'antd';
 import { CampaignList } from './CampaignList';
 import { NewCampaignForm } from './NewCampaignForm';
-import { RedoOutlined } from '@ant-design/icons';
+import {  PlusOutlined, CloseOutlined } from '@ant-design/icons';
 
 function CampaignAdmin() {
+  const [drawerVisibility, setDrawerVisibility] = useState(false);
 
-  const loadCampaignList = () => {
-    ReactDOM.render(<CampaignList />, document.getElementById('campaign-list'));
+  const toggleDrawer = () => {
+    setDrawerVisibility(!drawerVisibility);
   };
-
 
   return (
     <>
+      <Drawer
+        title="Create a new campaign"
+        placement="top"
+        closable={false}
+        onClose={toggleDrawer}
+        visible={drawerVisibility}
+        key="top"
+        height="90%"
+        closeIcon={<CloseOutlined />}
+      >
+        <NewCampaignForm />
+      </Drawer>
       <Divider style={{ borderTopColor: 'gray' }} orientation="left">
         <h2 style={{ marginBottom: 0 }}>CAMPAIGNS KINDOM</h2>
       </Divider>
 
       <p style={{ textAlign: 'right' }}>You can create, view or delete campaigns </p>
-
-      <NewCampaignForm />
+      <Button type="primary" onClick={toggleDrawer} icon={<PlusOutlined />} size={'small'}>
+        ADD NEW CAMPAING
+      </Button>
 
       <Divider style={{ borderTopColor: 'gray' }} orientation="left">
         <h4 style={{ marginBottom: 0 }}>Listing all the campaigns</h4>
       </Divider>
       <div id="campaign-list"></div>
-      <Button type="primary" onClick={loadCampaignList} icon={<RedoOutlined />} size={'large'}>
-        VIEW CAMPAIGNS LIST
-      </Button>
+      <CampaignList />
     </>
   );
 }

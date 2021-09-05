@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useCampaigID } from '../db/hooks/getCampaignDetailsByID';
+import { useCampaignById } from '../db/hooks/getCampaignDetailsByID';
 import { useParams } from 'react-router-dom';
 import { CampaignLocationInfo } from '../models/CampaignLocationInfo';
-import { Table, Divider, Tag } from 'antd';
+import { Table, Divider, Tag, Button } from 'antd';
+import { definitions } from '../db/supabase';
 
 const today = new Date();
 
@@ -29,20 +30,20 @@ const columns = [
     title: 'Photo',
     dataIndex: 'photoURL',
     key: 'photoURL',
+    render: (_: any, record: CampaignLocationInfo) => {
+      return (
+        //por que se ejecuta en todas las filas en la primera vez que renderiza?
+        <Button type="primary" onClick={() => {alert(record.name);}} size={'small'}>
+          ADD
+        </Button>
+      );
+    },
   },
 ];
 
 export function CampaignDetails() {
-  const [campaignLocationInfo, setCampaignLocationInfo] = useState<CampaignLocationInfo[]>([]);
   const { id } = useParams<CampaignParams>();
-  const { campaign } = useCampaigID(Number(id));
-
-  useEffect(() => {
-    if (campaign?.location_config) {
-      const locationInfo = JSON.parse(campaign.location_config) as CampaignLocationInfo[];
-      setCampaignLocationInfo(locationInfo);
-    }
-  }, [campaign]);
+  const { campaign } = useCampaignById(Number(id));
 
   return (
     <>
@@ -59,8 +60,8 @@ export function CampaignDetails() {
         size="small"
         style={{ margin: 5 }}
         bordered
-        loading={campaignLocationInfo == null}
-        dataSource={campaignLocationInfo}
+        loading={campaign == null}
+        dataSource={campaign?.locationInfo}
         columns={columns}
         rowKey="id"
       />
@@ -73,13 +74,11 @@ interface DateLabelProps {
   date?: string;
 }
 
-const DueDateLabel = ({date}: DateLabelProps) => {
+const DueDateLabel = ({ date }: DateLabelProps) => {
   if (!date) {
     return <Tag color="geekblue">UNKNOW</Tag>;
   }
 
   const formatedDueDate = new Date(date);
-  return today < formatedDueDate 
-    ? <Tag color="green">ON TIME</Tag> 
-    : <Tag color="volcano">OVERDUE</Tag>;
+  return today < formatedDueDate ? <Tag color="green">ON TIME</Tag> : <Tag color="volcano">OVERDUE</Tag>;
 };
