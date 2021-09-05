@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 import { Divider, Button, Drawer } from 'antd';
 import { CampaignList } from './CampaignList';
 import { NewCampaignForm } from './NewCampaignForm';
-import { RedoOutlined, PlusOutlined } from '@ant-design/icons';
+import {  PlusOutlined, CloseOutlined } from '@ant-design/icons';
 
 function CampaignAdmin() {
   const [drawerVisibility, setDrawerVisibility] = useState(false);
 
-  const toggleDrawser = () => {
-    if (drawerVisibility) {
-      setDrawerVisibility(false);
-    } else {
-      setDrawerVisibility(true);
-    }
+  const toggleDrawer = () => {
+    setDrawerVisibility(!drawerVisibility);
   };
 
   return (
@@ -22,10 +17,11 @@ function CampaignAdmin() {
         title="Create a new campaign"
         placement="top"
         closable={false}
-        onClose={toggleDrawser}
+        onClose={toggleDrawer}
         visible={drawerVisibility}
         key="top"
         height="90%"
+        closeIcon={<CloseOutlined />}
       >
         <NewCampaignForm />
       </Drawer>
@@ -34,7 +30,7 @@ function CampaignAdmin() {
       </Divider>
 
       <p style={{ textAlign: 'right' }}>You can create, view or delete campaigns </p>
-      <Button type="primary" onClick={toggleDrawser} icon={<PlusOutlined />} size={'small'}>
+      <Button type="primary" onClick={toggleDrawer} icon={<PlusOutlined />} size={'small'}>
         ADD NEW CAMPAING
       </Button>
 
