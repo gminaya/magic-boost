@@ -1,8 +1,12 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useCampaignById } from '../db/hooks/getCampaignDetailsByID';
 import { useParams } from 'react-router-dom';
 import { CampaignLocationInfo } from '../models/CampaignLocationInfo';
 import { Table, Divider, Tag, Button } from 'antd';
+import { uploadPhoto } from '../db/Locations';
+import { settings } from '../settings';
+import { createClient } from '@supabase/supabase-js';
+import { v4 as uuidv4 } from 'uuid';
 
 interface CampaignDetails {
   locationList: JSON;
@@ -15,6 +19,32 @@ type CampaignParams = {
 export function CampaignDetails() {
   const { id } = useParams<CampaignParams>();
   const { campaign } = useCampaignById(Number(id));
+
+  const uploadImage = async (file: File) => {
+    const filename = `${uuidv4()}.jpg`;
+    const { uri, apiKey } = settings.supabase;
+    const supabase = createClient(uri, apiKey);
+    const { data, error } = await supabase
+      .storage
+      .from('location-pictures')
+      .upload(
+        `public/${filename}`,
+        file, 
+        {
+          cacheControl: '3600',
+          upsert: false,
+          contentType: 'image/jpg'
+        });
+
+    if (error) {
+      alert(error?.message);
+    }
+
+    return data;
+  };
+
+  //TODO: What's this
+  const locationListConfig = campaign?.location_config === undefined ? [] : JSON.parse(campaign?.location_config);
 
   const columns = useMemo(() => {
     return [
@@ -34,7 +64,13 @@ export function CampaignDetails() {
         key: 'photoURL',
         render: (_: unknown, record: CampaignLocationInfo) => {
           return (
-            <Button type="primary" onClick={() => {alert(record.name);}} size={'small'}>
+            <Button
+              type="primary"
+              onClick={() => {
+                alert(record.name);
+              }}
+              size={'small'}
+            >
               ADD
             </Button>
           );
@@ -43,17 +79,23 @@ export function CampaignDetails() {
     ];
   }, []);
 
+  const [selectedFile, setSelectFiled] = useState<File|undefined>();
+
   return (
     <>
       <Divider orientation={'left'}>
         <span>You are seeing the campaign locations info of:</span>
         <h1> {campaign?.name} </h1>
       </Divider>
-
+      <Button onClick={() => {
+        if (selectedFile) {
+          uploadImage(selectedFile);
+        }
+      }}>revelio</Button>
+      <input onChange={(e) => setSelectFiled(e.target.files![0])} id="file" type="file" />
       <span>
         The status of this report is <DueDateLabel date={campaign?.dueDate} />
       </span>
-
       <Table
         size="small"
         style={{ margin: 5 }}
