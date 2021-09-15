@@ -1,9 +1,8 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useCampaignById } from '../db/hooks/getCampaignDetailsByID';
 import { useParams } from 'react-router-dom';
 import { CampaignLocationInfo } from '../models/CampaignLocationInfo';
-import { Table, Divider, Tag, Button } from 'antd';
-import { uploadPhoto } from '../db/Locations';
+import { Table, Divider, Tag, Button, Input, Image } from 'antd';
 import { settings } from '../settings';
 import { createClient } from '@supabase/supabase-js';
 import { v4 as uuidv4 } from 'uuid';
@@ -20,66 +19,119 @@ export function CampaignDetails() {
   const { id } = useParams<CampaignParams>();
   const { campaign } = useCampaignById(Number(id));
 
+  //uploads selected image to supabe DB
   const uploadImage = async (file: File) => {
+    console.log('1.0');
     const filename = `${uuidv4()}.jpg`;
     const { uri, apiKey } = settings.supabase;
     const supabase = createClient(uri, apiKey);
-    const { data, error } = await supabase
-      .storage
-      .from('location-pictures')
-      .upload(
-        `public/${filename}`,
-        file, 
-        {
-          cacheControl: '3600',
-          upsert: false,
-          contentType: 'image/jpg'
-        });
+    console.log('1.2');
+    const { data, error } = await supabase.storage.from('location-pictures').upload(`public/${filename}`, file, {
+      cacheControl: '3600',
+      upsert: false,
+      contentType: 'image/jpg',
+    });
+    console.log('1.3');
 
     if (error) {
       alert(error?.message);
     }
 
-    return data;
+    console.log('1.4');
+    return data === null ? data : data.Key;
   };
 
-  //TODO: What's this
-  const locationListConfig = campaign?.location_config === undefined ? [] : JSON.parse(campaign?.location_config);
+  //gets public uploaded image URL on supabase
+  const getUploadedImageURL = async (imagePath: string) => {
+    console.log('2.0', imagePath);
+    const { uri, apiKey } = settings.supabase;
+    const supabase = createClient(uri, apiKey);
+    const { publicURL, error } = await supabase.storage.from('location-pictures').getPublicUrl(imagePath);
 
-  const columns = useMemo(() => {
-    return [
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-      },
-      {
-        title: 'Address',
-        dataIndex: 'address',
-        key: 'adress',
-      },
-      {
-        title: 'Photo',
-        dataIndex: 'photoURL',
-        key: 'photoURL',
-        render: (_: unknown, record: CampaignLocationInfo) => {
-          return (
-            <Button
-              type="primary"
-              onClick={() => {
-                alert(record.name);
-              }}
-              size={'small'}
-            >
-              ADD
-            </Button>
-          );
-        },
-      },
-    ];
-  }, []);
+    if (error) {
+      alert(error?.message);
+    }
 
-  const [selectedFile, setSelectFiled] = useState<File|undefined>();
+    console.log('2.2', publicURL);
+    if (publicURL) {
+      return publicURL;
+    }
+  };
+  //modifies location object imageUrl key based on its index
+  const updateLocationPhotoURL = (locationID: number, imageURL: string) => {
+    const locationToUpdate = campaign?.locationInfo.find((loc) => loc.id === locationID);
+    if (locationToUpdate) {
+      locationToUpdate.photoUrl = imageURL;
+    }
+    console.log('3', locationToUpdate);
+  };
+
+  //finds public image url on locationInfo
+  const getImageURL = (locationID:number) =>{
+    const urlToFind = campaign?.locationInfo.find((loc) => loc.id === locationID);
+    if(urlToFind){
+      return urlToFind.photoUrl;
+    }
+  };
+  //updates campaing location config on supabase
+  const updateLocationConfig = async (campaignID: number, locationCONF: CampaignLocationInfo[] | undefined) => {
+    const { uri, apiKey } = settings.supabase;
+    const supabase = createClient(uri, apiKey);
+
+    const { data, error } = await supabase
+      .from('Campaigns')
+      .update({ location_config: JSON.stringify(locationCONF) })
+      .eq('id', campaignID);
+
+    if (error) {
+      alert(error);
+    }
+
+    return data;
+  };
+  //handle for OnChange on ADD button input
+  const addBtnOnChange = async (file: File, locationID: number) => {
+    const uploadedPath = await uploadImage(file);
+    if (uploadedPath) {
+      const path = uploadedPath.substr(uploadedPath.indexOf('/') + 1);
+      const URL = await getUploadedImageURL(path);
+      if (URL) {
+        updateLocationPhotoURL(locationID, URL);
+      }
+    }
+    const updateLocationConfigResult = updateLocationConfig(Number(id), campaign?.locationInfo);
+    console.log(updateLocationConfigResult);
+  };
+
+  // locations list table columns config
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Address',
+      dataIndex: 'address',
+      key: 'adress',
+    },
+    {
+      title: 'ADD Photo',
+      dataIndex: 'photoURL',
+      key: 'photoURL',
+      render: (_: unknown, record: CampaignLocationInfo) => {
+        return <Input accept="image/jpg" type="file" onChange={(e) => addBtnOnChange(e.target.files![0], record.id)} />;
+      },
+    },
+    {
+      title: 'View Photo',
+      dataIndex: 'viewPhoto',
+      key: 'viewPhoto',
+      render: (_: unknown, record: CampaignLocationInfo) => {
+        return <Image width={50} src={getImageURL(record.id)} />;
+      },
+    },
+  ];
 
   return (
     <>
@@ -87,12 +139,16 @@ export function CampaignDetails() {
         <span>You are seeing the campaign locations info of:</span>
         <h1> {campaign?.name} </h1>
       </Divider>
-      <Button onClick={() => {
-        if (selectedFile) {
-          uploadImage(selectedFile);
-        }
-      }}>revelio</Button>
-      <input onChange={(e) => setSelectFiled(e.target.files![0])} id="file" type="file" />
+      <Button
+        onClick={() => {
+          console.log(campaign?.locationInfo);
+        }}
+      >
+        revelio
+      </Button>
+      <Button onClick={() => getUploadedImageURL('p')}>revelio URL</Button>
+      <Button onClick={() => console.log(campaign?.locationInfo)}>revelio locationCONF</Button>
+
       <span>
         The status of this report is <DueDateLabel date={campaign?.dueDate} />
       </span>
