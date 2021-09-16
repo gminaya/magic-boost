@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { useCampaignById } from '../db/hooks/getCampaignDetailsByID';
 import { useParams } from 'react-router-dom';
 import { CampaignLocationInfo } from '../models/CampaignLocationInfo';
-import { Table, Divider, Tag, Button, Input, Image } from 'antd';
+import { Table, Divider, Tag, Button, Input, Image, message } from 'antd';
 import { settings } from '../settings';
 import { createClient } from '@supabase/supabase-js';
 import { v4 as uuidv4 } from 'uuid';
@@ -21,29 +21,25 @@ export function CampaignDetails() {
 
   //uploads selected image to supabe DB
   const uploadImage = async (file: File) => {
-    console.log('1.0');
     const filename = `${uuidv4()}.jpg`;
     const { uri, apiKey } = settings.supabase;
     const supabase = createClient(uri, apiKey);
-    console.log('1.2');
+  
     const { data, error } = await supabase.storage.from('location-pictures').upload(`public/${filename}`, file, {
       cacheControl: '3600',
       upsert: false,
       contentType: 'image/jpg',
     });
-    console.log('1.3');
 
     if (error) {
       alert(error?.message);
     }
 
-    console.log('1.4');
     return data === null ? data : data.Key;
   };
 
   //gets public uploaded image URL on supabase
   const getUploadedImageURL = async (imagePath: string) => {
-    console.log('2.0', imagePath);
     const { uri, apiKey } = settings.supabase;
     const supabase = createClient(uri, apiKey);
     const { publicURL, error } = await supabase.storage.from('location-pictures').getPublicUrl(imagePath);
@@ -52,24 +48,23 @@ export function CampaignDetails() {
       alert(error?.message);
     }
 
-    console.log('2.2', publicURL);
     if (publicURL) {
       return publicURL;
     }
   };
+
   //modifies location object imageUrl key based on its index
   const updateLocationPhotoURL = (locationID: number, imageURL: string) => {
     const locationToUpdate = campaign?.locationInfo.find((loc) => loc.id === locationID);
     if (locationToUpdate) {
       locationToUpdate.photoUrl = imageURL;
     }
-    console.log('3', locationToUpdate);
   };
 
   //finds public image url on locationInfo
-  const getImageURL = (locationID:number) =>{
+  const getImageURL = (locationID: number) => {
     const urlToFind = campaign?.locationInfo.find((loc) => loc.id === locationID);
-    if(urlToFind){
+    if (urlToFind) {
       return urlToFind.photoUrl;
     }
   };
@@ -91,6 +86,7 @@ export function CampaignDetails() {
   };
   //handle for OnChange on ADD button input
   const addBtnOnChange = async (file: File, locationID: number) => {
+    
     const uploadedPath = await uploadImage(file);
     if (uploadedPath) {
       const path = uploadedPath.substr(uploadedPath.indexOf('/') + 1);
@@ -99,8 +95,11 @@ export function CampaignDetails() {
         updateLocationPhotoURL(locationID, URL);
       }
     }
-    const updateLocationConfigResult = updateLocationConfig(Number(id), campaign?.locationInfo);
-    console.log(updateLocationConfigResult);
+    const updateLocationConfigResult = await updateLocationConfig(Number(id), campaign?.locationInfo);
+    if(updateLocationConfigResult){
+      uploadedPhotoMessage();
+      
+    }
   };
 
   // locations list table columns config
@@ -139,16 +138,6 @@ export function CampaignDetails() {
         <span>You are seeing the campaign locations info of:</span>
         <h1> {campaign?.name} </h1>
       </Divider>
-      <Button
-        onClick={() => {
-          console.log(campaign?.locationInfo);
-        }}
-      >
-        revelio
-      </Button>
-      <Button onClick={() => getUploadedImageURL('p')}>revelio URL</Button>
-      <Button onClick={() => console.log(campaign?.locationInfo)}>revelio locationCONF</Button>
-
       <span>
         The status of this report is <DueDateLabel date={campaign?.dueDate} />
       </span>
@@ -179,4 +168,8 @@ const DueDateLabel = ({ date }: DateLabelProps) => {
 
   const formatedDueDate = new Date(date);
   return today < formatedDueDate ? <Tag color="green">ON TIME</Tag> : <Tag color="volcano">OVERDUE</Tag>;
+};
+
+const uploadedPhotoMessage = () => {
+  message.success('Photo uploaded ');
 };
