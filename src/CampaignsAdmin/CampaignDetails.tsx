@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { useCampaignById } from '../db/hooks/getCampaignDetailsByID';
 import { useParams } from 'react-router-dom';
 import { CampaignLocationInfo } from '../models/CampaignLocationInfo';
-import { Table, Divider, Tag, Button, Input, Image, message } from 'antd';
+import { Table, Divider, Tag, Input, Image, message } from 'antd';
 import { settings } from '../settings';
 import { createClient } from '@supabase/supabase-js';
 import { v4 as uuidv4 } from 'uuid';
@@ -19,12 +19,14 @@ export function CampaignDetails() {
   const { id } = useParams<CampaignParams>();
   const { campaign } = useCampaignById(Number(id));
 
-  //uploads selected image to supabe DB
-  const uploadImage = async (file: File) => {
+  /**
+   *uploads selected image to supabase DB
+   */
+  const uploadImageToSupabase = async (file: File) => {
     const filename = `${uuidv4()}.jpg`;
     const { uri, apiKey } = settings.supabase;
     const supabase = createClient(uri, apiKey);
-  
+
     const { data, error } = await supabase.storage.from('location-pictures').upload(`public/${filename}`, file, {
       cacheControl: '3600',
       upsert: false,
@@ -35,10 +37,12 @@ export function CampaignDetails() {
       alert(error?.message);
     }
 
-    return data === null ? data : data.Key;
+    return data?.Key;
   };
 
-  //gets public uploaded image URL on supabase
+  /**
+   * Retrieves public uploaded image URL from supabase
+   */
   const getUploadedImageURL = async (imagePath: string) => {
     const { uri, apiKey } = settings.supabase;
     const supabase = createClient(uri, apiKey);
@@ -53,22 +57,19 @@ export function CampaignDetails() {
     }
   };
 
-  //modifies location object imageUrl key based on its index
-  const updateLocationPhotoURL = (locationID: number, imageURL: string) => {
+  /**
+   * Modifies location object imageUrl key based on its index with photo public url
+   */
+  const updatePhotoUrlKey = (locationID: number, imageURL: string) => {
     const locationToUpdate = campaign?.locationInfo.find((loc) => loc.id === locationID);
     if (locationToUpdate) {
       locationToUpdate.photoUrl = imageURL;
     }
   };
 
-  //finds public image url on locationInfo
-  const getImageURL = (locationID: number) => {
-    const urlToFind = campaign?.locationInfo.find((loc) => loc.id === locationID);
-    if (urlToFind) {
-      return urlToFind.photoUrl;
-    }
-  };
-  //updates campaing location config on supabase
+  /**
+   *updates campaing locationConfig on supabase
+   */
   const updateLocationConfig = async (campaignID: number, locationCONF: CampaignLocationInfo[] | undefined) => {
     const { uri, apiKey } = settings.supabase;
     const supabase = createClient(uri, apiKey);
@@ -84,25 +85,28 @@ export function CampaignDetails() {
 
     return data;
   };
-  //handle for OnChange on ADD button input
+  
+  /**
+   * Handle for OnChange on ADD button input
+   */
   const addBtnOnChange = async (file: File, locationID: number) => {
-    
-    const uploadedPath = await uploadImage(file);
+    const uploadedPath = await uploadImageToSupabase(file);
     if (uploadedPath) {
       const path = uploadedPath.substr(uploadedPath.indexOf('/') + 1);
       const URL = await getUploadedImageURL(path);
       if (URL) {
-        updateLocationPhotoURL(locationID, URL);
+        updatePhotoUrlKey(locationID, URL);
       }
     }
     const updateLocationConfigResult = await updateLocationConfig(Number(id), campaign?.locationInfo);
-    if(updateLocationConfigResult){
+    if (updateLocationConfigResult) {
       uploadedPhotoMessage();
-      
     }
   };
 
-  // locations list table columns config
+  /**
+   * locations list table columns config
+   */
   const columns = [
     {
       title: 'Name',
@@ -119,7 +123,15 @@ export function CampaignDetails() {
       dataIndex: 'photoURL',
       key: 'photoURL',
       render: (_: unknown, record: CampaignLocationInfo) => {
-        return <Input accept="image/jpg" type="file" onChange={(e) => addBtnOnChange(e.target.files![0], record.id)} />;
+        return (
+          <Input
+            accept="image/jpg"
+            type="file"
+            onChange={(e) => {
+              e.target.files && addBtnOnChange(e.target.files[0], record.id);
+            }}
+          />
+        );
       },
     },
     {
@@ -127,7 +139,7 @@ export function CampaignDetails() {
       dataIndex: 'viewPhoto',
       key: 'viewPhoto',
       render: (_: unknown, record: CampaignLocationInfo) => {
-        return <Image width={50} src={getImageURL(record.id)} />;
+        return <Image width={50} src={record.photoUrl} />;
       },
     },
   ];
@@ -154,7 +166,7 @@ export function CampaignDetails() {
   );
 }
 
-//TODO: Move to its own file?
+//TODO: A: Move to its own file? G:
 interface DateLabelProps {
   date?: string;
 }
