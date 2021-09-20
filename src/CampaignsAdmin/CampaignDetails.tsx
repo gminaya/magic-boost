@@ -4,9 +4,8 @@ import { useParams } from 'react-router-dom';
 import { CampaignLocationInfo } from '../models/CampaignLocationInfo';
 import { Table, Divider, Tag, Input, Image, message, Popconfirm, Button } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
-import { settings } from '../settings';
-import { createClient } from '@supabase/supabase-js';
 import { v4 as uuidv4 } from 'uuid';
+import { supabase as supabaseClientKey } from '../db/helper';
 
 interface CampaignDetails {
   locationList: JSON;
@@ -25,14 +24,13 @@ export function CampaignDetails() {
    */
   const uploadImageToSupabase = async (file: File) => {
     const filename = `${uuidv4()}.jpg`;
-    const { uri, apiKey } = settings.supabase;
-    const supabase = createClient(uri, apiKey);
-
-    const { data, error } = await supabase.storage.from('location-pictures').upload(`public/${filename}`, file, {
-      cacheControl: '3600',
-      upsert: false,
-      contentType: 'image/jpg',
-    });
+    const { data, error } = await supabaseClientKey.storage
+      .from('location-pictures')
+      .upload(`public/${filename}`, file, {
+        cacheControl: '3600',
+        upsert: false,
+        contentType: 'image/jpg',
+      });
 
     if (error) {
       alert(error?.message);
@@ -45,9 +43,7 @@ export function CampaignDetails() {
    * Retrieves public uploaded image URL from supabase
    */
   const getUploadedImageURL = async (imagePath: string) => {
-    const { uri, apiKey } = settings.supabase;
-    const supabase = createClient(uri, apiKey);
-    const { publicURL, error } = await supabase.storage.from('location-pictures').getPublicUrl(imagePath);
+    const { publicURL, error } = supabaseClientKey.storage.from('location-pictures').getPublicUrl(imagePath);
 
     if (error) {
       alert(error?.message);
@@ -72,10 +68,7 @@ export function CampaignDetails() {
    *updates campaing locationConfig on supabase
    */
   const updateLocationConfig = async (campaignID: number, locationCONF: CampaignLocationInfo[] | undefined) => {
-    const { uri, apiKey } = settings.supabase;
-    const supabase = createClient(uri, apiKey);
-
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClientKey
       .from('Campaigns')
       .update({ location_config: JSON.stringify(locationCONF) })
       .eq('id', campaignID);
@@ -83,7 +76,6 @@ export function CampaignDetails() {
     if (error) {
       alert(error);
     }
-
     return data;
   };
 
@@ -110,11 +102,7 @@ export function CampaignDetails() {
    */
   const removePhotoOnSupabase = async (locationID: number, imageURL: string) => {
     const imagePath = imageURL.substr(imageURL.lastIndexOf('/') + 1);
-
-    const { uri, apiKey } = settings.supabase;
-    const supabase = createClient(uri, apiKey);
-
-    const { data, error } = await supabase.storage.from('location-pictures').remove([`public/${imagePath}`]);
+    const { data, error } = await supabaseClientKey.storage.from('location-pictures').remove([`public/${imagePath}`]);
 
     if (error) {
       throw error;
@@ -132,7 +120,7 @@ export function CampaignDetails() {
   /**
    * locations list table columns config
    */
-  const columns =  [
+  const columns = [
     {
       title: 'Name',
       dataIndex: 'name',
