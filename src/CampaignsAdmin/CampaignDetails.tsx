@@ -2,7 +2,8 @@ import React, { useMemo } from 'react';
 import { useCampaignById } from '../db/hooks/getCampaignDetailsByID';
 import { useParams } from 'react-router-dom';
 import { CampaignLocationInfo } from '../models/CampaignLocationInfo';
-import { Table, Divider, Tag, Input, Image, message } from 'antd';
+import { Table, Divider, Tag, Input, Image, message, Popconfirm, Button } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 import { settings } from '../settings';
 import { createClient } from '@supabase/supabase-js';
 import { v4 as uuidv4 } from 'uuid';
@@ -85,7 +86,7 @@ export function CampaignDetails() {
 
     return data;
   };
-  
+
   /**
    * Handle for OnChange on ADD button input
    */
@@ -102,6 +103,24 @@ export function CampaignDetails() {
     if (updateLocationConfigResult) {
       uploadedPhotoMessage();
     }
+  };
+
+  /**
+   * Removes photo file on supabase
+   */
+  const removePhotoOnSupabase = async (locationID: number, imageURL: string) => {
+    const imagePath = imageURL.substr(imageURL.lastIndexOf('/')+1);
+    
+    const { uri, apiKey } = settings.supabase;
+    const supabase = createClient(uri, apiKey);
+
+    const { data, error } = await supabase.storage.from('location-pictures').remove([`public/${imagePath}`]);
+    
+    if(error){
+      throw error;
+    }
+    console.log(data);
+
   };
 
   /**
@@ -140,6 +159,27 @@ export function CampaignDetails() {
       key: 'viewPhoto',
       render: (_: unknown, record: CampaignLocationInfo) => {
         return <Image width={50} src={record.photoUrl} />;
+      },
+    },
+    {
+      title: 'Delete',
+      dataIndex: 'delete',
+      key: 'delete',
+      render: (_: unknown, record: CampaignLocationInfo) => {
+        return (
+          <Popconfirm
+            title="Are you sure to delete this photo 🧐?"
+            onConfirm={async () => {
+              removePhotoOnSupabase(0, record.photoUrl);
+            }}
+            okText="DELETE"
+            cancelText="CANCEL"
+          >
+            <Button type="primary" icon={<DeleteOutlined />} size={'small'}>
+              Remove
+            </Button>
+          </Popconfirm>
+        );
       },
     },
   ];
