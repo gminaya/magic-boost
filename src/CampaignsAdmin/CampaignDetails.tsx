@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useCampaignById } from '../db/hooks/getCampaignDetailsByID';
 import { useParams } from 'react-router-dom';
 import { CampaignLocationInfo } from '../models/CampaignLocationInfo';
-import { Table, Divider, Tag, Input, Image, message, Popconfirm, Button } from 'antd';
+import { Table, Divider, Input, Image, message, Popconfirm, Button } from 'antd';
+import {DueDateLabel} from './DueDateLabel';
 import { DeleteOutlined } from '@ant-design/icons';
 import { v4 as uuidv4 } from 'uuid';
 import { supabase as supabaseClientKey } from '../db/helper';
@@ -199,23 +200,6 @@ export function CampaignDetails() {
     </>
   );
 }
-
-//TODO: A: Move to its own file? G:
-interface DateLabelProps {
-  date?: string;
-}
-
-const DueDateLabel = ({ date }: DateLabelProps) => {
-  const today = useMemo(() => new Date(), []);
-
-  if (!date) {
-    return <Tag color="geekblue">UNKNOW</Tag>;
-  }
-
-  const formatedDueDate = new Date(date);
-  return today < formatedDueDate ? <Tag color="green">ON TIME</Tag> : <Tag color="volcano">OVERDUE</Tag>;
-};
-
 const uploadedPhotoMessage = () => {
   message.success('Photo uploaded ');
 };
