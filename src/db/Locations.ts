@@ -51,3 +51,20 @@ export const deleteLocation = async (id: number) => {
 
   return true;
 };
+
+
+export const uploadPhoto = async () => {
+  const { uri, apiKey } = settings.supabase;
+  const supabase = createClient(uri, apiKey);
+  
+  const { data, error } = await supabase.storage.from('location-pictures').upload('app-background.jpg', 'src/app-background.jpg', {
+    cacheControl: '3600',
+    upsert: false,
+  });
+
+  if (error) {
+    throw new Error('Could not upload the picture');
+  }
+
+  return data;
+};
