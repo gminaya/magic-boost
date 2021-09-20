@@ -106,27 +106,33 @@ export function CampaignDetails() {
   };
 
   /**
-   * Removes photo file on supabase
+   * Removes photo file on supabase and updates locationInfo JSON
    */
   const removePhotoOnSupabase = async (locationID: number, imageURL: string) => {
-    const imagePath = imageURL.substr(imageURL.lastIndexOf('/')+1);
-    
+    const imagePath = imageURL.substr(imageURL.lastIndexOf('/') + 1);
+
     const { uri, apiKey } = settings.supabase;
     const supabase = createClient(uri, apiKey);
 
     const { data, error } = await supabase.storage.from('location-pictures').remove([`public/${imagePath}`]);
-    
-    if(error){
+
+    if (error) {
       throw error;
     }
-    console.log(data);
+    if (data) {
+      updatePhotoUrlKey(locationID, '');
 
+      const updateResponse = await updateLocationConfig(Number(id), campaign?.locationInfo);
+      if (updateResponse) {
+        removePhotoMessage();
+      }
+    }
   };
 
   /**
    * locations list table columns config
    */
-  const columns = [
+  const columns =  [
     {
       title: 'Name',
       dataIndex: 'name',
@@ -138,7 +144,7 @@ export function CampaignDetails() {
       key: 'adress',
     },
     {
-      title: 'ADD Photo',
+      title: 'ADD / CHANGE Photo',
       dataIndex: 'photoURL',
       key: 'photoURL',
       render: (_: unknown, record: CampaignLocationInfo) => {
@@ -170,7 +176,7 @@ export function CampaignDetails() {
           <Popconfirm
             title="Are you sure to delete this photo 🧐?"
             onConfirm={async () => {
-              removePhotoOnSupabase(0, record.photoUrl);
+              removePhotoOnSupabase(record.id, record.photoUrl);
             }}
             okText="DELETE"
             cancelText="CANCEL"
@@ -224,4 +230,7 @@ const DueDateLabel = ({ date }: DateLabelProps) => {
 
 const uploadedPhotoMessage = () => {
   message.success('Photo uploaded ');
+};
+const removePhotoMessage = () => {
+  message.success('Photo removed ');
 };
