@@ -1,0 +1,29 @@
+.location-card {
+  width: 40%;
+  background-color: #eff2f5;
+  margin: 10px;
+  border-bottom: 10px solid #173057;
+  
+
+}
+
+.location-card .stats {
+  height: 30px;
+  background-color: #eff2f5;
+  padding: 5px;
+}
+.location-card h3 {
+  color: #173057;
+  font-size: 1.3em;
+  text-transform: uppercase;
+  margin-bottom: 0;
+}
+
+.location-card .ant-ribbon-text {
+  color: #eff2f5;
+}
+
+.location-card .card-info {
+  background-color: #eff2f5;
+  padding: 15px;
+}

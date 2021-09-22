@@ -6,6 +6,7 @@ import { Table, Divider, Tag, Input, Image, message } from 'antd';
 import { settings } from '../settings';
 import { createClient } from '@supabase/supabase-js';
 import { v4 as uuidv4 } from 'uuid';
+import {CampaignReport} from './CampaignReport';
 
 interface CampaignDetails {
   locationList: JSON;
@@ -162,6 +163,7 @@ export function CampaignDetails() {
         columns={columns}
         rowKey="id"
       />
+      <CampaignReport />
     </>
   );
 }
