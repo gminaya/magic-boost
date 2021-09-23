@@ -6,7 +6,7 @@ import { Table, Divider, Tag, Input, Image, message } from 'antd';
 import { settings } from '../settings';
 import { createClient } from '@supabase/supabase-js';
 import { v4 as uuidv4 } from 'uuid';
-import {CampaignReport} from './CampaignReport';
+import { Report } from './Report';
 
 interface CampaignDetails {
   locationList: JSON;
@@ -86,7 +86,7 @@ export function CampaignDetails() {
 
     return data;
   };
-  
+
   /**
    * Handle for OnChange on ADD button input
    */
@@ -163,7 +163,7 @@ export function CampaignDetails() {
         columns={columns}
         rowKey="id"
       />
-      <CampaignReport />
+      <Report/>
     </>
   );
 }
