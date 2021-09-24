@@ -9,6 +9,7 @@ import { CampaignDetails } from './CampaignsAdmin/CampaignDetails';
 import 'antd/dist/antd.css';
 import './index.css';
 import { MapDemo } from './Maps/MapDemo';
+
 const { Header, Content, Footer } = Layout;
 function App() {
   return (
@@ -39,7 +40,7 @@ function App() {
             <Switch>
               <Route path="/LocationsAdmin" exact component={LocationsAdmin} />
               <Route path="/CampaignsAdmin" exact component={CampaignAdmin} />
-              <Route path="/CampaignsAdmin/:id" component={CampaignDetails} />
+              <Route path="/CampaignsAdmin/:id" exact component={CampaignDetails} />
               <Route path="/MapTest" component={MapDemo} />
             </Switch>
           </div>
