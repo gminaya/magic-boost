@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
-import { useCampaignById } from '../db/hooks/getCampaignDetailsByID';
+import { useCampaignById } from '../../db/hooks/getCampaignDetailsByID';
 import { useParams } from 'react-router-dom';
-import { CampaignLocationInfo } from '../models/CampaignLocationInfo';
+import { CampaignLocationInfo } from '../../models/CampaignLocationInfo';
 import { Table, Divider, Tag, Input, Image, message } from 'antd';
-import { settings } from '../settings';
+import { settings } from '../../settings';
 import { createClient } from '@supabase/supabase-js';
 import { v4 as uuidv4 } from 'uuid';
-import { Report } from './Report';
+
 
 
 interface CampaignDetails {
@@ -164,7 +164,6 @@ export function CampaignDetails() {
         columns={columns}
         rowKey="id"
       />
-      <Report/>
     </>
   );
 }
