@@ -5,7 +5,7 @@ import { Breadcrumb, Layout, Menu } from 'antd';
 import { HomeOutlined } from '@ant-design/icons';
 import LocationsAdmin from './LocationsAdmin/LocationsAdmin';
 import CampaignAdmin from './CampaignsAdmin/CampaignAdmin';
-import { CampaignDetails } from './CampaignsAdmin/edit/CampaignDetails';
+import { CampaignDetails } from './CampaignsAdmin/CampaignDetails';
 import 'antd/dist/antd.css';
 import './index.css';
 import { MapDemo } from './Maps/MapDemo';
@@ -37,7 +37,7 @@ function App() {
       </Content>
       <div style={{ padding: '0px 0px 20px 0px' }} className="site-layout-content">
         <Layout style={{ height: 'auto' }} className="layout">
-          <div style={{ margin: '0 5%' }}>
+          <div style={{ margin: '0 2%' }}>
             <Switch>
               <Route path="/LocationsAdmin" exact component={LocationsAdmin} />
               <Route path="/CampaignsAdmin" exact component={CampaignAdmin} />
