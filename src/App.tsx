@@ -41,7 +41,7 @@ function App() {
             <Switch>
               <Route path="/LocationsAdmin" exact component={LocationsAdmin} />
               <Route path="/CampaignsAdmin" exact component={CampaignAdmin} />
-              <Route path="/CampaignsAdmin/edit/:id" exact component={CampaignDetails} />
+              <Route path="/CampaignsAdmin/edit/:id"  component={CampaignDetails} />
               <Route path="/CampaignsAdmin/report/:id" exact component={Report} />
               <Route path="/MapTest" component={MapDemo} />
             </Switch>

@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom';
 import { LocationCard } from './LocationCard';
 import './report.css';
 import { CampaignLocationInfo } from '../../models/CampaignLocationInfo';
+import { PageHeader, Button } from 'antd';
+
 
 export const Report = () => {
   type CampaignParams = {
@@ -19,10 +21,24 @@ export const Report = () => {
   }, [campaign]);
 
   return (
-    <div className="cards-container">
-      {
-        locationList.map(location => <LocationCard key={location.id} {...location} />)
-      }
-    </div>
+    <PageHeader
+      ghost={false}
+      onBack={() => window.history.back()}
+      title={campaign?.name}
+      subTitle="due date label here"
+      extra={[
+        <Button key="3">Operation</Button>,
+        <Button key="2">Operation</Button>,
+        <Button key="1" type="primary">
+          Primary
+        </Button>,
+      ]}
+    >
+      <div className="cards-container">
+        {locationList.map((location) => (
+          <LocationCard key={location.id} {...location} />
+        ))}
+      </div>
+    </PageHeader>
   );
 };
