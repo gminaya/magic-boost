@@ -7,6 +7,8 @@ import { settings } from '../settings';
 import { createClient } from '@supabase/supabase-js';
 import { v4 as uuidv4 } from 'uuid';
 
+
+
 interface CampaignDetails {
   locationList: JSON;
 }
@@ -85,7 +87,7 @@ export function CampaignDetails() {
 
     return data;
   };
-  
+
   /**
    * Handle for OnChange on ADD button input
    */

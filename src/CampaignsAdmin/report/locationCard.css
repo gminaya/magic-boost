@@ -1,0 +1,33 @@
+.location-card {
+  flex: 0 1 auto;
+  background-color: #eff2f5;
+  margin: 10px;
+  border: 2px solid #173057;
+  }
+.location-card:hover{
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.location-card .card-image{
+  box-shadow: 0px 6px 5px rgb(0 0 0 / 10%)
+}
+.location-card .stats {
+  height: 30px;
+  background-color: #eff2f5;
+  padding: 5px;
+}
+.location-card h3 {
+  color: #173057;
+  font-size: 1.3em;
+  text-transform: uppercase;
+  margin-bottom: 0;
+}
+
+.location-card .ant-ribbon-text {
+  color: #eff2f5;
+}
+
+.location-card .card-info {
+  background-color: #eff2f5;
+  padding: 15px;
+}

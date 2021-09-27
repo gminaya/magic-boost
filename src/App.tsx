@@ -9,6 +9,8 @@ import { CampaignDetails } from './CampaignsAdmin/CampaignDetails';
 import 'antd/dist/antd.css';
 import './index.css';
 import { MapDemo } from './Maps/MapDemo';
+import { Report } from './CampaignsAdmin/report/Report';
+
 const { Header, Content, Footer } = Layout;
 function App() {
   return (
@@ -35,11 +37,12 @@ function App() {
       </Content>
       <div style={{ padding: '0px 0px 20px 0px' }} className="site-layout-content">
         <Layout style={{ height: 'auto' }} className="layout">
-          <div style={{ margin: '0 5%' }}>
+          <div style={{ margin: '0 2%' }}>
             <Switch>
               <Route path="/LocationsAdmin" exact component={LocationsAdmin} />
               <Route path="/CampaignsAdmin" exact component={CampaignAdmin} />
-              <Route path="/CampaignsAdmin/:id" component={CampaignDetails} />
+              <Route path="/CampaignsAdmin/edit/:id"  component={CampaignDetails} />
+              <Route path="/CampaignsAdmin/report/:id" exact component={Report} />
               <Route path="/MapTest" component={MapDemo} />
             </Switch>
           </div>

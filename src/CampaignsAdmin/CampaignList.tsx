@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
-import { Table, Button, Popconfirm } from 'antd';
-import { DeleteOutlined, EyeOutlined } from '@ant-design/icons';
+import { Table, Button, Popconfirm, Space } from 'antd';
+import { DeleteOutlined, EyeOutlined,EditOutlined } from '@ant-design/icons';
 import { getCampaigns, deleteCampaign } from '../db/Campaigns';
 import { definitions } from '../db/supabase';
 import moment from 'moment';
@@ -38,35 +38,38 @@ export const CampaignList = () => {
       },
     },
     {
-      title: 'Delete',
-      dataIndex: 'delete',
-      key: 'delete',
+      title: 'Actions',
+      dataIndex: 'actions',
+      key: 'actions',
       render: (_: unknown, record: definitions['Campaigns']) => {
         return (
-          <Popconfirm
-            title="Are you sure to delete this campaign 🧐?"
-            onConfirm={async () => {
-              await deleteCampaign(record.id);              
-              triggerGetCampaigns();
-            }}
-            okText="Yes"
-            cancelText="No"
-          >
-            {' '}
-            <Button type="primary" icon={<DeleteOutlined />} size={'small'}>Remove</Button>
-          </Popconfirm>
-        );
-      },
-    },
-    {
-      title: 'Details',
-      dataIndex: 'details',
-      key: 'details',
-      render: (_: unknown, record: definitions['Campaigns']) => {
-        return (
-          <Link target={'_blank'} key={record.id} to={`/CampaignsAdmin/${record.id}`}>
-            <Button type="primary" icon={<EyeOutlined />} size={'small'}></Button>
-          </Link>
+          <Button.Group>
+            <Space>
+              <Link target='_parent'   key={record.id} to={`/CampaignsAdmin/edit/${record.id}`}>
+                <Button type="primary" icon={<EditOutlined />} size={'small'}>
+                  Edit
+                </Button>
+              </Link>
+              <Link target={'_parent'} key={record.id} to={`/CampaignsAdmin/report/${record.id}`}>
+                <Button type="primary" icon={<EyeOutlined />} size={'small'}>
+                  View
+                </Button>
+              </Link>
+              <Popconfirm
+                title="Are you sure to delete this campaign 🧐?"
+                onConfirm={async () => {
+                  await deleteCampaign(record.id);
+                  triggerGetCampaigns();
+                }}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button type="primary" icon={<DeleteOutlined />} size={'small'}>
+                  Remove
+                </Button>
+              </Popconfirm>
+            </Space>
+          </Button.Group>
         );
       },
     },
