@@ -1,11 +1,12 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useCampaignById } from '../db/hooks/getCampaignDetailsByID';
 import { useParams } from 'react-router-dom';
 import { CampaignLocationInfo } from '../models/CampaignLocationInfo';
-import { Table, Divider, Tag, Input, Image, message } from 'antd';
-import { settings } from '../settings';
-import { createClient } from '@supabase/supabase-js';
+import { Table, Divider, Input, Image, message, Popconfirm, Button } from 'antd';
+import {DueDateLabel} from './DueDateLabel';
+import { DeleteOutlined } from '@ant-design/icons';
 import { v4 as uuidv4 } from 'uuid';
+import { supabase as supabaseClientKey } from '../db/helper';
 
 
 
@@ -26,14 +27,13 @@ export function CampaignDetails() {
    */
   const uploadImageToSupabase = async (file: File) => {
     const filename = `${uuidv4()}.jpg`;
-    const { uri, apiKey } = settings.supabase;
-    const supabase = createClient(uri, apiKey);
-
-    const { data, error } = await supabase.storage.from('location-pictures').upload(`public/${filename}`, file, {
-      cacheControl: '3600',
-      upsert: false,
-      contentType: 'image/jpg',
-    });
+    const { data, error } = await supabaseClientKey.storage
+      .from('location-pictures')
+      .upload(`public/${filename}`, file, {
+        cacheControl: '3600',
+        upsert: false,
+        contentType: 'image/jpg',
+      });
 
     if (error) {
       alert(error?.message);
@@ -46,9 +46,7 @@ export function CampaignDetails() {
    * Retrieves public uploaded image URL from supabase
    */
   const getUploadedImageURL = async (imagePath: string) => {
-    const { uri, apiKey } = settings.supabase;
-    const supabase = createClient(uri, apiKey);
-    const { publicURL, error } = await supabase.storage.from('location-pictures').getPublicUrl(imagePath);
+    const { publicURL, error } = supabaseClientKey.storage.from('location-pictures').getPublicUrl(imagePath);
 
     if (error) {
       alert(error?.message);
@@ -73,10 +71,7 @@ export function CampaignDetails() {
    *updates campaing locationConfig on supabase
    */
   const updateLocationConfig = async (campaignID: number, locationCONF: CampaignLocationInfo[] | undefined) => {
-    const { uri, apiKey } = settings.supabase;
-    const supabase = createClient(uri, apiKey);
-
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClientKey
       .from('Campaigns')
       .update({ location_config: JSON.stringify(locationCONF) })
       .eq('id', campaignID);
@@ -84,7 +79,6 @@ export function CampaignDetails() {
     if (error) {
       alert(error);
     }
-
     return data;
   };
 
@@ -107,6 +101,26 @@ export function CampaignDetails() {
   };
 
   /**
+   * Removes photo file on supabase and updates locationInfo JSON
+   */
+  const removePhotoOnSupabase = async (locationID: number, imageURL: string) => {
+    const imagePath = imageURL.substr(imageURL.lastIndexOf('/') + 1);
+    const { data, error } = await supabaseClientKey.storage.from('location-pictures').remove([`public/${imagePath}`]);
+
+    if (error) {
+      throw error;
+    }
+    if (data) {
+      updatePhotoUrlKey(locationID, '');
+
+      const updateResponse = await updateLocationConfig(Number(id), campaign?.locationInfo);
+      if (updateResponse) {
+        removePhotoMessage();
+      }
+    }
+  };
+
+  /**
    * locations list table columns config
    */
   const columns = [
@@ -121,7 +135,7 @@ export function CampaignDetails() {
       key: 'adress',
     },
     {
-      title: 'ADD Photo',
+      title: 'ADD / CHANGE Photo',
       dataIndex: 'photoURL',
       key: 'photoURL',
       render: (_: unknown, record: CampaignLocationInfo) => {
@@ -142,6 +156,27 @@ export function CampaignDetails() {
       key: 'viewPhoto',
       render: (_: unknown, record: CampaignLocationInfo) => {
         return <Image width={50} src={record.photoUrl} />;
+      },
+    },
+    {
+      title: 'Delete',
+      dataIndex: 'delete',
+      key: 'delete',
+      render: (_: unknown, record: CampaignLocationInfo) => {
+        return (
+          <Popconfirm
+            title="Are you sure to delete this photo 🧐?"
+            onConfirm={async () => {
+              removePhotoOnSupabase(record.id, record.photoUrl);
+            }}
+            okText="DELETE"
+            cancelText="CANCEL"
+          >
+            <Button type="primary" icon={<DeleteOutlined />} size={'small'}>
+              Remove
+            </Button>
+          </Popconfirm>
+        );
       },
     },
   ];
@@ -167,23 +202,9 @@ export function CampaignDetails() {
     </>
   );
 }
-
-//TODO: A: Move to its own file? G:
-interface DateLabelProps {
-  date?: string;
-}
-
-const DueDateLabel = ({ date }: DateLabelProps) => {
-  const today = useMemo(() => new Date(), []);
-
-  if (!date) {
-    return <Tag color="geekblue">UNKNOW</Tag>;
-  }
-
-  const formatedDueDate = new Date(date);
-  return today < formatedDueDate ? <Tag color="green">ON TIME</Tag> : <Tag color="volcano">OVERDUE</Tag>;
-};
-
 const uploadedPhotoMessage = () => {
   message.success('Photo uploaded ');
+};
+const removePhotoMessage = () => {
+  message.success('Photo removed ');
 };
