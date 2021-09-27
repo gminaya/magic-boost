@@ -50,7 +50,7 @@ export const CampaignList = () => {
                   Edit
                 </Button>
               </Link>
-              <Link target={'_parent'} key={record.id + 1} to={`/CampaignsAdmin/report/${record.id}`}>
+              <Link target={'_parent'} key={record.id} to={`/CampaignsAdmin/report/${record.id}`}>
                 <Button type="primary" icon={<EyeOutlined />} size={'small'}>
                   View
                 </Button>
