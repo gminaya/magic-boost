@@ -1,12 +1,12 @@
 import React from 'react';
-import { useCampaignById } from '../db/hooks/getCampaignDetailsByID';
+import { useCampaignById } from '../../db/hooks/getCampaignDetailsByID';
 import { useParams } from 'react-router-dom';
-import { CampaignLocationInfo } from '../models/CampaignLocationInfo';
+import { CampaignLocationInfo } from '../../models/CampaignLocationInfo';
 import { Table, Divider, Input, Image, message, Popconfirm, Button } from 'antd';
-import {DueDateLabel} from './DueDateLabel';
+import {DueDateLabel} from '../DueDateLabel';
 import { DeleteOutlined } from '@ant-design/icons';
 import { v4 as uuidv4 } from 'uuid';
-import { supabase as supabaseClientKey } from '../db/helper';
+import { supabase as supabaseClientKey } from '../../db/helper';
 
 
 

@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { LocationCard } from './LocationCard';
 import './report.css';
 import { CampaignLocationInfo } from '../../models/CampaignLocationInfo';
-import { PageHeader, Button, Slider } from 'antd';
+import { PageHeader, Button, Radio } from 'antd';
 
 export const Report = () => {
   type CampaignParams = {
@@ -36,16 +36,12 @@ export const Report = () => {
       ]}
     >
       <div className="location-card-size-slider">
-        <span>Image size</span>
-        <Slider
-          marks={{300:'-',800:'+'}}
-          min={300}
-          max={800}
-          onChange={(e) => {
-            setLocationCardSize(e);
-          }}
-          defaultValue={400}
-        />
+        <span>Image size:</span>
+        <Radio.Group defaultValue="small">
+          <Radio.Button onClick={() => setLocationCardSize(300)} value='small'>small</Radio.Button>
+          <Radio.Button onClick={() => setLocationCardSize(500)} value='medium'>Medium</Radio.Button>
+          <Radio.Button onClick={() => setLocationCardSize(800)} value='large'>LARGE</Radio.Button>
+        </Radio.Group>
       </div>
       <div className="cards-container">
         {locationList.map((location) => (
