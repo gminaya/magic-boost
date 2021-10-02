@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useCampaignById } from '../../db/hooks/getCampaignDetailsByID';
 import { useParams } from 'react-router-dom';
 import { LocationCard } from './LocationCard';
-import './report.css';
 import { CampaignLocationInfo } from '../../models/CampaignLocationInfo';
+import { DueDateLabel } from '../DueDateLabel';
 import { PageHeader, Button, Radio } from 'antd';
+import './report.css';
 
 export const Report = () => {
   type CampaignParams = {
@@ -26,7 +27,7 @@ export const Report = () => {
       ghost={false}
       onBack={() => window.history.back()}
       title={campaign?.name}
-      subTitle="due date label here"
+      subTitle={<DueDateLabel date={campaign?.dueDate} />}
       extra={[
         <Button key="3">ARCHIVE</Button>,
         <Button key="2">SHARE</Button>,
