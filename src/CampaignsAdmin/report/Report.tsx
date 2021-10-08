@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useCampaignById } from '../../db/hooks/getCampaignDetailsByID';
 import { useParams } from 'react-router-dom';
 import { LocationCard } from './LocationCard';
-import './report.css';
 import { CampaignLocationInfo } from '../../models/CampaignLocationInfo';
-import { PageHeader, Button, Slider } from 'antd';
+import { DueDateLabel } from '../DueDateLabel';
+import { PageHeader, Button, Radio } from 'antd';
+import './report.css';
 
 export const Report = () => {
   type CampaignParams = {
@@ -26,7 +27,7 @@ export const Report = () => {
       ghost={false}
       onBack={() => window.history.back()}
       title={campaign?.name}
-      subTitle="due date label here"
+      subTitle={<DueDateLabel date={campaign?.dueDate} />}
       extra={[
         <Button key="3">ARCHIVE</Button>,
         <Button key="2">SHARE</Button>,
@@ -36,16 +37,12 @@ export const Report = () => {
       ]}
     >
       <div className="location-card-size-slider">
-        <span>Image size</span>
-        <Slider
-          marks={{300:'-',800:'+'}}
-          min={300}
-          max={800}
-          onChange={(e) => {
-            setLocationCardSize(e);
-          }}
-          defaultValue={400}
-        />
+        <span>Image size:</span>
+        <Radio.Group defaultValue="small">
+          <Radio.Button onClick={() => setLocationCardSize(300)} value='small'>small</Radio.Button>
+          <Radio.Button onClick={() => setLocationCardSize(500)} value='medium'>Medium</Radio.Button>
+          <Radio.Button onClick={() => setLocationCardSize(800)} value='large'>LARGE</Radio.Button>
+        </Radio.Group>
       </div>
       <div className="cards-container">
         {locationList.map((location) => (

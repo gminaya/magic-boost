@@ -5,7 +5,7 @@ import { Breadcrumb, Layout, Menu } from 'antd';
 import { HomeOutlined } from '@ant-design/icons';
 import LocationsAdmin from './LocationsAdmin/LocationsAdmin';
 import CampaignAdmin from './CampaignsAdmin/CampaignAdmin';
-import { CampaignDetails } from './CampaignsAdmin/CampaignDetails';
+import { CampaignDetails } from './CampaignsAdmin/edit/CampaignDetails';
 import 'antd/dist/antd.css';
 import './index.css';
 import { MapDemo } from './Maps/MapDemo';

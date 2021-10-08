@@ -8,14 +8,12 @@
 }
 
 .location-card-size-slider {
-  width: 320px;
-  padding: 5px;
-
-    text-align: center;
-  float: right;
+  position: absolute;
+  top: 20px;
+  margin: auto 30%;
 }
 .location-card-size-slider span {
-  font-weight: 700;
+  padding-right: 10px;
   
 }
 .location-card-size-slider .ant-slider-track{
