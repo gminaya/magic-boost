@@ -3,12 +3,10 @@ import { useCampaignById } from '../../db/hooks/getCampaignDetailsByID';
 import { useParams } from 'react-router-dom';
 import { CampaignLocationInfo } from '../../models/CampaignLocationInfo';
 import { Table, Divider, Input, Image, message, Popconfirm, Button } from 'antd';
-import {DueDateLabel} from '../DueDateLabel';
+import { DueDateLabel } from '../DueDateLabel';
 import { DeleteOutlined } from '@ant-design/icons';
 import { v4 as uuidv4 } from 'uuid';
 import { supabase as supabaseClient } from '../../db/helper';
-
-
 
 interface CampaignDetails {
   locationList: JSON;
@@ -27,13 +25,11 @@ export function CampaignDetails() {
    */
   const uploadImageToSupabase = async (file: File) => {
     const filename = `${uuidv4()}.jpg`;
-    const { data, error } = await supabaseClient.storage
-      .from('location-pictures')
-      .upload(`public/${filename}`, file, {
-        cacheControl: '3600',
-        upsert: false,
-        contentType: 'image/jpg',
-      });
+    const { data, error } = await supabaseClient.storage.from('location-pictures').upload(`public/${filename}`, file, {
+      cacheControl: '3600',
+      upsert: false,
+      contentType: 'image/jpg',
+    });
 
     if (error) {
       alert(error?.message);
@@ -199,9 +195,10 @@ export function CampaignDetails() {
         columns={columns}
         rowKey="id"
       />
+      toto
     </>
   );
 }
-const photoStatusMessage = (msj:string) => {
+const photoStatusMessage = (msj: string) => {
   message.success(msj);
 };
