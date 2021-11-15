@@ -1,18 +1,16 @@
-import React, { CSSProperties, FC } from 'react';
+import React from 'react';
 import { useCampaignById } from '../../db/hooks/getCampaignDetailsByID';
 import { useParams } from 'react-router-dom';
 import { CampaignLocationInfo } from '../../models/CampaignLocationInfo';
-import { Table, Divider, Input, Image, message, Popconfirm, Button } from 'antd';
+import { Table, Divider, Image, message, Popconfirm, Button } from 'antd';
 import { DueDateLabel } from '../DueDateLabel';
 import { DeleteOutlined } from '@ant-design/icons';
 import { v4 as uuidv4 } from 'uuid';
 import { supabase as supabaseClient } from '../../db/helper';
-
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { NativeTypes } from 'react-dnd-html5-backend';
-import { useDrop, DropTargetMonitor } from 'react-dnd';
-
 import { DndProvider } from 'react-dnd';
+import { DropPhotoZone } from '../DropPhotoZone';
+import './campaignAdmin.css';
 
 interface CampaignDetails {
   locationList: JSON;
@@ -141,18 +139,26 @@ export function CampaignDetails() {
       title: 'ADD / CHANGE Photo',
       dataIndex: 'photoURL',
       key: 'photoURL',
+      className:'photo-input-td',
       render: (_: unknown, record: CampaignLocationInfo) => {
         return (
+          
           <>
             <DndProvider backend={HTML5Backend}>
-              <DropFileZone2 onDrop={(file) => { addBtnOnChange(file.files[0], record.id); }}>
-                <Input
-                  accept="image/jpg"
-                  type="file"
+              <div className='input-continer'>
+                <input
+                  className='photo-input'
+                  id={'photoInput' + record.id}
+                  accept='image/jpg'
+                  type='file'
                   onChange={(e) => {
                     e.target.files && addBtnOnChange(e.target.files[0], record.id);
-                  }} />
-              </DropFileZone2>
+                  }
+                  } />
+                <label htmlFor={'photoInput' + record.id}>
+                  <DropPhotoZone onDrop={(e) => { addBtnOnChange(e.files[0], record.id); }} />
+                </label>
+              </div>
             </DndProvider>
           </>
         );
@@ -163,7 +169,7 @@ export function CampaignDetails() {
       dataIndex: 'viewPhoto',
       key: 'viewPhoto',
       render: (_: unknown, record: CampaignLocationInfo) => {
-        return <Image width={50} src={record.photoUrl} />;
+        return <Image width={60} src={record.photoUrl} />;
       },
     },
     {
@@ -209,48 +215,8 @@ export function CampaignDetails() {
       />
 
     </>
-
   );
 }
 const photoStatusMessage = (msj: string) => {
   message.success(msj);
 };
-const style: CSSProperties = {
-  border: '1px solid gray',
-
-  padding: '2rem',
-  textAlign: 'center',
-};
-
-export interface TargetBoxProps {
-  onDrop: (item: { files: File[] }) => void
-}
-const DropFileZone2: FC<TargetBoxProps> = (props) => {
-  // eslint-disable-next-line react/prop-types
-  const { onDrop } = props;
-  const [{ canDrop, isOver }, drop] = useDrop(
-    () => ({
-      accept: [NativeTypes.FILE],
-      drop(item: { files: File[] }) {
-        if (onDrop) {
-          onDrop(item);
-        }
-      },
-      collect: (monitor: DropTargetMonitor) => ({
-        isOver: monitor.isOver(),
-        canDrop: monitor.canDrop(),
-      }),
-    }),
-    [props],
-  );
-
-  const isActive = canDrop && isOver;
-  return (
-    <div ref={drop} style={style}>
-      {isActive ? 'Release to drop' : 'Drag file here'}
-      {/* eslint-disable-next-line react/prop-types */}
-      {props.children}
-    </div>
-  );
-};
-
