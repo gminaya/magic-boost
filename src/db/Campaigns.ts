@@ -28,7 +28,7 @@ export const insertNewCampaign = async (name: string, status = '', location_conf
 
   const { error } = await supabase
     .from<definitions['Campaigns']>('Campaigns')
-    .insert([{ name, status, location_config, dueDate: dueDate.toString() }]);
+    .insert([{ name, status, location_config, dueDate: Intl.DateTimeFormat('en-US').format(dueDate) }]);
 
   if (error) {
     throw new Error('Could not insert campaign');
