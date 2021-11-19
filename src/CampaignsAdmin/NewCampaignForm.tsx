@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { Form, Button, Input, message, DatePicker, Row, Col, Table, List } from 'antd';
 import { useLocations } from '../db/hooks/getLocations';
 import { definitions } from '../db/supabase';
@@ -12,7 +12,7 @@ import { CampaignModel } from '../models/CampaignModel';
 export const NewCampaignForm = () => {
   const [name, setName] = useState('');
   const [dueDate, setDueDate] = useState(new Date());
-  
+
   const { locations } = useLocations();
   const [form] = Form.useForm();
 
@@ -31,7 +31,7 @@ export const NewCampaignForm = () => {
   //updates addedLocations state
   const addLocationForCampaign = (location: definitions['Locations']) => {
     setCampaignLocations([
-      ...campaignLocations, 
+      ...campaignLocations,
       {
         ...location,
         photoUrl: ''
@@ -49,11 +49,62 @@ export const NewCampaignForm = () => {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
+
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }: any) => {
+        return <Input
+          autoFocus={true}
+          placeholder='Search by name'
+          value={selectedKeys}
+          onChange={(e) => {
+            setSelectedKeys(e.target.value ? [e.target.value] : []);
+          }}
+          onPressEnter={() => {
+            confirm();
+          }}
+          onBlur={() => {
+            confirm();
+          }}
+        >
+
+        </Input>;
+      },
+      filterIcon: () => {
+        return <SearchOutlined />;
+      },
+      onFilter: (value: any, record: definitions['Locations']) => {
+        return record.name.toLowerCase().includes(value.toLowerCase());
+      }
     },
     {
       title: 'Address',
       dataIndex: 'address',
       key: 'address',
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }: any) => {
+        return <Input
+          autoFocus={true}
+          placeholder='Search by adress'
+          value={selectedKeys}
+          onChange={(e) => {
+            setSelectedKeys(e.target.value ? [e.target.value] : []);
+          }}
+          onPressEnter={() => {
+            confirm();
+          }}
+          onBlur={() => {
+            confirm();
+          }}
+        >
+
+        </Input>;
+      },
+      filterIcon: () => {
+        return <SearchOutlined />;
+      },
+      onFilter: (value: any, record: any) => {
+
+        return record.address.toLowerCase().includes(value.toLowerCase());
+
+      }
     },
     {
       title: 'Add',
@@ -95,6 +146,7 @@ export const NewCampaignForm = () => {
 
   return (
     <>
+
       <Form
         className="form-row"
         form={form}
@@ -105,7 +157,9 @@ export const NewCampaignForm = () => {
         initialValues={{ requiredMarkValue: 'optional' }}
         requiredMark={true}
       >
-       
+        <header>
+          <h2>CREATE NEW CAMPAGIN</h2>
+        </header>
         <Row>
           <Col span={5}>
             <Form.Item
@@ -144,7 +198,7 @@ export const NewCampaignForm = () => {
           </Col>
         </Row>
         <Row>
-          <Col span={16} className="location-table">
+          <Col span={24} className="location-table">
             <h3>Available locations to add</h3>
             <Table
               size={'small'}
@@ -155,7 +209,9 @@ export const NewCampaignForm = () => {
               columns={columns}
             />
           </Col>
-          <Col span={6} offset={2} className="added-locations">
+        </Row>
+        <Row>
+          <Col span={24} className="added-locations">
             <h3>Added Locations</h3>
             <List
               size="small"

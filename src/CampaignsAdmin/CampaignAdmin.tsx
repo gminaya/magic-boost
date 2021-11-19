@@ -4,6 +4,7 @@ import { CampaignList } from './CampaignList';
 import { NewCampaignForm } from './NewCampaignForm';
 import {  PlusOutlined, CloseOutlined } from '@ant-design/icons';
 
+
 function CampaignAdmin() {
   const [drawerVisibility, setDrawerVisibility] = useState(false);
 
@@ -14,13 +15,13 @@ function CampaignAdmin() {
   return (
     <>
       <Drawer
-        title="Create a new campaign"
-        placement="top"
+        
+        placement="left"
         closable={false}
         onClose={toggleDrawer}
         visible={drawerVisibility}
-        key="top"
-        height="90%"
+        key="left"
+        width='90%'
         closeIcon={<CloseOutlined />}
       >
         <NewCampaignForm />

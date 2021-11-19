@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { NativeTypes } from 'react-dnd-html5-backend';
 import { useDrop, DropTargetMonitor } from 'react-dnd';
 import { InboxOutlined, DownloadOutlined } from '@ant-design/icons';
@@ -7,7 +7,7 @@ import './dropPhotoZone.css';
 interface TargetBoxProps {
   onDrop: (item: { files: File[] }) => void;
 }
-export const DropPhotoZone: FC<TargetBoxProps> = (props:TargetBoxProps ) => {
+export const DropPhotoZone = (props:TargetBoxProps ) => {
   const { onDrop } = props;
   const [{ canDrop, isOver }, drop] = useDrop(
     () => ({
@@ -22,7 +22,7 @@ export const DropPhotoZone: FC<TargetBoxProps> = (props:TargetBoxProps ) => {
         canDrop: monitor.canDrop(),
       }),
     }),
-    [props],
+    [props.onDrop],
   );
 
   const isActive = canDrop && isOver;
