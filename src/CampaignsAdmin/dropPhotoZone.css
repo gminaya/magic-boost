@@ -1,0 +1,21 @@
+.drop-container{
+  font-weight: 700;
+  color:#1990FF;
+  text-align: center;
+}
+
+.drop-container:hover{
+  cursor: pointer;
+}
+
+.drop-container .icon{
+  font-size: 2rem;
+  color:#1990FF
+}
+
+.onDrag{
+  background: aliceblue;
+  outline: 2px dashed;
+  transform: scale(1.03);
+  
+}

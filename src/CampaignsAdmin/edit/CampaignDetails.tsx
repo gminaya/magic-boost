@@ -2,13 +2,15 @@ import React from 'react';
 import { useCampaignById } from '../../db/hooks/getCampaignDetailsByID';
 import { useParams } from 'react-router-dom';
 import { CampaignLocationInfo } from '../../models/CampaignLocationInfo';
-import { Table, Divider, Input, Image, message, Popconfirm, Button } from 'antd';
-import {DueDateLabel} from '../DueDateLabel';
+import { Table, Divider, Image, message, Popconfirm, Button } from 'antd';
+import { DueDateLabel } from '../DueDateLabel';
 import { DeleteOutlined } from '@ant-design/icons';
 import { v4 as uuidv4 } from 'uuid';
 import { supabase as supabaseClient } from '../../db/helper';
-
-
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
+import { DropPhotoZone } from '../DropPhotoZone';
+import './campaignAdmin.css';
 
 interface CampaignDetails {
   locationList: JSON;
@@ -22,18 +24,17 @@ export function CampaignDetails() {
   const { id } = useParams<CampaignParams>();
   const { campaign } = useCampaignById(Number(id));
 
+
   /**
    *uploads selected image to supabase DB
    */
   const uploadImageToSupabase = async (file: File) => {
     const filename = `${uuidv4()}.jpg`;
-    const { data, error } = await supabaseClient.storage
-      .from('location-pictures')
-      .upload(`public/${filename}`, file, {
-        cacheControl: '3600',
-        upsert: false,
-        contentType: 'image/jpg',
-      });
+    const { data, error } = await supabaseClient.storage.from('location-pictures').upload(`public/${filename}`, file, {
+      cacheControl: '3600',
+      upsert: false,
+      contentType: 'image/jpg',
+    });
 
     if (error) {
       alert(error?.message);
@@ -138,15 +139,28 @@ export function CampaignDetails() {
       title: 'ADD / CHANGE Photo',
       dataIndex: 'photoURL',
       key: 'photoURL',
+      className:'photo-input-td',
       render: (_: unknown, record: CampaignLocationInfo) => {
         return (
-          <Input
-            accept="image/jpg"
-            type="file"
-            onChange={(e) => {
-              e.target.files && addBtnOnChange(e.target.files[0], record.id);
-            }}
-          />
+          
+          <>
+            <DndProvider backend={HTML5Backend}>
+              <div className='input-continer'>
+                <input
+                  className='photo-input'
+                  id={'photoInput' + record.id}
+                  accept='image/jpg'
+                  type='file'
+                  onChange={(e) => {
+                    e.target.files && addBtnOnChange(e.target.files[0], record.id);
+                  }
+                  } />
+                <label htmlFor={'photoInput' + record.id}>
+                  <DropPhotoZone onDrop={(e) => { addBtnOnChange(e.files[0], record.id); }} />
+                </label>
+              </div>
+            </DndProvider>
+          </>
         );
       },
     },
@@ -155,7 +169,7 @@ export function CampaignDetails() {
       dataIndex: 'viewPhoto',
       key: 'viewPhoto',
       render: (_: unknown, record: CampaignLocationInfo) => {
-        return <Image width={50} src={record.photoUrl} />;
+        return <Image width={60} src={record.photoUrl} />;
       },
     },
     {
@@ -199,9 +213,10 @@ export function CampaignDetails() {
         columns={columns}
         rowKey="id"
       />
+
     </>
   );
 }
-const photoStatusMessage = (msj:string) => {
+const photoStatusMessage = (msj: string) => {
   message.success(msj);
 };
