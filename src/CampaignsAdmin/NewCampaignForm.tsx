@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
+import { PlusOutlined, SearchOutlined, ClearOutlined } from '@ant-design/icons';
 import { Form, Button, Input, message, DatePicker, Row, Col, Table, List } from 'antd';
 import { useLocations } from '../db/hooks/getLocations';
 import { definitions } from '../db/supabase';
@@ -10,6 +10,7 @@ import './NewCampaignForm.css';
 import { CampaignModel } from '../models/CampaignModel';
 
 export const NewCampaignForm = () => {
+
   const [name, setName] = useState('');
   const [dueDate, setDueDate] = useState(new Date());
 
@@ -50,23 +51,33 @@ export const NewCampaignForm = () => {
       dataIndex: 'name',
       key: 'name',
 
-      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }: any) => {
-        return <Input
-          autoFocus={true}
-          placeholder='Search by name'
-          value={selectedKeys}
-          onChange={(e) => {
-            setSelectedKeys(e.target.value ? [e.target.value] : []);
-          }}
-          onPressEnter={() => {
-            confirm();
-          }}
-          onBlur={() => {
-            confirm();
-          }}
-        >
-
-        </Input>;
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => {
+        return <>
+          <Input
+            autoFocus
+            placeholder='Search by name'
+            value={selectedKeys}
+            onChange={(e) => {
+              setSelectedKeys(e.target.value ? [e.target.value] : confirm({ closeDropdown: false }));
+            }}
+            onPressEnter={() => {
+              confirm();
+            }}
+            onBlur={() => {
+              confirm();
+            }}
+          ></Input>
+          <Button
+            type="primary"
+            icon={<SearchOutlined />}
+            size='large'
+            onClick={() => { confirm(); }} />
+          <Button
+            type="primary"
+            icon={<ClearOutlined />}
+            size='large'
+            onClick={() => { clearFilters(); }} />
+        </>;
       },
       filterIcon: () => {
         return <SearchOutlined />;
@@ -79,31 +90,38 @@ export const NewCampaignForm = () => {
       title: 'Address',
       dataIndex: 'address',
       key: 'address',
-      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }: any) => {
-        return <Input
-          autoFocus={true}
-          placeholder='Search by adress'
-          value={selectedKeys}
-          onChange={(e) => {
-            setSelectedKeys(e.target.value ? [e.target.value] : []);
-          }}
-          onPressEnter={() => {
-            confirm();
-          }}
-          onBlur={() => {
-            confirm();
-          }}
-        >
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => {
+        return <>
+          <Input
+            autoFocus
+            placeholder='Search by adress'
+            value={selectedKeys}
+            onChange={(e) => {
+              setSelectedKeys(e.target.value ? [e.target.value] : []);
+            }}
+            onPressEnter={() => {
+              confirm();
+            }}
+            onBlur={() => {
+              confirm();
+            }} />
 
-        </Input>;
+          <Button
+            type="primary"
+            icon={<SearchOutlined />}
+            size='large'
+            onClick={() => { confirm(); }} />
+          <Button
+            type="primary"
+            icon={<ClearOutlined />} size='large'
+            onClick={() => { clearFilters(); }} />
+        </>;
       },
       filterIcon: () => {
         return <SearchOutlined />;
       },
       onFilter: (value: any, record: any) => {
-
         return record.address.toLowerCase().includes(value.toLowerCase());
-
       }
     },
     {
@@ -112,7 +130,6 @@ export const NewCampaignForm = () => {
       key: 'add',
       render: (_: unknown, record: definitions['Locations']) => {
         return (
-          //por que se ejecuta en todas las filas en la primera vez que renderiza?
           <Button
             type="primary"
             onClick={() => {
@@ -146,7 +163,6 @@ export const NewCampaignForm = () => {
 
   return (
     <>
-
       <Form
         className="form-row"
         form={form}
