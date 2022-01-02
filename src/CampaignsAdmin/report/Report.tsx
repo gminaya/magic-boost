@@ -33,7 +33,7 @@ export const Report = () => {
       extra={[
         <Button key="3">ARCHIVE</Button>,
         <Button key="2">SHARE</Button>,
-        <>{ campaign && <PrintToPdf campaign={ campaign }  /> }</>
+        <span key="4">{ campaign && <PrintToPdf campaign={ campaign }  /> }</span>
         
 
       ]}
