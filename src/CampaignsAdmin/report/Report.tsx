@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useCampaignById } from '../../db/hooks/getCampaignDetailsByID';
 import { useParams } from 'react-router-dom';
 import { LocationCard } from './LocationCard';
@@ -23,6 +23,18 @@ export const Report = () => {
     }
   }, [campaign]);
 
+  const actions = useMemo(() => {
+    const arr = [
+      <Button key="ARCHIVE">ARCHIVE</Button>,
+      <Button key="SHARE">SHARE</Button>,
+    ];
+    if (campaign) {
+      arr.push(<PrintToPdf key="PRINT" campaign={ campaign } />);
+    }
+
+    return arr;
+  }, [campaign]);
+
   return (
     <PageHeader
       className="page-header"
@@ -30,13 +42,7 @@ export const Report = () => {
       onBack={() => window.history.back()}
       title={campaign?.name}
       subTitle={<DueDateLabel date={campaign?.dueDate} />}
-      extra={[
-        <Button key="3">ARCHIVE</Button>,
-        <Button key="2">SHARE</Button>,
-        <span key="4">{ campaign && <PrintToPdf campaign={ campaign }  /> }</span>
-        
-
-      ]}
+      extra={actions}
     >
       
       <div className="location-card-size-slider">
