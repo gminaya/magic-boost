@@ -7,6 +7,8 @@ import { DueDateLabel } from '../DueDateLabel';
 import { PageHeader, Button, Radio } from 'antd';
 import './report.css';
 
+import { PrintToPdf } from './pdf/PrintToPdf';
+
 export const Report = () => {
   type CampaignParams = {
     id: string;
@@ -36,6 +38,9 @@ export const Report = () => {
         </Button>,
       ]}
     >
+      {
+        campaign && <PrintToPdf campaign={ campaign } key={'4'} />
+      }
       <div className="location-card-size-slider">
         <span>Image size:</span>
         <Radio.Group defaultValue="small">
