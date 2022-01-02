@@ -1,10 +1,13 @@
 import React from 'react';
-import { CampaignModel } from '../../../models/CampaignModel';
+import { PrintToPdfProps } from './Models';
 import './reportToPrint.css';
 
-export const ReportToPrint = React.forwardRef((props: any, ref: any) => {
+//TODO: Gabi: Change name to ReportTemplate or TemplateToPrint
 
-  const campaign: CampaignModel = props.props.campaign;
+export const ReportToPrint = React.forwardRef<HTMLInputElement, PrintToPdfProps>((
+  {campaign}: PrintToPdfProps, 
+  ref
+) => {
   const numberOfLocations = campaign.locationInfo.length;
 
   return (
