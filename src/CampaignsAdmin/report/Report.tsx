@@ -33,12 +33,12 @@ export const Report = () => {
       extra={[
         <Button key="3">ARCHIVE</Button>,
         <Button key="2">SHARE</Button>,
-
-        <PrintToPdf campaign={campaign} key={'4'} />
+        <>{ campaign && <PrintToPdf campaign={ campaign }  /> }</>
+        
 
       ]}
     >
-
+      
       <div className="location-card-size-slider">
         <span>Image size:</span>
         <Radio.Group defaultValue="small">
