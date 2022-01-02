@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { ReportToPrint } from './ReportToPrint';
-
+import { Button } from 'antd';
 export const PrintToPdf = (campaign:any ) => {
   
   const componentRef = useRef(null);
@@ -11,10 +11,10 @@ export const PrintToPdf = (campaign:any ) => {
 
   return (
     <>
-      <div >
-        <ReportToPrint props={campaign} ref={componentRef} />
+      <div style={{ display: 'none'}}>
+        <ReportToPrint  props={campaign} ref={componentRef} />
       </div>
-      <button onClick={handlePrint}>Print this out!</button>
+      <Button type="primary" onClick={handlePrint}>GENERATE PDF</Button>
     </>
   );
 };
