@@ -24,6 +24,5 @@ export const useCampaignById = (id: number) => {
   useEffect(()=>{
     refreshCampaign();
   },[]);
-
   return{campaign, refreshCampaign};
 };

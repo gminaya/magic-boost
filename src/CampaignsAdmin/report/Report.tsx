@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useCampaignById } from '../../db/hooks/getCampaignDetailsByID';
 import { useParams } from 'react-router-dom';
 import { LocationCard } from './LocationCard';
 import { CampaignLocationInfo } from '../../models/CampaignLocationInfo';
+
+
 import { DueDateLabel } from '../DueDateLabel';
 import { PageHeader, Button, Radio } from 'antd';
 import './report.css';
+
+import { PrintToPdf } from './pdf/PrintToPdf';
 
 export const Report = () => {
   type CampaignParams = {
@@ -21,6 +25,18 @@ export const Report = () => {
     }
   }, [campaign]);
 
+  const actions = useMemo(() => {
+    const arr = [
+      <Button key="ARCHIVE">ARCHIVE</Button>,
+      <Button key="SHARE">SHARE</Button>,
+    ];
+    if (campaign) {
+      arr.push(<PrintToPdf key="PRINT" campaign={ campaign } />);
+    }
+
+    return arr;
+  }, [campaign]);
+
   return (
     <PageHeader
       className="page-header"
@@ -28,14 +44,9 @@ export const Report = () => {
       onBack={() => window.history.back()}
       title={campaign?.name}
       subTitle={<DueDateLabel date={campaign?.dueDate} />}
-      extra={[
-        <Button key="3">ARCHIVE</Button>,
-        <Button key="2">SHARE</Button>,
-        <Button key="1" type="primary">
-          GENERATE PDF
-        </Button>,
-      ]}
+      extra={actions}
     >
+      
       <div className="location-card-size-slider">
         <span>Image size:</span>
         <Radio.Group defaultValue="small">
