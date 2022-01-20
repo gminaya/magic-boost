@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PlusOutlined, SearchOutlined, ClearOutlined } from '@ant-design/icons';
-import { Form, Button, Input, message, DatePicker, Row, Col, Table, List } from 'antd';
+import { Form, Button, Input, message, DatePicker, Row, Col, Table, List, Divider } from 'antd';
 import { useLocations } from '../db/hooks/getLocations';
 import { definitions } from '../db/supabase';
 import { insertNewCampaign } from '../db/Campaigns';
@@ -173,11 +173,9 @@ export const NewCampaignForm = () => {
         initialValues={{ requiredMarkValue: 'optional' }}
         requiredMark={true}
       >
-        <header>
-          <h2>CREATE NEW CAMPAGIN</h2>
-        </header>
+
         <Row>
-          <Col span={5}>
+          <Col className='campaign-input' span={12}>
             <Form.Item
               className="text-input-item"
               style={{ flexDirection: 'column', alignItems: 'flex-start' }}
@@ -188,13 +186,13 @@ export const NewCampaignForm = () => {
               rules={[{ required: true, message: 'Name can not be empty 🤨' }]}
             >
               <Input
-                size={'large'}
+                size='large'
                 placeholder="Type campaign name"
                 onChange={(e) => setName(e.target.value)}
               />
             </Form.Item>
           </Col>
-          <Col span={5} offset={1}>
+          <Col span={10} offset={1}>
             <Form.Item
               style={{ flexDirection: 'column', alignItems: 'flex-start' }}
               requiredMark={true}
@@ -215,7 +213,7 @@ export const NewCampaignForm = () => {
         </Row>
         <Row>
           <Col span={24} className="location-table">
-            <h3>Available locations to add</h3>
+            <h3>ADD LOCATIONS TO THIS CAMPAIGN</h3>
             <Table
               size={'small'}
               style={{ margin: 5 }}
@@ -243,6 +241,7 @@ export const NewCampaignForm = () => {
             />
           </Col>
         </Row>
+        <Divider></Divider>
         <Row>
           <Col offset={20} span={4}>
             <Form.Item>

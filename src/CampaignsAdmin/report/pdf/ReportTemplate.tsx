@@ -1,11 +1,10 @@
 import React from 'react';
 import { PrintToPdfProps } from './Models';
 import './reportToPrint.css';
+import { StaticGoogleMap, Marker } from 'react-static-google-map';
 
-//TODO: Gabi: Change name to ReportTemplate or TemplateToPrint
-
-export const ReportToPrint = React.forwardRef<HTMLInputElement, PrintToPdfProps>((
-  {campaign}: PrintToPdfProps, 
+export const ReportTemplate = React.forwardRef<HTMLInputElement, PrintToPdfProps>((
+  { campaign }: PrintToPdfProps,
   ref
 ) => {
   const numberOfLocations = campaign.locationInfo.length;
@@ -32,14 +31,22 @@ export const ReportToPrint = React.forwardRef<HTMLInputElement, PrintToPdfProps>
           <div key={index} className='page'>
             <div className='picture-cap'>
               <div className='location-picture '>
-                <img src={location.photoUrl} />
+                <figure>
+                  <img src={location.photoUrl} />
+
+                </figure>
               </div>
-              <div className='location-cap'>
-                <p> {location.address} </p>
+              <div className='location-map'>
+
+                <StaticGoogleMap size="410x500" className="img-fluid" apiKey="AIzaSyDc4hp1XK5k70sAiA92BIHuZtWzzHXRHf8">
+                  <Marker location="6.4488387,3.5496361" color="red" label="Pkmcndknmvcdkv" />
+                </StaticGoogleMap>
               </div>
             </div>
             <div className='report-footer'>
-              <div className='fill'>.</div>
+              <div className='fill'>
+                <p className='location-adddres'>{location.address}</p>
+              </div>
               <div className='footer-img'>
                 <img alt='logo signmaster' src='https://jojggjqetqmkxwbkxgbr.supabase.in/storage/v1/object/public/location-pictures/Nuevo Logo Signmaster Fondo Oscuro.png' />
               </div>

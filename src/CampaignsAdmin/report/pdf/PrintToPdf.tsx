@@ -12,7 +12,7 @@ export const PrintToPdf = ({campaign}: PrintToPdfProps) => {
 
   return (
     <>
-      <div style={{ display: 'none'}}>
+      <div style={{ position:'absolute', visibility:'hidden' }}>
         <ReportTemplate campaign={campaign} ref={componentRef} />
       </div>
       <Button type="primary" onClick={handlePrint}>GENERATE PDF</Button>
