@@ -105,7 +105,6 @@ export const NewCampaignForm = () => {
             onBlur={() => {
               confirm();
             }} />
-
           <Button
             type="primary"
             icon={<SearchOutlined />}
@@ -173,7 +172,6 @@ export const NewCampaignForm = () => {
         initialValues={{ requiredMarkValue: 'optional' }}
         requiredMark={true}
       >
-
         <Row>
           <Col className='campaign-input' span={12}>
             <Form.Item
