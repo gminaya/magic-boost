@@ -3,13 +3,13 @@ import { useCampaignById } from '../../db/hooks/getCampaignDetailsByID';
 import { useParams } from 'react-router-dom';
 import { LocationCard } from './LocationCard';
 import { CampaignLocationInfo } from '../../models/CampaignLocationInfo';
-
-
 import { DueDateLabel } from '../DueDateLabel';
 import { PageHeader, Button, Radio } from 'antd';
 import './report.css';
 
 import { PrintToPdf } from './pdf/PrintToPdf';
+
+
 
 export const Report = () => {
   type CampaignParams = {
@@ -31,7 +31,7 @@ export const Report = () => {
       <Button key="SHARE">SHARE</Button>,
     ];
     if (campaign) {
-      arr.push(<PrintToPdf key="PRINT" campaign={ campaign } />);
+      arr.push(<PrintToPdf key="PRINT" campaign={campaign} />);
     }
 
     return arr;
@@ -46,7 +46,7 @@ export const Report = () => {
       subTitle={<DueDateLabel date={campaign?.dueDate} />}
       extra={actions}
     >
-      
+
       <div className="location-card-size-slider">
         <span>Image size:</span>
         <Radio.Group defaultValue="small">
@@ -60,6 +60,7 @@ export const Report = () => {
           <LocationCard {...location} cardSize={locationCardSize} key={location.id} />
         ))}
       </div>
+
     </PageHeader>
   );
 };

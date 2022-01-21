@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Divider, Button, Drawer } from 'antd';
 import { CampaignList } from './CampaignList';
 import { NewCampaignForm } from './NewCampaignForm';
-import {  PlusOutlined, CloseOutlined } from '@ant-design/icons';
+import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
 
 
 function CampaignAdmin() {
@@ -15,7 +15,7 @@ function CampaignAdmin() {
   return (
     <>
       <Drawer
-        
+        className='formDrawer'
         placement="left"
         closable={false}
         onClose={toggleDrawer}
@@ -24,6 +24,13 @@ function CampaignAdmin() {
         width='90%'
         closeIcon={<CloseOutlined />}
       >
+
+        <header className='drawer-title'>
+          <h1>
+            Creating a new campaign
+          </h1>
+        </header>
+
         <NewCampaignForm />
       </Drawer>
       <Divider style={{ borderTopColor: 'gray' }} orientation="left">

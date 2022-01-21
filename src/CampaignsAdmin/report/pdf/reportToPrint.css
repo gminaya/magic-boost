@@ -7,12 +7,14 @@
   text-transform: uppercase;
 }
 .location-number{
-  color: white;
+  color: rgb(212, 211, 211);
   font-size: 2rem;
+  
 }
 .page{
   height: 210mm;
   width: 297mm;
+  
 }
 
 .frontPage{
@@ -32,20 +34,36 @@
   display: flex;
   align-items: center;
   flex-direction: row;
-  background-color: gray;
-}
-.location-picture{
-  width: 188mm;
-  height: auto;
-}
-
-.location-picture img{
-  height: auto;
-  width: 100%;
+  background-color: white;
+  align-items: baseline;
+  justify-content: space-evenly;
+  background: url('../../../images/report-bg.png');
+  background-size: cover;
+  
   
 }
-.location-cap{
-  width: 109mm;
+.location-picture{
+  height: 500px;
+  /* width: 188mm;
+  height: auto; */
+}
+.location-adddres{
+color: white;
+margin: auto 25%;
+  font-size: 1.5rem;
+}
+.location-picture img{
+  border-bottom: 10px solid #E93847;
+  border-right: 10px solid #E93847;
+  height: 500px;
+  
+  
+}
+.location-map{
+  border-top: 10px solid #E93847;
+  border-left: 10px solid #E93847;
+  align-self: end;
+
 }
 
 .location-cap p{

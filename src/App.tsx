@@ -8,7 +8,7 @@ import CampaignAdmin from './CampaignsAdmin/CampaignAdmin';
 import { CampaignDetails } from './CampaignsAdmin/edit/CampaignDetails';
 import 'antd/dist/antd.css';
 import './index.css';
-import { MapDemo } from './Maps/MapDemo';
+import { Map } from './Maps/Map';
 import { Report } from './CampaignsAdmin/report/Report';
 
 const { Header, Content, Footer } = Layout;
@@ -43,7 +43,7 @@ function App() {
               <Route path="/CampaignsAdmin" exact component={CampaignAdmin} />
               <Route path="/CampaignsAdmin/edit/:id"  component={CampaignDetails} />
               <Route path="/CampaignsAdmin/report/:id" exact component={Report} />
-              <Route path="/MapTest" component={MapDemo} />
+              <Route path="/MapTest" component={Map} />
             </Switch>
           </div>
 
