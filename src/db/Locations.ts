@@ -1,6 +1,6 @@
 import { definitions } from './supabase';
-import { settings } from '../settings';
 import { createClient } from '@supabase/supabase-js';
+import { settings } from 'settings';
 
 /** Gets a list of all locations */
 export const getLocations = async () => {

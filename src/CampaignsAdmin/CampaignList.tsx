@@ -2,8 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { Table, Button, Popconfirm, Space } from 'antd';
 import { DeleteOutlined, EyeOutlined,EditOutlined } from '@ant-design/icons';
-import { getCampaigns, deleteCampaign } from '../db/Campaigns';
-import { definitions } from '../db/supabase';
+import { getCampaigns, deleteCampaign } from 'db/Campaigns';
+import { definitions } from 'db/supabase';
 import moment from 'moment';
 
 type CampaignsResult = Array<definitions['Campaigns']>;

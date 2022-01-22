@@ -1,15 +1,17 @@
-import React from 'react';
-import { useCampaignById } from '../../db/hooks/getCampaignDetailsByID';
-import { useParams } from 'react-router-dom';
-import { CampaignLocationInfo } from '../../models/CampaignLocationInfo';
-import { Table, Divider, Image, message, Popconfirm, Button } from 'antd';
-import { DueDateLabel } from '../DueDateLabel';
-import { DeleteOutlined } from '@ant-design/icons';
 import { v4 as uuidv4 } from 'uuid';
-import { supabase as supabaseClient } from '../../db/helper';
+import { DeleteOutlined } from '@ant-design/icons';
+import { Table, Divider, Image, message, Popconfirm, Button } from 'antd';
+import { useParams } from 'react-router-dom';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
-import { DropPhotoZone } from '../DropPhotoZone';
+
+import { useCampaignById } from 'db/hooks/getCampaignDetailsByID';
+
+import { CampaignLocationInfo } from 'models/CampaignLocationInfo';
+import { supabase as supabaseClient } from 'db/helper';
+import { DueDateLabel } from 'CampaignsAdmin/DueDateLabel';
+import { DropPhotoZone } from 'CampaignsAdmin/DropPhotoZone';
+
 import './campaignAdmin.css';
 
 interface CampaignDetails {
@@ -142,7 +144,7 @@ export function CampaignDetails() {
       className:'photo-input-td',
       render: (_: unknown, record: CampaignLocationInfo) => {
         return (
-          
+
           <>
             <DndProvider backend={HTML5Backend}>
               <div className='input-continer'>

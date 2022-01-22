@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable @typescript-eslint/no-var-requires */
 'use strict';
 
 const path = require('path');
@@ -67,7 +69,7 @@ module.exports = {
   proxySetup: resolveApp('src/setupProxy.js'),
   appNodeModules: resolveApp('node_modules'),
   swSrc: resolveModule(resolveApp, 'src/service-worker'),
-  publicUrlOrPath,
+  publicUrlOrPath
 };
 
 

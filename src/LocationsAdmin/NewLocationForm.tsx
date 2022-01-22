@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
 import { Form, Input, Button, message } from 'antd';
-import { insertNewLocation } from '../db/Locations';
+import { insertNewLocation } from 'db/Locations';
 
 type RequiredMark = boolean | 'optional';
 

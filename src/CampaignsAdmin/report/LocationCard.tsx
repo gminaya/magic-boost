@@ -1,13 +1,13 @@
 import React from 'react';
 import './locationCard.css';
 import { Image, Badge } from 'antd';
-import { CampaignLocationInfo } from '../../models/CampaignLocationInfo';
+import { CampaignLocationInfo } from 'models/CampaignLocationInfo';
 
 interface LocationCardInfo extends CampaignLocationInfo  {
   cardSize?: number
 }
 export const LocationCard = (location: LocationCardInfo) => {
-  
+
   const cardSizeProp ={
     width: location.cardSize
   };

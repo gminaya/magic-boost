@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { PlusOutlined, SearchOutlined, ClearOutlined } from '@ant-design/icons';
 import { Form, Button, Input, message, DatePicker, Row, Col, Table, List, Divider } from 'antd';
-import { useLocations } from '../db/hooks/getLocations';
-import { definitions } from '../db/supabase';
-import { insertNewCampaign } from '../db/Campaigns';
-import { CampaignLocationInfo } from '../models/CampaignLocationInfo';
+import { useLocations } from 'db/hooks/getLocations';
+import { definitions } from 'db/supabase';
+import { insertNewCampaign } from 'db/Campaigns';
+import { CampaignLocationInfo } from 'models/CampaignLocationInfo';
 import { ValidateErrorEntity } from 'rc-field-form/lib/interface';
 import './NewCampaignForm.css';
-import { CampaignModel } from '../models/CampaignModel';
+import { CampaignModel } from 'models/CampaignModel';
 
 export const NewCampaignForm = () => {
 

@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useCampaignById } from '../../db/hooks/getCampaignDetailsByID';
-import { useParams } from 'react-router-dom';
-import { LocationCard } from './LocationCard';
-import { CampaignLocationInfo } from '../../models/CampaignLocationInfo';
-import { DueDateLabel } from '../DueDateLabel';
 import { PageHeader, Button } from 'antd';
+import { useParams } from 'react-router-dom';
+
+import { useCampaignById } from 'db/hooks/getCampaignDetailsByID';
+
+import { DueDateLabel } from 'CampaignsAdmin/DueDateLabel';
+import { LocationCard } from './LocationCard';
+import { CampaignLocationInfo } from 'models/CampaignLocationInfo';
+
 import './report.css';
 
 import { PrintToPdf } from './pdf/PrintToPdf';
