@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { LocationCard } from './LocationCard';
 import { CampaignLocationInfo } from '../../models/CampaignLocationInfo';
 import { DueDateLabel } from '../DueDateLabel';
-import { PageHeader, Button, Radio } from 'antd';
+import { PageHeader, Button } from 'antd';
 import './report.css';
 
 import { PrintToPdf } from './pdf/PrintToPdf';
@@ -18,7 +18,7 @@ export const Report = () => {
   const { id } = useParams<CampaignParams>();
   const { campaign } = useCampaignById(Number(id));
   const [locationList, setLocationList] = useState<CampaignLocationInfo[]>([]);
-  const [locationCardSize, setLocationCardSize] = useState(400);
+  const [locationCardSize] = useState(400);
   useEffect(() => {
     if (campaign?.locationInfo) {
       setLocationList(campaign.locationInfo);
