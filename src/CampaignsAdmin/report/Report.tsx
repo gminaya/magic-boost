@@ -18,7 +18,7 @@ export const Report = () => {
   const { id } = useParams<CampaignParams>();
   const { campaign } = useCampaignById(Number(id));
   const [locationList, setLocationList] = useState<CampaignLocationInfo[]>([]);
-  const [locationCardSize] = useState(400);
+  const locationCardSize = 400;
   useEffect(() => {
     if (campaign?.locationInfo) {
       setLocationList(campaign.locationInfo);
