@@ -22,7 +22,7 @@ export const Map = (props: MapProps) => {
 
 
   return (
-    <div className='map-container'>
+    <div className="map-container">
       <GoogleMapReact
         bootstrapURLKeys={{ key: settings.googpleMaps.apiKey }}
         defaultCenter={cursorPosition}

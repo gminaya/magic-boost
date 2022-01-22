@@ -55,7 +55,7 @@ export const NewCampaignForm = () => {
         return <>
           <Input
             autoFocus
-            placeholder='Search by name'
+            placeholder="Search by name"
             value={selectedKeys}
             onChange={(e) => {
               setSelectedKeys(e.target.value ? [e.target.value] : confirm({ closeDropdown: false }));
@@ -68,14 +68,14 @@ export const NewCampaignForm = () => {
             }}
           ></Input>
           <Button
-            type='primary'
+            type="primary"
             icon={<SearchOutlined />}
-            size='large'
+            size="large"
             onClick={() => { confirm(); }} />
           <Button
-            type='primary'
+            type="primary"
             icon={<ClearOutlined />}
-            size='large'
+            size="large"
             onClick={() => { clearFilters(); }} />
         </>;
       },
@@ -106,13 +106,13 @@ export const NewCampaignForm = () => {
               confirm();
             }} />
           <Button
-            type='primary'
+            type="primary"
             icon={<SearchOutlined />}
-            size='large'
+            size="large"
             onClick={() => { confirm(); }} />
           <Button
-            type='primary'
-            icon={<ClearOutlined />} size='large'
+            type="primary"
+            icon={<ClearOutlined />} size="large"
             onClick={() => { clearFilters(); }} />
         </>;
       },
@@ -163,7 +163,7 @@ export const NewCampaignForm = () => {
   return (
     <>
       <Form
-        className='form-row'
+        className="form-row"
         form={form}
         preserve={false}
         onFinish={OnSummit}
@@ -173,19 +173,19 @@ export const NewCampaignForm = () => {
         requiredMark={true}
       >
         <Row>
-          <Col className='campaign-input' span={12}>
+          <Col className="campaign-input" span={12}>
             <Form.Item
-              className='text-input-item'
+              className="text-input-item"
               style={{ flexDirection: 'column', alignItems: 'flex-start' }}
               requiredMark={true}
-              label='Campaign Name'
-              name='name'
-              tooltip='The name have to be as the client named the campaign'
+              label="Campaign Name"
+              name="name"
+              tooltip="The name have to be as the client named the campaign"
               rules={[{ required: true, message: 'Name can not be empty 🤨' }]}
             >
               <Input
-                size='large'
-                placeholder='Type campaign name'
+                size="large"
+                placeholder="Type campaign name"
                 onChange={(e) => setName(e.target.value)}
               />
             </Form.Item>
@@ -194,9 +194,9 @@ export const NewCampaignForm = () => {
             <Form.Item
               style={{ flexDirection: 'column', alignItems: 'flex-start' }}
               requiredMark={true}
-              label='Due Date'
-              tooltip='Due Date is the due date for the report to be delivery'
-              name='dueDate'
+              label="Due Date"
+              tooltip="Due Date is the due date for the report to be delivery"
+              name="dueDate"
               rules={[{ required: true, message: 'Due date can not be empty 😒' }]}
             >
               <DatePicker
@@ -210,10 +210,10 @@ export const NewCampaignForm = () => {
           </Col>
         </Row>
         <Row>
-          <Col span={24} className='location-table'>
+          <Col span={24} className="location-table">
             <h3>ADD LOCATIONS TO THIS CAMPAIGN</h3>
             <Table
-              size={'small'}
+              size="small"
               style={{ margin: 5 }}
               bordered
               loading={locations == null}
@@ -223,10 +223,10 @@ export const NewCampaignForm = () => {
           </Col>
         </Row>
         <Row>
-          <Col span={24} className='added-locations'>
+          <Col span={24} className="added-locations">
             <h3>Added Locations</h3>
             <List
-              size='small'
+              size="small"
               bordered
               pagination={{
                 onChange: (page) => {
@@ -243,8 +243,11 @@ export const NewCampaignForm = () => {
         <Row>
           <Col offset={20} span={4}>
             <Form.Item>
-              <Button size={'large'} type='primary' htmlType='submit'>
-                SAVE CAMPAIGN
+              <Button
+                size="large"
+                type="primary"
+                htmlType="submit">
+                  SAVE CAMPAIGN
               </Button>
             </Form.Item>
           </Col>
