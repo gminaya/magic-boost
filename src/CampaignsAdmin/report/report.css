@@ -6,28 +6,9 @@
   align-items: flex-start;
   align-content: stretch;
 }
-
-.location-card-size-slider {
-  position: absolute;
-  top: 20px;
-  margin: auto 30%;
-}
-.location-card-size-slider span {
-  padding-right: 10px;
-  
-}
-.location-card-size-slider .ant-slider-track{
-  background-color: #001528;
-}
-.location-card-size-slider .ant-slider-handle{
-  background-color: #001528;
-  border:none;
-}
-
 .page-header {
   margin-top: 1%;
 }
-
 .location-icon{
   color:red;
   font-size: 1.5rem;

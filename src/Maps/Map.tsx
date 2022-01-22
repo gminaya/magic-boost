@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import GoogleMapReact from 'google-map-react';
 import { settings } from '../settings';
 import { MapMarker, MapMarkerProps } from './MapMarker';
+import './map.css';
 
 interface MapProps {
   center?: {
@@ -21,9 +22,9 @@ export const Map = (props: MapProps) => {
 
 
   return (
-    <div style={{ height: '80%', width: '100%' }}>
+    <div className="map-container">
       <GoogleMapReact
-        bootstrapURLKeys={{ key: 'AIzaSyDc4hp1XK5k70sAiA92BIHuZtWzzHXRHf8' }}
+        bootstrapURLKeys={{ key: settings.googpleMaps.apiKey }}
         defaultCenter={cursorPosition}
         defaultZoom={settings.googpleMaps.defaulZoom}
       >

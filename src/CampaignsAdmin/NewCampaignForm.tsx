@@ -55,7 +55,7 @@ export const NewCampaignForm = () => {
         return <>
           <Input
             autoFocus
-            placeholder='Search by name'
+            placeholder="Search by name"
             value={selectedKeys}
             onChange={(e) => {
               setSelectedKeys(e.target.value ? [e.target.value] : confirm({ closeDropdown: false }));
@@ -70,12 +70,12 @@ export const NewCampaignForm = () => {
           <Button
             type="primary"
             icon={<SearchOutlined />}
-            size='large'
+            size="large"
             onClick={() => { confirm(); }} />
           <Button
             type="primary"
             icon={<ClearOutlined />}
-            size='large'
+            size="large"
             onClick={() => { clearFilters(); }} />
         </>;
       },
@@ -108,11 +108,11 @@ export const NewCampaignForm = () => {
           <Button
             type="primary"
             icon={<SearchOutlined />}
-            size='large'
+            size="large"
             onClick={() => { confirm(); }} />
           <Button
             type="primary"
-            icon={<ClearOutlined />} size='large'
+            icon={<ClearOutlined />} size="large"
             onClick={() => { clearFilters(); }} />
         </>;
       },
@@ -130,7 +130,7 @@ export const NewCampaignForm = () => {
       render: (_: unknown, record: definitions['Locations']) => {
         return (
           <Button
-            type="primary"
+            type='primary'
             onClick={() => {
               addLocationForCampaign(record);
             }}
@@ -173,7 +173,7 @@ export const NewCampaignForm = () => {
         requiredMark={true}
       >
         <Row>
-          <Col className='campaign-input' span={12}>
+          <Col className="campaign-input" span={12}>
             <Form.Item
               className="text-input-item"
               style={{ flexDirection: 'column', alignItems: 'flex-start' }}
@@ -184,7 +184,7 @@ export const NewCampaignForm = () => {
               rules={[{ required: true, message: 'Name can not be empty 🤨' }]}
             >
               <Input
-                size='large'
+                size="large"
                 placeholder="Type campaign name"
                 onChange={(e) => setName(e.target.value)}
               />
@@ -213,7 +213,7 @@ export const NewCampaignForm = () => {
           <Col span={24} className="location-table">
             <h3>ADD LOCATIONS TO THIS CAMPAIGN</h3>
             <Table
-              size={'small'}
+              size="small"
               style={{ margin: 5 }}
               bordered
               loading={locations == null}
@@ -243,8 +243,11 @@ export const NewCampaignForm = () => {
         <Row>
           <Col offset={20} span={4}>
             <Form.Item>
-              <Button size={'large'} type="primary" htmlType="submit">
-                SAVE CAMPAIGN
+              <Button
+                size="large"
+                type="primary"
+                htmlType="submit">
+                  SAVE CAMPAIGN
               </Button>
             </Form.Item>
           </Col>
