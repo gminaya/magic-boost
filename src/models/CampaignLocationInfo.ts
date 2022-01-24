@@ -1,4 +1,4 @@
-import { definitions } from '../db/supabase';
+import { definitions } from 'db/supabase';
 
 type Location = definitions['Locations'];
 

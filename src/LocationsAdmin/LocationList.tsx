@@ -2,10 +2,11 @@
 import React from 'react';
 import { Table, Popconfirm } from 'antd';
 import { DeleteTwoTone } from '@ant-design/icons';
-import { definitions } from '../db/supabase';
+import { definitions } from 'db/supabase';
+import { useLocations } from 'db/hooks/getLocations';
+import { deleteLocation } from 'db/Locations';
+
 import ViewOnGoogleMaps from './ViewOnGoogleMaps';
-import { useLocations } from '../db/hooks/getLocations';
-import { deleteLocation } from '../db/Locations';
 
 export const LocationList = () => {
   const { locations, refreshLocations } = useLocations();

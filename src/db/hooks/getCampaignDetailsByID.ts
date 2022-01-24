@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
-import { CampaignLocationInfo } from '../../models/CampaignLocationInfo';
-import { CampaignModel } from '../../models/CampaignModel';
-import { getCampaignByID } from '../Campaigns';
+import { CampaignLocationInfo } from 'models/CampaignLocationInfo';
+import { CampaignModel } from 'models/CampaignModel';
+import { getCampaignByID } from 'db/Campaigns';
 
 export const useCampaignById = (id: number) => {
   const [campaign, setCampaign] = useState<CampaignModel>();
@@ -12,7 +12,7 @@ export const useCampaignById = (id: number) => {
     if(result == null){
       return;
     }
-    
+
     if (result?.location_config) {
       const locationInfo = JSON.parse(result.location_config) as CampaignLocationInfo[];
       result.locationInfo = locationInfo;
