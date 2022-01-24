@@ -2,7 +2,7 @@ import React from 'react';
 import { NativeTypes } from 'react-dnd-html5-backend';
 import { useDrop, DropTargetMonitor } from 'react-dnd';
 import { InboxOutlined, DownloadOutlined } from '@ant-design/icons';
-import './dropPhotoZone.css';
+import 'sass/components/dropPhotoZone.scss';
 
 interface TargetBoxProps {
   onDrop: (item: { files: File[] }) => void;

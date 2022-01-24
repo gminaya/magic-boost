@@ -6,7 +6,7 @@ import { definitions } from 'db/supabase';
 import { insertNewCampaign } from 'db/Campaigns';
 import { CampaignLocationInfo } from 'models/CampaignLocationInfo';
 import { ValidateErrorEntity } from 'rc-field-form/lib/interface';
-import './NewCampaignForm.css';
+import 'sass/components/newCampaignForm.scss';
 import { CampaignModel } from 'models/CampaignModel';
 
 export const NewCampaignForm = () => {
