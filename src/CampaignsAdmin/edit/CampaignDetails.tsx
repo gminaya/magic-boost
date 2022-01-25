@@ -12,7 +12,7 @@ import { supabase as supabaseClient } from 'db/helper';
 import { DueDateLabel } from 'CampaignsAdmin/DueDateLabel';
 import { DropPhotoZone } from 'CampaignsAdmin/DropPhotoZone';
 
-import 'sass/pages/campaignDetails.scss';
+import 'styles/pages/campaignDetails.scss';
 
 interface CampaignDetails {
   locationList: JSON;

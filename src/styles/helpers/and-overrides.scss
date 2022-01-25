@@ -1,8 +1,5 @@
-@import 'sass/helpers/colors.scss';
+@import 'styles/helpers/colors.scss';
 
-header {
-  padding: 10px;
-}
 .ant-form-item-control {
   width: 100%;
 }
@@ -25,25 +22,27 @@ header {
     font-size: 1rem !important;
   }
 }
-.ant-picker-large{
+.ant-picker-large {
   width: 100%;
 }
-.form-row{
+.form-row {
   padding: 2% !important;
-   border-radius: 3px;
-   margin: 0 3% !important;
+  border-radius: 3px;
+  margin: 0 3% !important;
 }
-.location-table{
-  padding: 1%;   
+.location-table {
+  padding: 1%;
   border-radius: 5px;
 }
-.added-locations{
-  padding: 1%;   
+.added-locations {
+  padding: 1%;
   border-radius: 5px;
 }
-.ant-drawer-content{
-  background: linear-gradient(180deg, rgba(241,246,255,1) 0%, rgba(255,255,255,1) 100%);
+.ant-drawer-content {
+  background: linear-gradient(180deg, rgba(241, 246, 255, 1) 0%, rgba(255, 255, 255, 1) 100%);
 }
-.ant-drawer-content table{
-  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(250,250,250,1) 100%);
+.ant-drawer-content {
+  table {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(250, 250, 250, 1) 100%);
+  }
 }

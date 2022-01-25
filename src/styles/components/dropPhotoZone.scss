@@ -8,8 +8,6 @@
     color:#1990FF
   }
 
-  
-
   &:hover {
     cursor: pointer;
   }
@@ -17,6 +15,5 @@
 .onDrag {
   background: aliceblue;
   outline: 2px dashed;
-  transform: scale(1.03);
-  
+  transform: scale(1.03);  
 }
