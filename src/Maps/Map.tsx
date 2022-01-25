@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import GoogleMapReact from 'google-map-react';
 import { settings } from 'settings';
 import { MapMarker, MapMarkerProps } from './MapMarker';
-import './map.css';
+import 'styles/components/map.scss';
 
 interface MapProps {
   center?: {

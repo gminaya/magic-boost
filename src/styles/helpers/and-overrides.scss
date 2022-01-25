@@ -1,0 +1,48 @@
+@import 'styles/helpers/colors.scss';
+
+.ant-form-item-control {
+  width: 100%;
+}
+.ant-drawer-body {
+  padding: 0% !important;
+}
+.drawer-title {
+  padding: 24px;
+  background-color: $dark-blue-navy;
+  h1 {
+    color: $light-gray;
+    text-transform: uppercase;
+    margin: 0 3%;
+  }
+}
+.ant-form-item-label {
+  label {
+    text-transform: uppercase !important;
+    font-weight: 600;
+    font-size: 1rem !important;
+  }
+}
+.ant-picker-large {
+  width: 100%;
+}
+.form-row {
+  padding: 2% !important;
+  border-radius: 3px;
+  margin: 0 3% !important;
+}
+.location-table {
+  padding: 1%;
+  border-radius: 5px;
+}
+.added-locations {
+  padding: 1%;
+  border-radius: 5px;
+}
+.ant-drawer-content {
+  background: linear-gradient(180deg, rgba(241, 246, 255, 1) 0%, rgba(255, 255, 255, 1) 100%);
+}
+.ant-drawer-content {
+  table {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(250, 250, 250, 1) 100%);
+  }
+}
