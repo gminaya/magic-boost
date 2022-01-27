@@ -3,7 +3,7 @@ import { Divider, Button, Drawer } from 'antd';
 import { CampaignList } from './CampaignList';
 import { NewCampaignForm } from './NewCampaignForm';
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
-
+import 'styles/pages/campaignAdmin.scss';
 
 function CampaignAdmin() {
   const [drawerVisibility, setDrawerVisibility] = useState(false);
@@ -15,35 +15,37 @@ function CampaignAdmin() {
   return (
     <>
       <Drawer
-        className='formDrawer'
+        className="formDrawer"
         placement="left"
         closable={false}
         onClose={toggleDrawer}
         visible={drawerVisibility}
         key="left"
-        width='90%'
+        width="90%"
         closeIcon={<CloseOutlined />}
       >
-
-        <header className='drawer-title'>
+        <header className="drawer-title">
           <h1>
             Creating a new campaign
           </h1>
         </header>
-
         <NewCampaignForm />
       </Drawer>
-      <Divider style={{ borderTopColor: 'gray' }} orientation="left">
-        <h2 style={{ marginBottom: 0 }}>CAMPAIGNS KINDOM</h2>
+      <Divider className="title-divider" orientation="left">
+        <h2>
+          CAMPAIGNS KINDOM
+        </h2>
       </Divider>
-
-      <p style={{ textAlign: 'right' }}>You can create, view or delete campaigns </p>
+      <p className="page-description">
+        You can create, view or delete campaigns
+      </p>
       <Button type="primary" onClick={toggleDrawer} icon={<PlusOutlined />} size={'small'}>
         ADD NEW CAMPAING
       </Button>
-
-      <Divider style={{ borderTopColor: 'gray' }} orientation="left">
-        <h4 style={{ marginBottom: 0 }}>Listing all the campaigns</h4>
+      <Divider className="title-divider" orientation="left">
+        <span className="span-text">
+          Listing all the campaigns
+        </span>
       </Divider>
       <div id="campaign-list"></div>
       <CampaignList />
