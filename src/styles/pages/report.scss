@@ -1,0 +1,12 @@
+.page-header {
+  margin-top: 1%;
+
+  .cards-container {
+    justify-content: center;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: stretch;
+  }
+}
