@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { PlusOutlined, SearchOutlined, ClearOutlined } from '@ant-design/icons';
 import { Form, Button, Input, message, DatePicker, Row, Col, Table, List, Divider } from 'antd';
 import { useLocations } from 'db/hooks/getLocations';
@@ -9,6 +9,8 @@ import { ValidateErrorEntity } from 'rc-field-form/lib/interface';
 import { CampaignModel } from 'models/CampaignModel';
 import 'styles/components/newCampaignForm.scss';
 import 'styles/helpers/and-overrides.scss';
+import { ColumnsType } from 'antd/lib/table';
+import { FilterDropdownProps } from 'antd/lib/table/interface';
 
 export const NewCampaignForm = () => {
 
@@ -46,20 +48,25 @@ export const NewCampaignForm = () => {
     console.log('Failed:', errorInfo);
   };
 
-  const columns = [
+  const columns: ColumnsType<definitions['Locations']> = [
     {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
 
-      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => {
+      filterDropdown: ({selectedKeys, setSelectedKeys, clearFilters, confirm}: FilterDropdownProps) => {
         return <>
           <Input
             autoFocus
             placeholder="Search by name"
-            value={selectedKeys}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            value={selectedKeys as any}
             onChange={(e) => {
-              setSelectedKeys(e.target.value ? [e.target.value] : confirm({ closeDropdown: false }));
+              if (e.target.value) {
+                setSelectedKeys([e.target.value]);
+              } else {
+                confirm({ closeDropdown: false });
+              }
             }}
             onPressEnter={() => {
               confirm();
@@ -77,26 +84,27 @@ export const NewCampaignForm = () => {
             type="primary"
             icon={<ClearOutlined />}
             size="large"
-            onClick={() => { clearFilters(); }} />
+            onClick={clearFilters} />
         </>;
       },
       filterIcon: () => {
         return <SearchOutlined />;
       },
-      onFilter: (value: any, record: definitions['Locations']) => {
-        return record.name.toLowerCase().includes(value.toLowerCase());
+      onFilter: (value, record) => {
+        return record.name.toLowerCase().includes(value.toString().toLowerCase());
       }
     },
     {
       title: 'Address',
       dataIndex: 'address',
       key: 'address',
-      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: any) => {
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: FilterDropdownProps) => {
         return <>
           <Input
             autoFocus
             placeholder='Search by adress'
-            value={selectedKeys}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            value={selectedKeys as any}
             onChange={(e) => {
               setSelectedKeys(e.target.value ? [e.target.value] : []);
             }}
@@ -114,19 +122,22 @@ export const NewCampaignForm = () => {
           <Button
             type="primary"
             icon={<ClearOutlined />} size="large"
-            onClick={() => { clearFilters(); }} />
+            onClick={clearFilters} />
         </>;
       },
       filterIcon: () => {
         return <SearchOutlined />;
       },
-      onFilter: (value: any, record: any) => {
-        return record.address.toLowerCase().includes(value.toLowerCase());
+      onFilter: (value, record) => {
+        if (!record.address) {
+          return false;
+        }
+
+        return record.address.toLowerCase().includes(value.toString().toLowerCase());
       }
     },
     {
       title: 'Add',
-      name: 'add',
       key: 'add',
       render: (_: unknown, record: definitions['Locations']) => {
         return (

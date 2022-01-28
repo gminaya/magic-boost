@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 //TODO: Gabriel: Need to revisit this file. Should we delete?
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button } from 'antd';
 import { RocketTwoTone } from '@ant-design/icons';
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import NewLocationForm from './NewLocationForm';
 import { Modal, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';

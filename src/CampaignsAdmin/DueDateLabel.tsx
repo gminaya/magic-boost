@@ -1,5 +1,5 @@
 import { Tag } from 'antd';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 
 interface DateLabelProps {
   date?: string;

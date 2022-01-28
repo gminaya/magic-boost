@@ -1,4 +1,3 @@
-import React from 'react';
 import { NativeTypes } from 'react-dnd-html5-backend';
 import { useDrop, DropTargetMonitor } from 'react-dnd';
 import { InboxOutlined, DownloadOutlined } from '@ant-design/icons';

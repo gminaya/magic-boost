@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import GoogleMapReact from 'google-map-react';
 import { settings } from 'settings';
 import { MapMarker, MapMarkerProps } from './MapMarker';
@@ -14,12 +14,10 @@ interface MapProps {
 
 export const Map = (props: MapProps) => {
 
-  const [cursorPosition, setCursorPosition] = useState<MapMarkerProps>({
+  const [cursorPosition] = useState<MapMarkerProps>({
     lat: Number(props.center?.lat),
     lng: Number(props.center?.lng)
-
   });
-
 
   return (
     <div className="map-container">
@@ -28,8 +26,10 @@ export const Map = (props: MapProps) => {
         defaultCenter={cursorPosition}
         defaultZoom={settings.googpleMaps.defaulZoom}
       >
-        <MapMarker lat={18.4482008}
-          lng={-69.9614988} />
+        <MapMarker
+          lat={18.4482008}
+          lng={-69.9614988}
+        />
       </GoogleMapReact>
     </div>
   );
