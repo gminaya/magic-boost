@@ -3,10 +3,15 @@ export interface MapMarkerProps {
   lng: number
 }
 
-export const MapMarker = () => {
+export const MapMarker = ({ lat, lng }: MapMarkerProps) => {
+
 
   return (
-    <div>{'🔥'}</div>
+    <>
+      <div>{lat}</div>
+      <div>{lng}</div>
+      <div>{'🔥'}</div>
+    </>
   );
 
 

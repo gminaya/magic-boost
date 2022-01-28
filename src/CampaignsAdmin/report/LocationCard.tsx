@@ -1,4 +1,3 @@
-import React from 'react';
 import { Image, Badge } from 'antd';
 import { CampaignLocationInfo } from 'models/CampaignLocationInfo';
 import 'styles/components/locationCard.scss';

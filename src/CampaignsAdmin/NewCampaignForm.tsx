@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { PlusOutlined, SearchOutlined, ClearOutlined } from '@ant-design/icons';
 import { Form, Button, Input, message, DatePicker, Row, Col, Table, List, Divider } from 'antd';
 import { useLocations } from 'db/hooks/getLocations';

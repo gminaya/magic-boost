@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { LocationList } from './LocationList';
 import { Divider, Button, Drawer } from 'antd';
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons';

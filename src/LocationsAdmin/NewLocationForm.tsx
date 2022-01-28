@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import { insertNewLocation } from 'db/Locations';
+import { ValidateErrorEntity } from 'rc-field-form/lib/interface';
 import 'styles/components/newLocationForm.scss';
 
 type RequiredMark = boolean | 'optional';
@@ -31,7 +31,7 @@ function NewLocationForm() {
       error();
     }
   };
-  const onFinishFailed = (errorInfo: any) => {
+  const onFinishFailed = (errorInfo: ValidateErrorEntity<Location>) => {
     console.log('Failed:', errorInfo);
   };
 

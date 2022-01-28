@@ -1,10 +1,10 @@
-import React from 'react';
+import { forwardRef } from 'react';
 import { PrintToPdfProps } from './Models';
 import { settings } from 'settings';
 import { StaticGoogleMap, Marker } from 'react-static-google-map';
 import 'styles/components/reportTemplate.scss';
 
-export const ReportTemplate = React.forwardRef<HTMLInputElement, PrintToPdfProps>((
+export const ReportTemplate = forwardRef<HTMLInputElement, PrintToPdfProps>((
   { campaign }: PrintToPdfProps,
   ref
 ) => {

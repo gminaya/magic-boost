@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Divider, Button, Drawer } from 'antd';
 import { CampaignList } from './CampaignList';
 import { NewCampaignForm } from './NewCampaignForm';

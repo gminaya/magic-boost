@@ -1,5 +1,3 @@
-//TODO: Look for rule that allows React to be in scope
-import React from 'react';
 import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
 import { Breadcrumb, Layout, Menu } from 'antd';
 import { HomeOutlined } from '@ant-design/icons';
