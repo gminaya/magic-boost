@@ -36,7 +36,7 @@ function NewLocationForm() {
   };
 
   return (
-    <div className='form-container'>
+    <div className='new-location-form-container'>
       <Form
         form={form}
         preserve={false}
