@@ -1,0 +1,38 @@
+@import 'styles/helpers/colors.scss';
+
+.location-card {
+  flex: 0 1 auto;
+  background-color: $light-gray;
+  margin: 10px;
+  border: 2px solid $dark-blue-navy;
+
+  .card-image{
+    box-shadow: 0px 6px 5px rgb(0 0 0 / 10%)
+  }
+
+  .stats {
+    height: 30px;
+    background-color: $light-gray;
+    padding: 5px;
+  }
+
+  h3 {
+    color: $dark-blue-navy;
+    font-size: 1.3em;
+    text-transform: uppercase;
+    margin-bottom: 0;
+  }
+
+  .ant-ribbon-text {
+    color: $light-gray;
+  }
+
+  .card-info {
+    background-color: $light-gray;
+    padding: 15px;
+  }
+
+  &:hover {
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+  }
+}

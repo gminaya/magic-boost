@@ -1,7 +1,8 @@
 import React from 'react';
 import { PrintToPdfProps } from './Models';
-import './reportToPrint.css';
+import { settings } from 'settings';
 import { StaticGoogleMap, Marker } from 'react-static-google-map';
+import 'styles/components/reportTemplate.scss';
 
 export const ReportTemplate = React.forwardRef<HTMLInputElement, PrintToPdfProps>((
   { campaign }: PrintToPdfProps,
@@ -10,9 +11,8 @@ export const ReportTemplate = React.forwardRef<HTMLInputElement, PrintToPdfProps
   const numberOfLocations = campaign.locationInfo.length;
 
   return (
-
     <div ref={ref} >
-      <div className='page frontPage'>
+      <div className='front-page'>
         <header >
           <h1 className='report-title'>
             Reporte fotográfico campaña: <br />
@@ -20,7 +20,7 @@ export const ReportTemplate = React.forwardRef<HTMLInputElement, PrintToPdfProps
           </h1>
         </header>
         <div>
-          <h2 className='location-number'> {numberOfLocations} Locations</h2>
+          <h2 className='location-number'>{ numberOfLocations } Locations</h2>
         </div>
         <div>
           <img alt='logo signmaster' className='logo' src='https://jojggjqetqmkxwbkxgbr.supabase.in/storage/v1/object/public/location-pictures/Nuevo Logo Signmaster Fondo Oscuro.png' />
@@ -28,17 +28,15 @@ export const ReportTemplate = React.forwardRef<HTMLInputElement, PrintToPdfProps
       </div>
       {
         campaign.locationInfo.map((location, index) => (
-          <div key={index} className='page'>
+          <div key={index} className='slide'>
             <div className='picture-cap'>
               <div className='location-picture '>
                 <figure>
                   <img src={location.photoUrl} />
-
                 </figure>
               </div>
               <div className='location-map'>
-
-                <StaticGoogleMap size="410x500" className="img-fluid" apiKey="AIzaSyDc4hp1XK5k70sAiA92BIHuZtWzzHXRHf8">
+                <StaticGoogleMap size="410x500" className="img-fluid" apiKey={ settings.googpleMaps.apiKey }>
                   <Marker location="6.4488387,3.5496361" color="red" label="Pkmcndknmvcdkv" />
                 </StaticGoogleMap>
               </div>
@@ -55,7 +53,5 @@ export const ReportTemplate = React.forwardRef<HTMLInputElement, PrintToPdfProps
         ))
       }
     </div>
-
-
   );
 });
