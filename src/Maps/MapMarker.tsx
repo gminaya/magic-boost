@@ -1,11 +1,9 @@
-import React from 'react';
-
 export interface MapMarkerProps {
   lat: number
   lng: number
 }
 
-export const MapMarker = (props: MapMarkerProps) => {
+export const MapMarker = () => {
 
   return (
     <div>{'🔥'}</div>

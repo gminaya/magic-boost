@@ -3,6 +3,7 @@ module.exports = {
     'browser': true,
     'es2021': true
   },
+  'ignorePatterns': ['.eslintrc.js', '/scripts/*', '/config/*'],
   'extends': [
     'eslint:recommended',
     'plugin:react/recommended',
