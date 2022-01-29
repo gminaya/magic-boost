@@ -20,7 +20,7 @@ function App() {
             <Link to="/CampaignsAdmin">Campaigns</Link>
           </Menu.Item>
           <Menu.Item key="locations">
-            <Link to="/LocationsAdmin">Locations</Link>
+            <Link to="/LocationsAdmin">JUST A TEST</Link>
           </Menu.Item>
         </Menu>
       </Header>
