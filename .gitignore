@@ -23,3 +23,10 @@ yarn-debug.log*
 yarn-error.log*
 
 .env
+# Supabase
+.supabase
+
+# Supabase
+**/supabase/.branches
+**/supabase/.temp
+**/supabase/.env
