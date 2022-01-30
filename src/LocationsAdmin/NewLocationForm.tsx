@@ -1,19 +1,29 @@
-import { useState } from 'react';
-import { Form, Input, Button, message } from 'antd';
+import { useCallback, useRef, useState } from 'react';
+import { Form, Input, Button, message, Select } from 'antd';
 import { insertNewLocation } from 'db/Locations';
 import { ValidateErrorEntity } from 'rc-field-form/lib/interface';
+
+import { uploadImageToSupabase } from 'db/hooks/useUploadPhoto';
+import { LocationFormat, LocationFormatLabels } from 'models/LocationFormat';
+import { LocationOrientation, LocationOrientationLabels } from 'models/LocationOrientation';
+
 import 'styles/components/newLocationForm.scss';
 
-type RequiredMark = boolean | 'optional';
+const { Option } = Select;
 
 function NewLocationForm() {
   const [form] = Form.useForm();
-  //TODO: Gabriel: Why is this needed?
-  const [requiredMark] = useState<RequiredMark>('optional');
+
   const [name, setName] = useState('');
   const [adress, setAdress] = useState('');
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
+  const [format, setFormat] = useState<LocationFormat>('billboard');
+  const [orientation, setOrientation] = useState<LocationOrientation>('NA');
+
+  const selectedFile = useRef<File>();
+
+  //TODO: Gabi: need to find ways to make this generic
   const success = () => {
     message.success('Your new location has saved 😁');
   };
@@ -21,11 +31,39 @@ function NewLocationForm() {
     message.error('oh no! something went wrong 😩');
   };
 
+  const handleOrientationChange = (value: LocationOrientation) => {
+    setOrientation(value);
+  };
+
+  const handleFormatChange = (value: LocationFormat) => {
+    setFormat(value);
+  };
+
+  // ReactDOM event handler type is WRONG. Ignoring. 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handlePictureSelection = useCallback((e: any) => {
+    if (e.target.files) {
+      selectedFile.current = e.target.files[0];
+    }
+  }, [selectedFile.current]);
+
+
   //Saves new location in DB
   const onSummit = async () => {
-    const response = await insertNewLocation(name, adress, latitude, longitude);
+    if (!selectedFile.current) {
+      throw Error('Attempted to submit empty file');
+    }
+
+    const defaultPictureUrl = await uploadImageToSupabase(selectedFile.current, 'default-pictures');
+
+    if (defaultPictureUrl === undefined) {
+      return;
+    }
+
+    const response = await insertNewLocation(name, adress, latitude, longitude, format, defaultPictureUrl, orientation);
     if (response) {
       success();
+      form.resetFields();
     }
     else {
       error();
@@ -43,13 +81,12 @@ function NewLocationForm() {
         onFinish={onSummit}
         onFinishFailed={onFinishFailed}
         layout={'vertical'}
-        initialValues={{ requiredMarkValue: requiredMark }}
-        requiredMark={requiredMark}>
+      >
         <Form.Item
           requiredMark={true}
           label="Location Name"
           name="name"
-          tooltip="The name most be a location fisical adress reference"
+          tooltip="The name must be a location fisical adress reference"
           rules={[{ required: true, message: 'Name can not be empty 🤨' }]}
         >
           <Input
@@ -87,6 +124,47 @@ function NewLocationForm() {
             placeholder="Type location longitude ex. -69.9341466"
             onChange={e => setLongitude(Number(e.target.value))}
             type="number"
+          />
+        </Form.Item>
+        <Form.Item
+          requiredMark={true}
+          label="Location Format" required
+          tooltip="Select the location format acording documentation"
+          name="format"
+          rules={[{ required: true, message: 'This can not be empty 🤦' }]}>
+          <Select
+            placeholder="Select the format"
+            onChange={handleFormatChange}
+          >
+            {Object.entries(LocationFormatLabels).map(([locationType, locationLabel]) => (
+              <Option key={locationType} value={locationType}>{locationLabel}</Option>
+            ))}
+          </Select>
+        </Form.Item>
+        <Form.Item
+          requiredMark={true}
+          label="Location Orientation" required
+          tooltip="Select the location orientation acording documentation"
+          name="orientation"
+          rules={[{ required: true, message: 'This can not be empty 🤦' }]}>
+          <Select
+            placeholder="Select the orientation"
+            onChange={handleOrientationChange}
+          >
+            {Object.entries(LocationOrientationLabels).map(([orientationType, orientationLabel]) => (
+              <Option key={orientationType} value={orientationType}>{orientationLabel}</Option>
+            ))}
+          </Select>
+        </Form.Item>
+        <Form.Item
+          requiredMark={true}
+          label="Location picture" required
+          tooltip="This picture will be used for pre sales reports"
+          name="picture"
+          rules={[{ required: true, message: 'This can not be empty 🤦' }]}>
+          <Input
+            onChange={handlePictureSelection}
+            type="file"
           />
         </Form.Item>
         <Form.Item wrapperCol={{}}>

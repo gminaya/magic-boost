@@ -1,9 +1,10 @@
-export interface Location{
-  id: number;
-  name: string;
-  address: string;
-  lat: number;
-  lon: number;
-  
+import { definitions } from 'db/supabase';
+import { LocationFormat } from './LocationFormat';
+import { LocationOrientation } from './LocationOrientation';
 
+type SupabaseDefinitions = definitions['Locations'];
+
+export interface Location extends SupabaseDefinitions {
+  format: LocationFormat;
+  orientation: LocationOrientation;
 }

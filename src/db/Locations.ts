@@ -17,7 +17,7 @@ export const getLocations = async () => {
 };
 
 /** Inserts a new location */
-export const insertNewLocation = async (name: string, address: string, lat: number, lon: number) => {
+export const insertNewLocation = async (name: string, address: string, lat: number, lon: number, format: string, picture: string, orientation: string) => {
   const { uri, apiKey } = settings.supabase;
   const supabase = createClient(uri, apiKey);
 
@@ -27,6 +27,9 @@ export const insertNewLocation = async (name: string, address: string, lat: numb
       address,
       lat,
       lon,
+      format,
+      picture,
+      orientation,
     },
   ]);
 
