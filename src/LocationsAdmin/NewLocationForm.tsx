@@ -2,20 +2,17 @@ import { useState } from 'react';
 import { Form, Input, Button, message, Select } from 'antd';
 import { insertNewLocation } from 'db/Locations';
 import { ValidateErrorEntity } from 'rc-field-form/lib/interface';
-import { uploadImageToSupabase } from 'db/hooks/useUploadPhoto';
-import 'styles/components/newLocationForm.scss';
 
-type RequiredMark = boolean | 'optional';
+import { uploadImageToSupabase } from 'db/hooks/useUploadPhoto';
+import { LocationFormat, LocationOrientation } from 'models/Location';
+
+import 'styles/components/newLocationForm.scss';
 
 const { Option } = Select;
 
-type LocationFormat = 'billboard' | 'mini-billboard' | 'digital';
-type LocationOrientation = 'car-flow' | 'walker-flow' | 'NA';
-
 function NewLocationForm() {
   const [form] = Form.useForm();
-  //TODO: Gabriel: Why is this needed?
-  const [requiredMark] = useState<RequiredMark>('optional');
+  
   const [name, setName] = useState('');
   const [adress, setAdress] = useState('');
   const [latitude, setLatitude] = useState(0);
@@ -25,49 +22,24 @@ function NewLocationForm() {
 
   let selectedFile: File;
 
+  //TODO: Gabi: need to find ways to make this generic
   const success = () => {
     message.success('Your new location has saved 😁');
   };
   const error = () => {
     message.error('oh no! something went wrong 😩');
   };
-  const hanldeOrientationChange = (value: string | undefined) => {
-
-    switch (value) {
-    case 'car-low':
-      setOrientation('car-flow');
-      break;
-
-    case 'walker-flow':
-      setOrientation('walker-flow');
-      break;
-
-    case 'NA':
-      setOrientation('NA');
-      break;
-    }
+  
+  const handleOrientationChange = (value: LocationOrientation) => {
+    setOrientation(value);
   };
 
-  const handleFormatChange = (value: string | undefined) => {
-
-    switch (value) {
-    case 'billboard':
-      setFormat('billboard');
-      break;
-
-    case 'mini-billboard':
-      setFormat('mini-billboard');
-      break;
-
-    case 'digital':
-      setFormat('digital');
-      break;
-    }
+  const handleFormatChange = (value: LocationFormat) => {
+    setFormat(value);
   };
 
   //Saves new location in DB
   const onSummit = async () => {
-    
     const defaultPictureUrl =  await uploadImageToSupabase(selectedFile, 'default-pictures');
     
     if(defaultPictureUrl === undefined){
@@ -95,8 +67,7 @@ function NewLocationForm() {
         onFinish={onSummit}
         onFinishFailed={onFinishFailed}
         layout={'vertical'}
-        initialValues={{ requiredMarkValue: requiredMark }}
-        requiredMark={requiredMark}>
+        requiredMark={true}>
         <Form.Item
           requiredMark={true}
           label="Location Name"
@@ -149,7 +120,7 @@ function NewLocationForm() {
           rules={[{ required: true, message: 'This can not be empty 🤦' }]}>
           <Select
             placeholder="Select the format"
-            onChange={value => { handleFormatChange(value?.toString()); }}
+            onChange={handleFormatChange}
           >
             <Option value="billboard">Billboard</Option>
             <Option value="mini-billboard">Mini Billboard</Option>
@@ -164,7 +135,7 @@ function NewLocationForm() {
           rules={[{ required: true, message: 'This can not be empty 🤦' }]}>
           <Select
             placeholder="Select the orientation"
-            onChange={value => { hanldeOrientationChange(value?.toString()); }}
+            onChange={handleOrientationChange}
           >
             <Option value="car-flow">Car flow</Option>
             <Option value="walker-flow">Walker flow</Option>
