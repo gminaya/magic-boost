@@ -4,7 +4,8 @@ import { insertNewLocation } from 'db/Locations';
 import { ValidateErrorEntity } from 'rc-field-form/lib/interface';
 
 import { uploadImageToSupabase } from 'db/hooks/useUploadPhoto';
-import { LocationFormat, LocationOrientation } from 'models/Location';
+import { LocationFormat, LocationFormatLabels } from 'models/LocationFormat';
+import { LocationOrientation, LocationOrientationLabels } from 'models/LocationOrientation';
 
 import 'styles/components/newLocationForm.scss';
 
@@ -12,7 +13,7 @@ const { Option } = Select;
 
 function NewLocationForm() {
   const [form] = Form.useForm();
-  
+
   const [name, setName] = useState('');
   const [adress, setAdress] = useState('');
   const [latitude, setLatitude] = useState(0);
@@ -29,7 +30,7 @@ function NewLocationForm() {
   const error = () => {
     message.error('oh no! something went wrong 😩');
   };
-  
+
   const handleOrientationChange = (value: LocationOrientation) => {
     setOrientation(value);
   };
@@ -40,9 +41,9 @@ function NewLocationForm() {
 
   //Saves new location in DB
   const onSummit = async () => {
-    const defaultPictureUrl =  await uploadImageToSupabase(selectedFile, 'default-pictures');
-    
-    if(defaultPictureUrl === undefined){
+    const defaultPictureUrl = await uploadImageToSupabase(selectedFile, 'default-pictures');
+
+    if (defaultPictureUrl === undefined) {
       return;
     }
 
@@ -67,7 +68,7 @@ function NewLocationForm() {
         onFinish={onSummit}
         onFinishFailed={onFinishFailed}
         layout={'vertical'}
-        requiredMark={true}>
+      >
         <Form.Item
           requiredMark={true}
           label="Location Name"
@@ -122,9 +123,9 @@ function NewLocationForm() {
             placeholder="Select the format"
             onChange={handleFormatChange}
           >
-            <Option value="billboard">Billboard</Option>
-            <Option value="mini-billboard">Mini Billboard</Option>
-            <Option value="digital">Digital</Option>
+            {Object.entries(LocationFormatLabels).map(([locationType, locationLabel]) => (
+              <Option key={locationType} value={locationType}>{locationLabel}</Option>
+            ))}
           </Select>
         </Form.Item>
         <Form.Item
@@ -137,9 +138,9 @@ function NewLocationForm() {
             placeholder="Select the orientation"
             onChange={handleOrientationChange}
           >
-            <Option value="car-flow">Car flow</Option>
-            <Option value="walker-flow">Walker flow</Option>
-            <Option value="NA">NA</Option>
+            {Object.entries(LocationOrientationLabels).map(([orientationType, orientationLabel]) => (
+              <Option key={orientationType} value={orientationType}>{orientationLabel}</Option>  
+            ))}
           </Select>
         </Form.Item>
         <Form.Item
