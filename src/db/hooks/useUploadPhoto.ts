@@ -1,10 +1,11 @@
-import { supabase as supabaseClient } from 'db/helper';
+import { getSupabaseClient } from 'db/DatabaseClient';
 import { v4 as uuidv4 } from 'uuid';
 /**
  * Retrieves public uploaded image URL from supabase
  */
 const getUploadedImageURL = async (imagePath: string, folder:string) => {
-  const { publicURL, error } = supabaseClient.storage.from(folder).getPublicUrl(imagePath);
+  const client = getSupabaseClient();
+  const { publicURL, error } = client.storage.from(folder).getPublicUrl(imagePath);
 
   if (error) {
     throw Error(error?.message);
@@ -22,7 +23,8 @@ export const uploadImageToSupabase = async (file: File, folder: string) => {
 
   const filename = `${uuidv4()}.jpg`;
   
-  const { data, error } = await supabaseClient.storage.from(folder).upload(`public/${filename}`, file, {
+  const client = getSupabaseClient();
+  const { data, error } = await client.storage.from(folder).upload(`public/${filename}`, file, {
     cacheControl: '3600',
     upsert: false,
     contentType: 'image/jpg',
