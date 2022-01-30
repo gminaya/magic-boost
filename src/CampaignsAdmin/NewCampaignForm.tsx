@@ -43,7 +43,6 @@ export const NewCampaignForm = () => {
     ]);
   };
 
-  //TODO: Amhed: Update to use correct model
   const onFinishFailed = (errorInfo: ValidateErrorEntity<CampaignModel>) => {
     console.log('Failed:', errorInfo);
   };
