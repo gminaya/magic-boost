@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { getLocations } from 'db/Locations';
-import { definitions } from 'db/supabase';
+import { definitions } from 'db/SupabaseTypes';
 
 type LocationsResult = Array<definitions['Locations']>;
 

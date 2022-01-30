@@ -1,7 +1,4 @@
-import { definitions } from './supabase';
-import { createClient } from '@supabase/supabase-js';
-
-import { settings } from 'settings';
+import { definitions } from './SupabaseTypes';
 import { getSupabaseClient } from './DatabaseClient';
 
 // Gets a list of all campaigns

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Table, Popconfirm } from 'antd';
 import { DeleteTwoTone } from '@ant-design/icons';
-import { definitions } from 'db/supabase';
+import { definitions } from 'db/SupabaseTypes';
 import { useLocations } from 'db/hooks/getLocations';
 import { deleteLocation } from 'db/Locations';
 

@@ -1,4 +1,4 @@
-import { definitions } from './supabase';
+import { definitions } from './SupabaseTypes';
 import { getSupabaseClient } from './DatabaseClient';
 
 /** Gets a list of all locations */
