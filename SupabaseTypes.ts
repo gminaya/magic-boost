@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-  '/': {
+  "/": {
     get: {
       responses: {
         /** OK */
@@ -12,37 +12,37 @@ export interface paths {
       };
     };
   };
-  '/Campaigns': {
+  "/Campaigns": {
     get: {
       parameters: {
         query: {
-          id?: parameters['rowFilter.Campaigns.id'];
-          name?: parameters['rowFilter.Campaigns.name'];
-          status?: parameters['rowFilter.Campaigns.status'];
-          location_config?: parameters['rowFilter.Campaigns.location_config'];
-          dueDate?: parameters['rowFilter.Campaigns.dueDate'];
+          id?: parameters["rowFilter.Campaigns.id"];
+          name?: parameters["rowFilter.Campaigns.name"];
+          status?: parameters["rowFilter.Campaigns.status"];
+          location_config?: parameters["rowFilter.Campaigns.location_config"];
+          dueDate?: parameters["rowFilter.Campaigns.dueDate"];
           /** Filtering Columns */
-          select?: parameters['select'];
+          select?: parameters["select"];
           /** Ordering */
-          order?: parameters['order'];
+          order?: parameters["order"];
           /** Limiting and Pagination */
-          offset?: parameters['offset'];
+          offset?: parameters["offset"];
           /** Limiting and Pagination */
-          limit?: parameters['limit'];
+          limit?: parameters["limit"];
         };
         header: {
           /** Limiting and Pagination */
-          Range?: parameters['range'];
+          Range?: parameters["range"];
           /** Limiting and Pagination */
-          'Range-Unit'?: parameters['rangeUnit'];
+          "Range-Unit"?: parameters["rangeUnit"];
           /** Preference */
-          Prefer?: parameters['preferCount'];
+          Prefer?: parameters["preferCount"];
         };
       };
       responses: {
         /** OK */
         200: {
-          schema: definitions['Campaigns'][];
+          schema: definitions["Campaigns"][];
         };
         /** Partial Content */
         206: unknown;
@@ -52,15 +52,15 @@ export interface paths {
       parameters: {
         body: {
           /** Campaigns */
-          Campaigns?: definitions['Campaigns'];
+          Campaigns?: definitions["Campaigns"];
         };
         query: {
           /** Filtering Columns */
-          select?: parameters['select'];
+          select?: parameters["select"];
         };
         header: {
           /** Preference */
-          Prefer?: parameters['preferReturn'];
+          Prefer?: parameters["preferReturn"];
         };
       };
       responses: {
@@ -71,15 +71,15 @@ export interface paths {
     delete: {
       parameters: {
         query: {
-          id?: parameters['rowFilter.Campaigns.id'];
-          name?: parameters['rowFilter.Campaigns.name'];
-          status?: parameters['rowFilter.Campaigns.status'];
-          location_config?: parameters['rowFilter.Campaigns.location_config'];
-          dueDate?: parameters['rowFilter.Campaigns.dueDate'];
+          id?: parameters["rowFilter.Campaigns.id"];
+          name?: parameters["rowFilter.Campaigns.name"];
+          status?: parameters["rowFilter.Campaigns.status"];
+          location_config?: parameters["rowFilter.Campaigns.location_config"];
+          dueDate?: parameters["rowFilter.Campaigns.dueDate"];
         };
         header: {
           /** Preference */
-          Prefer?: parameters['preferReturn'];
+          Prefer?: parameters["preferReturn"];
         };
       };
       responses: {
@@ -90,19 +90,19 @@ export interface paths {
     patch: {
       parameters: {
         query: {
-          id?: parameters['rowFilter.Campaigns.id'];
-          name?: parameters['rowFilter.Campaigns.name'];
-          status?: parameters['rowFilter.Campaigns.status'];
-          location_config?: parameters['rowFilter.Campaigns.location_config'];
-          dueDate?: parameters['rowFilter.Campaigns.dueDate'];
+          id?: parameters["rowFilter.Campaigns.id"];
+          name?: parameters["rowFilter.Campaigns.name"];
+          status?: parameters["rowFilter.Campaigns.status"];
+          location_config?: parameters["rowFilter.Campaigns.location_config"];
+          dueDate?: parameters["rowFilter.Campaigns.dueDate"];
         };
         body: {
           /** Campaigns */
-          Campaigns?: definitions['Campaigns'];
+          Campaigns?: definitions["Campaigns"];
         };
         header: {
           /** Preference */
-          Prefer?: parameters['preferReturn'];
+          Prefer?: parameters["preferReturn"];
         };
       };
       responses: {
@@ -111,36 +111,36 @@ export interface paths {
       };
     };
   };
-  '/LocationScreens': {
+  "/LocationScreens": {
     get: {
       parameters: {
         query: {
-          id?: parameters['rowFilter.LocationScreens.id'];
-          location_id?: parameters['rowFilter.LocationScreens.location_id'];
+          id?: parameters["rowFilter.LocationScreens.id"];
+          location_id?: parameters["rowFilter.LocationScreens.location_id"];
           /** Identifies a screen, in case a location has multiple */
-          order_id?: parameters['rowFilter.LocationScreens.order_id'];
+          order_id?: parameters["rowFilter.LocationScreens.order_id"];
           /** Filtering Columns */
-          select?: parameters['select'];
+          select?: parameters["select"];
           /** Ordering */
-          order?: parameters['order'];
+          order?: parameters["order"];
           /** Limiting and Pagination */
-          offset?: parameters['offset'];
+          offset?: parameters["offset"];
           /** Limiting and Pagination */
-          limit?: parameters['limit'];
+          limit?: parameters["limit"];
         };
         header: {
           /** Limiting and Pagination */
-          Range?: parameters['range'];
+          Range?: parameters["range"];
           /** Limiting and Pagination */
-          'Range-Unit'?: parameters['rangeUnit'];
+          "Range-Unit"?: parameters["rangeUnit"];
           /** Preference */
-          Prefer?: parameters['preferCount'];
+          Prefer?: parameters["preferCount"];
         };
       };
       responses: {
         /** OK */
         200: {
-          schema: definitions['LocationScreens'][];
+          schema: definitions["LocationScreens"][];
         };
         /** Partial Content */
         206: unknown;
@@ -150,15 +150,15 @@ export interface paths {
       parameters: {
         body: {
           /** LocationScreens */
-          LocationScreens?: definitions['LocationScreens'];
+          LocationScreens?: definitions["LocationScreens"];
         };
         query: {
           /** Filtering Columns */
-          select?: parameters['select'];
+          select?: parameters["select"];
         };
         header: {
           /** Preference */
-          Prefer?: parameters['preferReturn'];
+          Prefer?: parameters["preferReturn"];
         };
       };
       responses: {
@@ -169,14 +169,14 @@ export interface paths {
     delete: {
       parameters: {
         query: {
-          id?: parameters['rowFilter.LocationScreens.id'];
-          location_id?: parameters['rowFilter.LocationScreens.location_id'];
+          id?: parameters["rowFilter.LocationScreens.id"];
+          location_id?: parameters["rowFilter.LocationScreens.location_id"];
           /** Identifies a screen, in case a location has multiple */
-          order_id?: parameters['rowFilter.LocationScreens.order_id'];
+          order_id?: parameters["rowFilter.LocationScreens.order_id"];
         };
         header: {
           /** Preference */
-          Prefer?: parameters['preferReturn'];
+          Prefer?: parameters["preferReturn"];
         };
       };
       responses: {
@@ -187,18 +187,18 @@ export interface paths {
     patch: {
       parameters: {
         query: {
-          id?: parameters['rowFilter.LocationScreens.id'];
-          location_id?: parameters['rowFilter.LocationScreens.location_id'];
+          id?: parameters["rowFilter.LocationScreens.id"];
+          location_id?: parameters["rowFilter.LocationScreens.location_id"];
           /** Identifies a screen, in case a location has multiple */
-          order_id?: parameters['rowFilter.LocationScreens.order_id'];
+          order_id?: parameters["rowFilter.LocationScreens.order_id"];
         };
         body: {
           /** LocationScreens */
-          LocationScreens?: definitions['LocationScreens'];
+          LocationScreens?: definitions["LocationScreens"];
         };
         header: {
           /** Preference */
-          Prefer?: parameters['preferReturn'];
+          Prefer?: parameters["preferReturn"];
         };
       };
       responses: {
@@ -207,41 +207,41 @@ export interface paths {
       };
     };
   };
-  '/Locations': {
+  "/Locations": {
     get: {
       parameters: {
         query: {
-          id?: parameters['rowFilter.Locations.id'];
-          name?: parameters['rowFilter.Locations.name'];
-          address?: parameters['rowFilter.Locations.address'];
+          id?: parameters["rowFilter.Locations.id"];
+          name?: parameters["rowFilter.Locations.name"];
+          address?: parameters["rowFilter.Locations.address"];
           /** Latitude */
-          lat?: parameters['rowFilter.Locations.lat'];
-          lon?: parameters['rowFilter.Locations.lon'];
-          format?: parameters['rowFilter.Locations.format'];
-          picture?: parameters['rowFilter.Locations.picture'];
-          orientation?: parameters['rowFilter.Locations.orientation'];
+          lat?: parameters["rowFilter.Locations.lat"];
+          lon?: parameters["rowFilter.Locations.lon"];
+          format?: parameters["rowFilter.Locations.format"];
+          picture?: parameters["rowFilter.Locations.picture"];
+          orientation?: parameters["rowFilter.Locations.orientation"];
           /** Filtering Columns */
-          select?: parameters['select'];
+          select?: parameters["select"];
           /** Ordering */
-          order?: parameters['order'];
+          order?: parameters["order"];
           /** Limiting and Pagination */
-          offset?: parameters['offset'];
+          offset?: parameters["offset"];
           /** Limiting and Pagination */
-          limit?: parameters['limit'];
+          limit?: parameters["limit"];
         };
         header: {
           /** Limiting and Pagination */
-          Range?: parameters['range'];
+          Range?: parameters["range"];
           /** Limiting and Pagination */
-          'Range-Unit'?: parameters['rangeUnit'];
+          "Range-Unit"?: parameters["rangeUnit"];
           /** Preference */
-          Prefer?: parameters['preferCount'];
+          Prefer?: parameters["preferCount"];
         };
       };
       responses: {
         /** OK */
         200: {
-          schema: definitions['Locations'][];
+          schema: definitions["Locations"][];
         };
         /** Partial Content */
         206: unknown;
@@ -251,15 +251,15 @@ export interface paths {
       parameters: {
         body: {
           /** Locations */
-          Locations?: definitions['Locations'];
+          Locations?: definitions["Locations"];
         };
         query: {
           /** Filtering Columns */
-          select?: parameters['select'];
+          select?: parameters["select"];
         };
         header: {
           /** Preference */
-          Prefer?: parameters['preferReturn'];
+          Prefer?: parameters["preferReturn"];
         };
       };
       responses: {
@@ -270,19 +270,19 @@ export interface paths {
     delete: {
       parameters: {
         query: {
-          id?: parameters['rowFilter.Locations.id'];
-          name?: parameters['rowFilter.Locations.name'];
-          address?: parameters['rowFilter.Locations.address'];
+          id?: parameters["rowFilter.Locations.id"];
+          name?: parameters["rowFilter.Locations.name"];
+          address?: parameters["rowFilter.Locations.address"];
           /** Latitude */
-          lat?: parameters['rowFilter.Locations.lat'];
-          lon?: parameters['rowFilter.Locations.lon'];
-          format?: parameters['rowFilter.Locations.format'];
-          picture?: parameters['rowFilter.Locations.picture'];
-          orientation?: parameters['rowFilter.Locations.orientation'];
+          lat?: parameters["rowFilter.Locations.lat"];
+          lon?: parameters["rowFilter.Locations.lon"];
+          format?: parameters["rowFilter.Locations.format"];
+          picture?: parameters["rowFilter.Locations.picture"];
+          orientation?: parameters["rowFilter.Locations.orientation"];
         };
         header: {
           /** Preference */
-          Prefer?: parameters['preferReturn'];
+          Prefer?: parameters["preferReturn"];
         };
       };
       responses: {
@@ -293,23 +293,23 @@ export interface paths {
     patch: {
       parameters: {
         query: {
-          id?: parameters['rowFilter.Locations.id'];
-          name?: parameters['rowFilter.Locations.name'];
-          address?: parameters['rowFilter.Locations.address'];
+          id?: parameters["rowFilter.Locations.id"];
+          name?: parameters["rowFilter.Locations.name"];
+          address?: parameters["rowFilter.Locations.address"];
           /** Latitude */
-          lat?: parameters['rowFilter.Locations.lat'];
-          lon?: parameters['rowFilter.Locations.lon'];
-          format?: parameters['rowFilter.Locations.format'];
-          picture?: parameters['rowFilter.Locations.picture'];
-          orientation?: parameters['rowFilter.Locations.orientation'];
+          lat?: parameters["rowFilter.Locations.lat"];
+          lon?: parameters["rowFilter.Locations.lon"];
+          format?: parameters["rowFilter.Locations.format"];
+          picture?: parameters["rowFilter.Locations.picture"];
+          orientation?: parameters["rowFilter.Locations.orientation"];
         };
         body: {
           /** Locations */
-          Locations?: definitions['Locations'];
+          Locations?: definitions["Locations"];
         };
         header: {
           /** Preference */
-          Prefer?: parameters['preferReturn'];
+          Prefer?: parameters["preferReturn"];
         };
       };
       responses: {
@@ -389,17 +389,17 @@ export interface parameters {
    * @description Preference
    * @enum {string}
    */
-  preferParams: 'params=single-object';
+  preferParams: "params=single-object";
   /**
    * @description Preference
    * @enum {string}
    */
-  preferReturn: 'return=representation' | 'return=minimal' | 'return=none';
+  preferReturn: "return=representation" | "return=minimal" | "return=none";
   /**
    * @description Preference
    * @enum {string}
    */
-  preferCount: 'count=none';
+  preferCount: "count=none";
   /** @description Filtering Columns */
   select: string;
   /** @description On Conflict */
@@ -418,49 +418,49 @@ export interface parameters {
   /** @description Limiting and Pagination */
   limit: string;
   /** @description Campaigns */
-  'body.Campaigns': definitions['Campaigns'];
+  "body.Campaigns": definitions["Campaigns"];
   /** Format: bigint */
-  'rowFilter.Campaigns.id': string;
+  "rowFilter.Campaigns.id": string;
   /** Format: text */
-  'rowFilter.Campaigns.name': string;
+  "rowFilter.Campaigns.name": string;
   /** Format: text */
-  'rowFilter.Campaigns.status': string;
+  "rowFilter.Campaigns.status": string;
   /** Format: json */
-  'rowFilter.Campaigns.location_config': string;
+  "rowFilter.Campaigns.location_config": string;
   /** Format: date */
-  'rowFilter.Campaigns.dueDate': string;
+  "rowFilter.Campaigns.dueDate": string;
   /** @description LocationScreens */
-  'body.LocationScreens': definitions['LocationScreens'];
+  "body.LocationScreens": definitions["LocationScreens"];
   /** Format: bigint */
-  'rowFilter.LocationScreens.id': string;
+  "rowFilter.LocationScreens.id": string;
   /** Format: bigint */
-  'rowFilter.LocationScreens.location_id': string;
+  "rowFilter.LocationScreens.location_id": string;
   /**
    * Format: bigint
    * @description Identifies a screen, in case a location has multiple
    */
-  'rowFilter.LocationScreens.order_id': string;
+  "rowFilter.LocationScreens.order_id": string;
   /** @description Locations */
-  'body.Locations': definitions['Locations'];
+  "body.Locations": definitions["Locations"];
   /** Format: bigint */
-  'rowFilter.Locations.id': string;
+  "rowFilter.Locations.id": string;
   /** Format: text */
-  'rowFilter.Locations.name': string;
+  "rowFilter.Locations.name": string;
   /** Format: character varying */
-  'rowFilter.Locations.address': string;
+  "rowFilter.Locations.address": string;
   /**
    * Format: double precision
    * @description Latitude
    */
-  'rowFilter.Locations.lat': string;
+  "rowFilter.Locations.lat": string;
   /** Format: double precision */
-  'rowFilter.Locations.lon': string;
+  "rowFilter.Locations.lon": string;
   /** Format: text */
-  'rowFilter.Locations.format': string;
+  "rowFilter.Locations.format": string;
   /** Format: text */
-  'rowFilter.Locations.picture': string;
+  "rowFilter.Locations.picture": string;
   /** Format: text */
-  'rowFilter.Locations.orientation': string;
+  "rowFilter.Locations.orientation": string;
 }
 
 export interface operations {}

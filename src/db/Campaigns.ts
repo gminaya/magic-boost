@@ -1,12 +1,9 @@
-import { definitions } from './supabase';
-import { createClient } from '@supabase/supabase-js';
-
-import { settings } from 'settings';
+import { definitions } from './SupabaseTypes';
+import { getSupabaseClient } from './DatabaseClient';
 
 // Gets a list of all campaigns
 export const getCampaigns = async () => {
-  const { uri, apiKey } = settings.supabase;
-  const supabase = createClient(uri, apiKey);
+  const supabase = getSupabaseClient();
 
   const { data, error } = await supabase.from<definitions['Campaigns']>('Campaigns').select();
 
@@ -24,8 +21,7 @@ export const getCampaigns = async () => {
 // Inserts a new campaign
 //TODO: Amhed + Gabriel: Manage date conversions on a single place
 export const insertNewCampaign = async (name: string, status = '', location_config: string, dueDate: Date) => {
-  const { uri, apiKey } = settings.supabase;
-  const supabase = createClient(uri, apiKey);
+  const supabase = getSupabaseClient();
 
   const { error } = await supabase
     .from<definitions['Campaigns']>('Campaigns')
@@ -42,8 +38,7 @@ export const insertNewCampaign = async (name: string, status = '', location_conf
  * gets an especific campaign by its ID
  */
 export const getCampaignByID = async (id:number) => {
-  const { uri, apiKey } = settings.supabase;
-  const supabase = createClient(uri, apiKey);
+  const supabase = getSupabaseClient();
 
   //TODO: Amhed: Encapsulate into its own hook?
   const { data } = await supabase.from<definitions['Campaigns']>('Campaigns').select().eq('id', Number(id)).single();
@@ -57,8 +52,7 @@ export const getCampaignByID = async (id:number) => {
  * Deletes a row based on it's ID
  */
 export const deleteCampaign = async (id: number) => {
-  const { uri, apiKey } = settings.supabase;
-  const supabase = createClient(uri, apiKey);
+  const supabase = getSupabaseClient();
 
   const { error } = await supabase.from('Campaigns').delete().eq('id', id);
 

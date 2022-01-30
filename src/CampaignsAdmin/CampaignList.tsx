@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { Table, Button, Popconfirm, Space } from 'antd';
 import { DeleteOutlined, EyeOutlined,EditOutlined } from '@ant-design/icons';
 import { getCampaigns, deleteCampaign } from 'db/Campaigns';
-import { definitions } from 'db/supabase';
+import { definitions } from 'db/SupabaseTypes';
 import moment from 'moment';
 
 type CampaignsResult = Array<definitions['Campaigns']>;

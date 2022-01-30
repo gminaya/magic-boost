@@ -1,4 +1,4 @@
-import { definitions } from 'db/supabase';
+import { definitions } from 'db/SupabaseTypes';
 import { CampaignLocationInfo } from './CampaignLocationInfo';
 
 type SupabaseCampaignDefinition = definitions['Campaigns'];

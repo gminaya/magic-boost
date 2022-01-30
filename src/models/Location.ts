@@ -1,4 +1,4 @@
-import { definitions } from 'db/supabase';
+import { definitions } from 'db/SupabaseTypes';
 import { LocationFormat } from './LocationFormat';
 import { LocationOrientation } from './LocationOrientation';
 

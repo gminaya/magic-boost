@@ -3,7 +3,7 @@ module.exports = {
     'browser': true,
     'es2021': true
   },
-  'ignorePatterns': ['.eslintrc.js', '/scripts/*', '/config/*'],
+  'ignorePatterns': ['.eslintrc.js', '/scripts/*', '/config/*', '/src/db/SupabaseTypes.ts'],
   'extends': [
     'eslint:recommended',
     'plugin:react/recommended',
