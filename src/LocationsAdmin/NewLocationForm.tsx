@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { Form, Input, Button, message, Select } from 'antd';
 import { insertNewLocation } from 'db/Locations';
 import { ValidateErrorEntity } from 'rc-field-form/lib/interface';
@@ -21,7 +21,7 @@ function NewLocationForm() {
   const [format, setFormat] = useState<LocationFormat>('billboard');
   const [orientation, setOrientation] = useState<LocationOrientation>('NA');
 
-  let selectedFile: File;
+  const selectedFile = useRef<File>();
 
   //TODO: Gabi: need to find ways to make this generic
   const success = () => {
@@ -39,9 +39,22 @@ function NewLocationForm() {
     setFormat(value);
   };
 
+  // ReactDOM event handler type is WRONG. Ignoring. 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handlePictureSelection = useCallback((e: any) => {
+    if (e.target.files) {
+      selectedFile.current = e.target.files[0];
+    }
+  }, [selectedFile.current]);
+
+
   //Saves new location in DB
   const onSummit = async () => {
-    const defaultPictureUrl = await uploadImageToSupabase(selectedFile, 'default-pictures');
+    if (!selectedFile.current) {
+      throw Error('Attempted to submit empty file');
+    }
+
+    const defaultPictureUrl = await uploadImageToSupabase(selectedFile.current, 'default-pictures');
 
     if (defaultPictureUrl === undefined) {
       return;
@@ -73,7 +86,7 @@ function NewLocationForm() {
           requiredMark={true}
           label="Location Name"
           name="name"
-          tooltip="The name most be a location fisical adress reference"
+          tooltip="The name must be a location fisical adress reference"
           rules={[{ required: true, message: 'Name can not be empty 🤨' }]}
         >
           <Input
@@ -139,7 +152,7 @@ function NewLocationForm() {
             onChange={handleOrientationChange}
           >
             {Object.entries(LocationOrientationLabels).map(([orientationType, orientationLabel]) => (
-              <Option key={orientationType} value={orientationType}>{orientationLabel}</Option>  
+              <Option key={orientationType} value={orientationType}>{orientationLabel}</Option>
             ))}
           </Select>
         </Form.Item>
@@ -150,12 +163,7 @@ function NewLocationForm() {
           name="picture"
           rules={[{ required: true, message: 'This can not be empty 🤦' }]}>
           <Input
-            onChange={(e) => {
-              if (e.target.files) {
-                selectedFile = e.target.files[0];
-              }
-            }
-            }
+            onChange={handlePictureSelection}
             type="file"
           />
         </Form.Item>
