@@ -217,6 +217,9 @@ export interface paths {
           /** Latitude */
           lat?: parameters['rowFilter.Locations.lat'];
           lon?: parameters['rowFilter.Locations.lon'];
+          format?: parameters['rowFilter.Locations.format'];
+          picture?: parameters['rowFilter.Locations.picture'];
+          orientation?: parameters['rowFilter.Locations.orientation'];
           /** Filtering Columns */
           select?: parameters['select'];
           /** Ordering */
@@ -273,6 +276,9 @@ export interface paths {
           /** Latitude */
           lat?: parameters['rowFilter.Locations.lat'];
           lon?: parameters['rowFilter.Locations.lon'];
+          format?: parameters['rowFilter.Locations.format'];
+          picture?: parameters['rowFilter.Locations.picture'];
+          orientation?: parameters['rowFilter.Locations.orientation'];
         };
         header: {
           /** Preference */
@@ -293,6 +299,9 @@ export interface paths {
           /** Latitude */
           lat?: parameters['rowFilter.Locations.lat'];
           lon?: parameters['rowFilter.Locations.lon'];
+          format?: parameters['rowFilter.Locations.format'];
+          picture?: parameters['rowFilter.Locations.picture'];
+          orientation?: parameters['rowFilter.Locations.orientation'];
         };
         body: {
           /** Locations */
@@ -314,85 +323,144 @@ export interface paths {
 export interface definitions {
   Campaigns: {
     /**
-     * Note:
+     * Format: bigint
+     * @description Note:
      * This is a Primary Key.<pk/>
      */
     id: number;
+    /** Format: text */
     name: string;
+    /** Format: text */
     status: string;
+    /** Format: json */
     location_config?: string;
+    /** Format: date */
     dueDate?: string;
   };
   LocationScreens: {
     /**
-     * Note:
+     * Format: bigint
+     * @description Note:
      * This is a Primary Key.<pk/>
      */
     id: number;
     /**
-     * Note:
+     * Format: bigint
+     * @description Note:
      * This is a Foreign Key to `Locations.id`.<fk table='Locations' column='id'/>
      */
     location_id?: number;
-    /** Identifies a screen, in case a location has multiple */
+    /**
+     * Format: bigint
+     * @description Identifies a screen, in case a location has multiple
+     */
     order_id: number;
   };
+  /** @description An address on a map */
   Locations: {
     /**
-     * Note:
+     * Format: bigint
+     * @description Note:
      * This is a Primary Key.<pk/>
      */
     id: number;
+    /** Format: text */
     name: string;
+    /** Format: character varying */
     address?: string;
-    /** Latitude */
+    /**
+     * Format: double precision
+     * @description Latitude
+     */
     lat: number;
+    /** Format: double precision */
     lon: number;
+    /** Format: text */
+    format?: string;
+    /** Format: text */
+    picture?: string;
+    /** Format: text */
+    orientation?: string;
   };
 }
 
 export interface parameters {
-  /** Preference */
+  /**
+   * @description Preference
+   * @enum {string}
+   */
   preferParams: 'params=single-object';
-  /** Preference */
+  /**
+   * @description Preference
+   * @enum {string}
+   */
   preferReturn: 'return=representation' | 'return=minimal' | 'return=none';
-  /** Preference */
+  /**
+   * @description Preference
+   * @enum {string}
+   */
   preferCount: 'count=none';
-  /** Filtering Columns */
+  /** @description Filtering Columns */
   select: string;
-  /** On Conflict */
+  /** @description On Conflict */
   on_conflict: string;
-  /** Ordering */
+  /** @description Ordering */
   order: string;
-  /** Limiting and Pagination */
+  /** @description Limiting and Pagination */
   range: string;
-  /** Limiting and Pagination */
+  /**
+   * @description Limiting and Pagination
+   * @default items
+   */
   rangeUnit: string;
-  /** Limiting and Pagination */
+  /** @description Limiting and Pagination */
   offset: string;
-  /** Limiting and Pagination */
+  /** @description Limiting and Pagination */
   limit: string;
-  /** Campaigns */
+  /** @description Campaigns */
   'body.Campaigns': definitions['Campaigns'];
+  /** Format: bigint */
   'rowFilter.Campaigns.id': string;
+  /** Format: text */
   'rowFilter.Campaigns.name': string;
+  /** Format: text */
   'rowFilter.Campaigns.status': string;
+  /** Format: json */
   'rowFilter.Campaigns.location_config': string;
+  /** Format: date */
   'rowFilter.Campaigns.dueDate': string;
-  /** LocationScreens */
+  /** @description LocationScreens */
   'body.LocationScreens': definitions['LocationScreens'];
+  /** Format: bigint */
   'rowFilter.LocationScreens.id': string;
+  /** Format: bigint */
   'rowFilter.LocationScreens.location_id': string;
-  /** Identifies a screen, in case a location has multiple */
+  /**
+   * Format: bigint
+   * @description Identifies a screen, in case a location has multiple
+   */
   'rowFilter.LocationScreens.order_id': string;
-  /** Locations */
+  /** @description Locations */
   'body.Locations': definitions['Locations'];
+  /** Format: bigint */
   'rowFilter.Locations.id': string;
+  /** Format: text */
   'rowFilter.Locations.name': string;
+  /** Format: character varying */
   'rowFilter.Locations.address': string;
-  /** Latitude */
+  /**
+   * Format: double precision
+   * @description Latitude
+   */
   'rowFilter.Locations.lat': string;
+  /** Format: double precision */
   'rowFilter.Locations.lon': string;
+  /** Format: text */
+  'rowFilter.Locations.format': string;
+  /** Format: text */
+  'rowFilter.Locations.picture': string;
+  /** Format: text */
+  'rowFilter.Locations.orientation': string;
 }
 
 export interface operations {}

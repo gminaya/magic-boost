@@ -56,6 +56,11 @@ export const LocationList = () => {
   ];
 
   return (
-    <Table style={{ margin: 5 }} bordered loading={locations == null} dataSource={locations} columns={columns} />
+    <Table style={{ margin: 5 }} 
+      rowKey="id"
+      bordered 
+      loading={locations == null} 
+      dataSource={locations} 
+      columns={columns} />
   );
 };
