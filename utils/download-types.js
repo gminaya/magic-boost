@@ -1,6 +1,10 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
 
+//TODO: Amhed: Need to update script to put directly unto /db/supabase
+//TODO: Amhed: Change that name from supabase.ts to supabase-types.ts
+//TODO: Amhed: Create scripts to push to staging/prod
+
 require('dotenv').config();
 const { exec } = require('child_process');
 
