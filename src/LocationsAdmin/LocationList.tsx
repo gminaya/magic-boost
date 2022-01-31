@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Table, Popconfirm } from 'antd';
+import { Table, Popconfirm} from 'antd';
 import { DeleteTwoTone } from '@ant-design/icons';
 import { definitions } from 'db/SupabaseTypes';
 import { useLocations } from 'db/hooks/getLocations';
 import { deleteLocation } from 'db/Locations';
-
-import ViewOnGoogleMaps from './ViewOnGoogleMaps';
+import { MapViewerModal } from 'Maps/MapViewerModal';
 
 export const LocationList = () => {
   const { locations, refreshLocations } = useLocations();
@@ -27,8 +26,7 @@ export const LocationList = () => {
       key: 'lon',
       render: (_: any, record: definitions['Locations']) => {
         return (
-          //TODO: Change to show a map, or link to map
-          <ViewOnGoogleMaps lat={record.lon} lon={record.lat} />
+          <MapViewerModal lat={record.lat} lon={record.lon} adress={record.address} />
         );
       },
     },
@@ -56,11 +54,11 @@ export const LocationList = () => {
   ];
 
   return (
-    <Table style={{ margin: 5 }} 
+    <Table style={{ margin: 5 }}
       rowKey="id"
-      bordered 
-      loading={locations == null} 
-      dataSource={locations} 
+      bordered
+      loading={locations == null}
+      dataSource={locations}
       columns={columns} />
   );
 };
