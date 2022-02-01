@@ -26,7 +26,7 @@ export const LocationList = () => {
       key: 'lon',
       render: (_: any, record: definitions['Locations']) => {
         return (
-          <MapViewerModal lat={record.lat} lon={record.lon} adress={record.address} />
+          <MapViewerModal { ...record } />
         );
       },
     },

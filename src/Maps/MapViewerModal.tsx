@@ -4,7 +4,7 @@ import { Marker, StaticGoogleMap } from 'react-static-google-map';
 import { settings } from 'settings';
 
 interface MapViewerModalProps {
-  adress?: string;
+  address?: string;
   lat: number;
   lon: number;
 }
@@ -26,7 +26,7 @@ export const MapViewerModal = (props: MapViewerModalProps) => {
         View on map
       </Button>
       <Modal
-        title={props.adress}
+        title={props.address}
         centered
         visible={isModalVisible}
         onOk={handleOk}
