@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Table, Popconfirm} from 'antd';
+import { Table, Popconfirm, Image} from 'antd';
 import { DeleteTwoTone } from '@ant-design/icons';
 import { definitions } from 'db/SupabaseTypes';
 import { useLocations } from 'db/hooks/getLocations';
@@ -19,6 +19,16 @@ export const LocationList = () => {
       title: 'Address',
       dataIndex: 'address',
       key: 'address',
+    },
+    {
+      title: 'Default Picture',
+      dataIndex: 'picture',
+      key: 'picture',
+      render: (_: any, record: definitions['Locations']) => {
+        return (
+          <Image src={ record.picture } height={ 20 } />
+        );
+      },
     },
     {
       title: 'Location',
@@ -55,6 +65,7 @@ export const LocationList = () => {
 
   return (
     <Table style={{ margin: 5 }}
+      size='small'
       rowKey="id"
       bordered
       loading={locations == null}
