@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Table, Popconfirm} from 'antd';
+import { Table, Popconfirm, Image} from 'antd';
 import { DeleteTwoTone } from '@ant-design/icons';
 import { definitions } from 'db/SupabaseTypes';
 import { useLocations } from 'db/hooks/getLocations';
@@ -21,10 +21,20 @@ export const LocationList = () => {
       key: 'address',
     },
     {
+      title: 'Default Picture',
+      dataIndex: 'picture',
+      key: 'picture',
+      render: (_: unknown, record: definitions['Locations']) => {
+        return (
+          <Image src={ record.picture } height={ 20 } />
+        );
+      },
+    },
+    {
       title: 'Location',
       dataIndex: 'lon',
       key: 'lon',
-      render: (_: any, record: definitions['Locations']) => {
+      render: (_: unknown, record: definitions['Locations']) => {
         return (
           <MapViewerModal { ...record } />
         );
@@ -34,7 +44,7 @@ export const LocationList = () => {
       title: 'Remove',
       dataIndex: 'remove',
       key: 'remove',
-      render: (_: any, record: definitions['Locations']) => {
+      render: (_: unknown, record: definitions['Locations']) => {
         return (
           <Popconfirm
             title="Are you sure to delete this location 🧐 ?"
@@ -55,6 +65,7 @@ export const LocationList = () => {
 
   return (
     <Table style={{ margin: 5 }}
+      size='small'
       rowKey="id"
       bordered
       loading={locations == null}
