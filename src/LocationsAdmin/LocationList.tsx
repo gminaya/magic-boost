@@ -34,7 +34,7 @@ export const LocationList = () => {
       title: 'Location',
       dataIndex: 'lon',
       key: 'lon',
-      render: (_: any, record: definitions['Locations']) => {
+      render: (_: unknown, record: definitions['Locations']) => {
         return (
           <MapViewerModal { ...record } />
         );
