@@ -24,7 +24,7 @@ export const LocationList = () => {
       title: 'Default Picture',
       dataIndex: 'picture',
       key: 'picture',
-      render: (_: any, record: definitions['Locations']) => {
+      render: (_: unknown, record: definitions['Locations']) => {
         return (
           <Image src={ record.picture } height={ 20 } />
         );
@@ -44,7 +44,7 @@ export const LocationList = () => {
       title: 'Remove',
       dataIndex: 'remove',
       key: 'remove',
-      render: (_: any, record: definitions['Locations']) => {
+      render: (_: unknown, record: definitions['Locations']) => {
         return (
           <Popconfirm
             title="Are you sure to delete this location 🧐 ?"
