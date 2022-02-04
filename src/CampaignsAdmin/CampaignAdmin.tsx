@@ -4,7 +4,6 @@ import { CampaignList } from './CampaignList';
 import { NewCampaignForm } from './NewCampaignForm';
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
 import 'styles/pages/campaignAdmin.scss';
-
 function CampaignAdmin() {
   const [drawerVisibility, setDrawerVisibility] = useState(false);
 
