@@ -2,6 +2,16 @@
   "name": "magic-boost",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js",
+    "test": "node scripts/test.js",
+    "lint": "eslint .",
+    "update:types": "node scripts/download-types.js",
+    "env:dev": "node scripts/set-local-env.js dev",
+    "env:staging": "node scripts/set-local-env.js staging",
+    "env:prod": "node scripts/set-local-env.js production"
+  },
   "dependencies": {
     "@supabase/supabase-js": "^1.21.1",
     "antd": "^4.16.11",
@@ -20,13 +30,6 @@
     "react-to-print": "^2.14.2",
     "sass": "^1.49.0",
     "uuid": "^8.3.2"
-  },
-  "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js",
-    "lint": "eslint .",
-    "update:types": "node scripts/download-types.js"
   },
   "eslintConfig": {
     "extends": [

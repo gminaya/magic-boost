@@ -1,26 +1,21 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-//TODO: Amhed: Create scripts to push to staging/prod
+const { getActiveEnv, exec } = require('./execWrapper');
+const environment = getActiveEnv();
+const dotEnvConfigPath = ['production', 'staging'].includes(environment)
+  ? `.env.${environment}`
+  : '.env';
 
-require('dotenv').config();
-const { exec } = require('child_process');
+const dotEnvConfig = require('dotenv').config({
+  path: dotEnvConfigPath
+}).parsed;
+
+console.log(`Download types for ${environment} environment`);
 
 const config = {
-  uri: process.env.REACT_APP_MAGIC_BOOST_SUPABASE_URI,
-  apiKey: process.env.REACT_APP_MAGIC_BOOST_SUPABASE_API_KEY
+  uri: dotEnvConfig.REACT_APP_MAGIC_BOOST_SUPABASE_URI,
+  apiKey: dotEnvConfig.REACT_APP_MAGIC_BOOST_SUPABASE_API_KEY
 };
 
-const generateCommand = `npx openapi-typescript ${config.uri}/rest/v1/?apikey=${config.apiKey} --output types/../src/db/SupabaseTypes.ts`;
-
-exec(generateCommand, (error, stdout, stderr) => {
-  if (error) {
-    console.log(`error: ${error.message}`);
-    return;
-  }
-  if (stderr) {
-    console.log(`stderr: ${stderr}`);
-    return;
-  }
-  console.log(`stdout: ${stdout}`);
-});
+exec(`npx openapi-typescript ${config.uri}/rest/v1/?apikey=${config.apiKey} --output types/../src/db/SupabaseTypes.ts`);

@@ -38,7 +38,7 @@ export const NewCampaignForm = () => {
       ...campaignLocations,
       {
         ...location,
-        photoUrl: ''
+        campaignPhotoUrl: ''
       }
     ]);
   };
@@ -90,7 +90,7 @@ export const NewCampaignForm = () => {
         return <SearchOutlined />;
       },
       onFilter: (value, record) => {
-        return record.name.toLowerCase().includes(value.toString().toLowerCase());
+        return record.name?.toLowerCase().includes(value.toString().toLowerCase()) ?? false;
       }
     },
     {
