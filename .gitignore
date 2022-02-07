@@ -22,6 +22,8 @@ yarn-debug.log*
 yarn-error.log*
 
 .env
+.buildconfig.js
+
 # Supabase
 .supabase
 

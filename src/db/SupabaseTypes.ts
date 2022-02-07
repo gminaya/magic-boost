@@ -17,11 +17,10 @@ export interface paths {
       parameters: {
         query: {
           id?: parameters["rowFilter.Campaigns.id"];
-          created_at?: parameters["rowFilter.Campaigns.created_at"];
           name?: parameters["rowFilter.Campaigns.name"];
           status?: parameters["rowFilter.Campaigns.status"];
           location_config?: parameters["rowFilter.Campaigns.location_config"];
-          due_date?: parameters["rowFilter.Campaigns.due_date"];
+          dueDate?: parameters["rowFilter.Campaigns.dueDate"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -73,11 +72,10 @@ export interface paths {
       parameters: {
         query: {
           id?: parameters["rowFilter.Campaigns.id"];
-          created_at?: parameters["rowFilter.Campaigns.created_at"];
           name?: parameters["rowFilter.Campaigns.name"];
           status?: parameters["rowFilter.Campaigns.status"];
           location_config?: parameters["rowFilter.Campaigns.location_config"];
-          due_date?: parameters["rowFilter.Campaigns.due_date"];
+          dueDate?: parameters["rowFilter.Campaigns.dueDate"];
         };
         header: {
           /** Preference */
@@ -93,15 +91,110 @@ export interface paths {
       parameters: {
         query: {
           id?: parameters["rowFilter.Campaigns.id"];
-          created_at?: parameters["rowFilter.Campaigns.created_at"];
           name?: parameters["rowFilter.Campaigns.name"];
           status?: parameters["rowFilter.Campaigns.status"];
           location_config?: parameters["rowFilter.Campaigns.location_config"];
-          due_date?: parameters["rowFilter.Campaigns.due_date"];
+          dueDate?: parameters["rowFilter.Campaigns.dueDate"];
         };
         body: {
           /** Campaigns */
           Campaigns?: definitions["Campaigns"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
+  "/LocationScreens": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.LocationScreens.id"];
+          location_id?: parameters["rowFilter.LocationScreens.location_id"];
+          /** Identifies a screen, in case a location has multiple */
+          order_id?: parameters["rowFilter.LocationScreens.order_id"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["LocationScreens"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** LocationScreens */
+          LocationScreens?: definitions["LocationScreens"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.LocationScreens.id"];
+          location_id?: parameters["rowFilter.LocationScreens.location_id"];
+          /** Identifies a screen, in case a location has multiple */
+          order_id?: parameters["rowFilter.LocationScreens.order_id"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.LocationScreens.id"];
+          location_id?: parameters["rowFilter.LocationScreens.location_id"];
+          /** Identifies a screen, in case a location has multiple */
+          order_id?: parameters["rowFilter.LocationScreens.order_id"];
+        };
+        body: {
+          /** LocationScreens */
+          LocationScreens?: definitions["LocationScreens"];
         };
         header: {
           /** Preference */
@@ -119,13 +212,13 @@ export interface paths {
       parameters: {
         query: {
           id?: parameters["rowFilter.Locations.id"];
-          created_at?: parameters["rowFilter.Locations.created_at"];
           name?: parameters["rowFilter.Locations.name"];
           address?: parameters["rowFilter.Locations.address"];
+          /** Latitude */
           lat?: parameters["rowFilter.Locations.lat"];
           lon?: parameters["rowFilter.Locations.lon"];
           format?: parameters["rowFilter.Locations.format"];
-          picture_url?: parameters["rowFilter.Locations.picture_url"];
+          picture?: parameters["rowFilter.Locations.picture"];
           orientation?: parameters["rowFilter.Locations.orientation"];
           /** Filtering Columns */
           select?: parameters["select"];
@@ -178,13 +271,13 @@ export interface paths {
       parameters: {
         query: {
           id?: parameters["rowFilter.Locations.id"];
-          created_at?: parameters["rowFilter.Locations.created_at"];
           name?: parameters["rowFilter.Locations.name"];
           address?: parameters["rowFilter.Locations.address"];
+          /** Latitude */
           lat?: parameters["rowFilter.Locations.lat"];
           lon?: parameters["rowFilter.Locations.lon"];
           format?: parameters["rowFilter.Locations.format"];
-          picture_url?: parameters["rowFilter.Locations.picture_url"];
+          picture?: parameters["rowFilter.Locations.picture"];
           orientation?: parameters["rowFilter.Locations.orientation"];
         };
         header: {
@@ -201,13 +294,13 @@ export interface paths {
       parameters: {
         query: {
           id?: parameters["rowFilter.Locations.id"];
-          created_at?: parameters["rowFilter.Locations.created_at"];
           name?: parameters["rowFilter.Locations.name"];
           address?: parameters["rowFilter.Locations.address"];
+          /** Latitude */
           lat?: parameters["rowFilter.Locations.lat"];
           lon?: parameters["rowFilter.Locations.lon"];
           format?: parameters["rowFilter.Locations.format"];
-          picture_url?: parameters["rowFilter.Locations.picture_url"];
+          picture?: parameters["rowFilter.Locations.picture"];
           orientation?: parameters["rowFilter.Locations.orientation"];
         };
         body: {
@@ -235,21 +328,16 @@ export interface definitions {
      * This is a Primary Key.<pk/>
      */
     id: number;
-    /**
-     * Format: timestamp with time zone
-     * @default now()
-     */
-    created_at?: string;
     /** Format: text */
-    name?: string;
+    name: string;
     /** Format: text */
-    status?: string;
+    status: string;
     /** Format: json */
     location_config?: string;
     /** Format: date */
-    due_date?: string;
+    dueDate?: string;
   };
-  Locations: {
+  LocationScreens: {
     /**
      * Format: bigint
      * @description Note:
@@ -257,22 +345,40 @@ export interface definitions {
      */
     id: number;
     /**
-     * Format: timestamp with time zone
-     * @default now()
+     * Format: bigint
+     * @description Note:
+     * This is a Foreign Key to `Locations.id`.<fk table='Locations' column='id'/>
      */
-    created_at?: string;
+    location_id?: number;
+    /**
+     * Format: bigint
+     * @description Identifies a screen, in case a location has multiple
+     */
+    order_id: number;
+  };
+  /** @description An address on a map */
+  Locations: {
+    /**
+     * Format: bigint
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id: number;
     /** Format: text */
-    name?: string;
-    /** Format: text */
+    name: string;
+    /** Format: character varying */
     address?: string;
+    /**
+     * Format: double precision
+     * @description Latitude
+     */
+    lat: number;
     /** Format: double precision */
-    lat?: number;
-    /** Format: double precision */
-    lon?: number;
+    lon: number;
     /** Format: text */
     format?: string;
     /** Format: text */
-    picture_url?: string;
+    picture?: string;
     /** Format: text */
     orientation?: string;
   };
@@ -315,8 +421,6 @@ export interface parameters {
   "body.Campaigns": definitions["Campaigns"];
   /** Format: bigint */
   "rowFilter.Campaigns.id": string;
-  /** Format: timestamp with time zone */
-  "rowFilter.Campaigns.created_at": string;
   /** Format: text */
   "rowFilter.Campaigns.name": string;
   /** Format: text */
@@ -324,25 +428,37 @@ export interface parameters {
   /** Format: json */
   "rowFilter.Campaigns.location_config": string;
   /** Format: date */
-  "rowFilter.Campaigns.due_date": string;
+  "rowFilter.Campaigns.dueDate": string;
+  /** @description LocationScreens */
+  "body.LocationScreens": definitions["LocationScreens"];
+  /** Format: bigint */
+  "rowFilter.LocationScreens.id": string;
+  /** Format: bigint */
+  "rowFilter.LocationScreens.location_id": string;
+  /**
+   * Format: bigint
+   * @description Identifies a screen, in case a location has multiple
+   */
+  "rowFilter.LocationScreens.order_id": string;
   /** @description Locations */
   "body.Locations": definitions["Locations"];
   /** Format: bigint */
   "rowFilter.Locations.id": string;
-  /** Format: timestamp with time zone */
-  "rowFilter.Locations.created_at": string;
   /** Format: text */
   "rowFilter.Locations.name": string;
-  /** Format: text */
+  /** Format: character varying */
   "rowFilter.Locations.address": string;
-  /** Format: double precision */
+  /**
+   * Format: double precision
+   * @description Latitude
+   */
   "rowFilter.Locations.lat": string;
   /** Format: double precision */
   "rowFilter.Locations.lon": string;
   /** Format: text */
   "rowFilter.Locations.format": string;
   /** Format: text */
-  "rowFilter.Locations.picture_url": string;
+  "rowFilter.Locations.picture": string;
   /** Format: text */
   "rowFilter.Locations.orientation": string;
 }

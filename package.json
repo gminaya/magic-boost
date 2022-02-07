@@ -8,9 +8,9 @@
     "test": "node scripts/test.js",
     "lint": "eslint .",
     "update:types": "node scripts/download-types.js",
-    "env:dev": "node scripts/setRemoteDb.js",
-    "env:staging": "NODE_ENV=staging node scripts/setRemoteDb.js",
-    "env:prod": "NODE_ENV=production node scripts/setRemoteDb.js"
+    "env:dev": "node -r dotenv/config scripts/envCheck.js",
+    "env:staging": "node -r dotenv/config scripts/download-types.js dotenv_config_path=.env.staging",
+    "env:prod": "node scripts/setRemoteDb.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^1.21.1",
