@@ -1,14 +1,21 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-require('dotenv').config();
-const { exec } = require('./execWrapper');
+const { getActiveEnv, exec } = require('./execWrapper');
+const environment = getActiveEnv();
+const dotEnvConfigPath = ['production', 'staging'].includes(environment)
+  ? `.env.${environment}`
+  : '.env';
 
-console.log(`Download types for ${process.env.NODE_ENV} environment`);
+const dotEnvConfig = require('dotenv').config({
+  path: dotEnvConfigPath
+}).parsed;
+
+console.log(`Download types for ${environment} environment`);
 
 const config = {
-  uri: process.env.REACT_APP_MAGIC_BOOST_SUPABASE_URI,
-  apiKey: process.env.REACT_APP_MAGIC_BOOST_SUPABASE_API_KEY
+  uri: dotEnvConfig.REACT_APP_MAGIC_BOOST_SUPABASE_URI,
+  apiKey: dotEnvConfig.REACT_APP_MAGIC_BOOST_SUPABASE_API_KEY
 };
 
 exec(`npx openapi-typescript ${config.uri}/rest/v1/?apikey=${config.apiKey} --output types/../src/db/SupabaseTypes.ts`);

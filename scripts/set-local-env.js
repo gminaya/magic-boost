@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { getActiveEnv, setActiveEnv, exec } = require('./execWrapper');
+const { setActiveEnv, exec } = require('./execWrapper');
 
 const environment = process.argv[2];
 if (!(['dev', 'staging', 'production']).includes(environment)) {
