@@ -208,7 +208,7 @@ export function CampaignDetails() {
         <h1> {campaign?.name} </h1>
       </Divider>
       <span>
-        The status of this report is <DueDateLabel date={campaign?.dueDate} />
+        The status of this report is <DueDateLabel date={campaign?.due_date} />
       </span>
       <Table
         size="small"

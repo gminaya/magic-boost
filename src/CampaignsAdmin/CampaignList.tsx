@@ -34,7 +34,7 @@ export const CampaignList = () => {
       dataIndex: 'dueDate',
       key: 'dueDate',
       render: (_: unknown, record: definitions['Campaigns']) => {
-        return moment(record.dueDate).format('MMMM Do YYYY');
+        return moment(record.due_date).format('MMMM Do YYYY');
       },
     },
     {
