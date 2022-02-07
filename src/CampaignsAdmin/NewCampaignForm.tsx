@@ -236,7 +236,7 @@ export const NewCampaignForm = () => {
         <Row>
           <Col span={24} className="added-locations">
             <h3>Added Locations</h3>
-            <List
+            {/* <List
               size="small"
               bordered
               pagination={{
@@ -247,7 +247,7 @@ export const NewCampaignForm = () => {
               }}
               dataSource={campaignLocations.map(loc => loc.name)}
               renderItem={(item: string) => <List.Item key={item}>{item}</List.Item>}
-            />
+            /> */}
           </Col>
         </Row>
         <Divider></Divider>

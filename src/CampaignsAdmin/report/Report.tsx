@@ -40,7 +40,7 @@ export const Report = () => {
       ghost={false}
       onBack={() => window.history.back()}
       title={campaign?.name}
-      subTitle={<DueDateLabel date={campaign?.dueDate} />}
+      subTitle={<DueDateLabel date={campaign?.due_date} />}
       extra={actions}
     >
       <div className='cards-container'>
