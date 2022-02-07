@@ -37,7 +37,8 @@ export const NewCampaignForm = () => {
     setCampaignLocations([
       ...campaignLocations,
       {
-        ...location
+        ...location,
+        campaignPhotoUrl: ''
       }
     ]);
   };

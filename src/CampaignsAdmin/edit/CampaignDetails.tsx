@@ -68,7 +68,7 @@ export function CampaignDetails() {
   const updatePhotoUrlKey = (locationID: number, imageURL: string) => {
     const locationToUpdate = campaign?.locationInfo.find((loc) => loc.id === locationID);
     if (locationToUpdate) {
-      locationToUpdate.photoUrl = imageURL;
+      locationToUpdate.campaignPhotoUrl = imageURL;
     }
   };
 
@@ -175,7 +175,7 @@ export function CampaignDetails() {
       dataIndex: 'viewPhoto',
       key: 'viewPhoto',
       render: (_: unknown, record: CampaignLocationInfo) => {
-        return <Image width={60} src={record.photoUrl} />;
+        return <Image width={60} src={record.campaignPhotoUrl} />;
       },
     },
     {
@@ -187,7 +187,7 @@ export function CampaignDetails() {
           <Popconfirm
             title="Are you sure to delete this photo 🧐?"
             onConfirm={async () => {
-              removePhotoOnSupabase(record.id, record.photoUrl);
+              removePhotoOnSupabase(record.id, record.campaignPhotoUrl);
             }}
             okText="DELETE"
             cancelText="CANCEL"

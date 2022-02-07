@@ -262,7 +262,7 @@ export interface definitions {
      */
     created_at?: string;
     /** Format: text */
-    name?: string;
+    name: string;
     /** Format: text */
     address?: string;
     /** Format: double precision */

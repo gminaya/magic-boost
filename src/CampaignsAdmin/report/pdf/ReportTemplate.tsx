@@ -32,7 +32,7 @@ export const ReportTemplate = forwardRef<HTMLInputElement, PrintToPdfProps>((
             <div className='picture-cap'>
               <div className='location-picture '>
                 <figure>
-                  <img src={location.photoUrl} />
+                  <img src={location.campaignPhotoUrl} />
                 </figure>
               </div>
               <div className='location-map'>
