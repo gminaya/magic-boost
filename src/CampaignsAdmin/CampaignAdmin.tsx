@@ -44,6 +44,8 @@ function CampaignAdmin() {
       </Button>
       <Divider className="title-divider" orientation="left">
         <span className="span-text">
+          <button onClick={() => { throw new Error('Environment test'); }}>Error me
+          </button>
           Listing all the campaigns
         </span>
       </Divider>

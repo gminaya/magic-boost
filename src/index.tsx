@@ -9,10 +9,13 @@ import reportWebVitals from './reportWebVitals';
 
 import 'dotenv/config';
 
+const currentEnvironment = process.env.NODE_ENV;
+
 //TODO: Move dsn to .env files and separate staging from prod
 Sentry.init({
   dsn: settings.sentry.dsn,
   integrations: [new BrowserTracing()],
+  environment: currentEnvironment,
 
   // Set tracesSampleRate to 1.0 to capture 100%
   // of transactions for performance monitoring.
