@@ -13,6 +13,8 @@
     "env:prod": "node scripts/set-local-env.js production"
   },
   "dependencies": {
+    "@sentry/react": "^6.17.6",
+    "@sentry/tracing": "^6.17.6",
     "@supabase/supabase-js": "^1.21.1",
     "antd": "^4.16.11",
     "bfj": "^7.0.2",

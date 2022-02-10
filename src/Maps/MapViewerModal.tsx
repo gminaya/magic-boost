@@ -5,8 +5,8 @@ import { settings } from 'settings';
 
 interface MapViewerModalProps {
   address?: string;
-  lat: number;
-  lon: number;
+  lat?: number;
+  lon?: number;
 }
 export const MapViewerModal = (props: MapViewerModalProps) => {
 
@@ -34,7 +34,7 @@ export const MapViewerModal = (props: MapViewerModalProps) => {
         width={700}
         closable={false}
       >
-        <StaticGoogleMap size="1000x1000" className="img-fluid" apiKey={settings.googpleMaps.apiKey}>
+        <StaticGoogleMap size="1000x1000" className="img-fluid" apiKey={settings.googleMaps.apiKey}>
           <Marker location={`${props.lat},${props.lon}`} color="red" label="Pkmcndknmvcdkv" />
         </StaticGoogleMap>
       </Modal>
