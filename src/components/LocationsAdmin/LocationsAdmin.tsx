@@ -22,12 +22,13 @@ export function LocationsAdmin() {
       >
         <header className="drawer-title">
           <h1>
-            Creating a new location
+            New Location
           </h1>
         </header>
         <NewLocationForm />
       </Drawer>
-      <Divider style={{ borderTopColor: 'gray' }} orientation="left">
+
+      <Divider className="title-divider" orientation="left">
         <h2>Locations</h2>
       </Divider>
       <div>
