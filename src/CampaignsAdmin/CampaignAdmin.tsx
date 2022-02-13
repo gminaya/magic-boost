@@ -4,7 +4,13 @@ import { CampaignList } from './CampaignList';
 import { NewCampaignForm } from './NewCampaignForm';
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
 import 'styles/pages/campaignAdmin.scss';
-function CampaignAdmin() {
+
+type CampaignAdminProps = {
+  // TODO: Remove
+}
+
+export const CampaignAdmin: React.FunctionComponent<CampaignAdminProps> = () => {
+  //TODO: Amhed: Abstract into a hook 
   const [drawerVisibility, setDrawerVisibility] = useState(false);
 
   const toggleDrawer = () => {
@@ -51,5 +57,3 @@ function CampaignAdmin() {
     </>
   );
 }
-
-export default CampaignAdmin;

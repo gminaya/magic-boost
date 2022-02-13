@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Layout } from 'antd';
-import LocationsAdmin from './LocationsAdmin/LocationsAdmin';
-import CampaignAdmin from './CampaignsAdmin/CampaignAdmin';
+import { LocationsAdmin } from './LocationsAdmin/LocationsAdmin';
+import { CampaignAdmin } from './CampaignsAdmin/CampaignAdmin';
 import { CampaignDetails } from './CampaignsAdmin/edit/CampaignDetails';
 import { NavBar } from 'commun/NavBar';
 import { NavigationBreadcrumbs } from 'commun/NavigationBreadcrumbs';

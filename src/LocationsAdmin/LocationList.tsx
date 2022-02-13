@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Table, Popconfirm, Image} from 'antd';
 import { DeleteTwoTone } from '@ant-design/icons';
 import { definitions } from 'db/SupabaseTypes';

@@ -5,8 +5,7 @@ import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
 import NewLocationForm from './NewLocationForm';
 import 'styles/pages/locationsAdmin.scss';
 
-function LocationsAdmin() {
-
+export function LocationsAdmin() {
   const [drawerVisibility, setDrawerVisibility] = useState(false);
 
   const toggleDrawer = () => {
@@ -46,5 +45,3 @@ function LocationsAdmin() {
     </>
   );
 }
-
-export default LocationsAdmin;
