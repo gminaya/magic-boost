@@ -1,5 +1,5 @@
 import { Route, Redirect } from 'react-router-dom';
-import { useAuth } from 'contexts/Auth';
+import { useAuth } from 'components/Auth/AuthProvider';
 
 interface PrivateRouteProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

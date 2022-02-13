@@ -9,8 +9,8 @@ import { useCampaignById } from 'db/hooks/getCampaignDetailsByID';
 
 import { CampaignLocationInfo } from 'models/CampaignLocationInfo';
 import { getSupabaseClient } from 'db/DatabaseClient';
-import { DueDateLabel } from 'CampaignsAdmin/DueDateLabel';
-import { DropPhotoZone } from 'CampaignsAdmin/DropPhotoZone';
+import { DueDateLabel } from 'components/CampaignsAdmin/DueDateLabel';
+import { DropPhotoZone } from 'components/CampaignsAdmin/DropPhotoZone';
 
 import 'styles/pages/campaignDetails.scss';
 

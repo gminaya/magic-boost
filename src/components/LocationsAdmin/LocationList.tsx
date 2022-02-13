@@ -3,7 +3,7 @@ import { DeleteTwoTone } from '@ant-design/icons';
 import { definitions } from 'db/SupabaseTypes';
 import { useLocations } from 'db/hooks/getLocations';
 import { deleteLocation } from 'db/Locations';
-import { MapViewerModal } from 'Maps/MapViewerModal';
+import { MapViewerModal } from 'components/Maps/MapViewerModal';
 
 export const LocationList = () => {
   const { locations, refreshLocations } = useLocations();
