@@ -1,10 +1,9 @@
 import { Route, Redirect } from 'react-router-dom';
 import { useAuth } from 'contexts/Auth';
-import { useMemo } from 'react';
 
 interface PrivateRouteProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  component?: React.ComponentType<any>;
+  component?: any;
   exact: boolean;
   path: string;
 }

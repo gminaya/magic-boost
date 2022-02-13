@@ -5,11 +5,7 @@ import { NewCampaignForm } from './NewCampaignForm';
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
 import 'styles/pages/campaignAdmin.scss';
 
-type CampaignAdminProps = {
-  // TODO: Remove
-}
-
-export const CampaignAdmin: React.FunctionComponent<CampaignAdminProps> = () => {
+export const CampaignAdmin = () => {
   //TODO: Amhed: Abstract into a hook 
   const [drawerVisibility, setDrawerVisibility] = useState(false);
 
@@ -56,4 +52,4 @@ export const CampaignAdmin: React.FunctionComponent<CampaignAdminProps> = () => 
       <CampaignList />
     </>
   );
-}
+};
