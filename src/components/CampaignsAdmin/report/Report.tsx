@@ -2,7 +2,7 @@ import  { useState, useEffect, useMemo } from 'react';
 import { PageHeader, Button } from 'antd';
 import { useParams } from 'react-router-dom';
 import { useCampaignById } from 'db/hooks/getCampaignDetailsByID';
-import { DueDateLabel } from 'CampaignsAdmin/DueDateLabel';
+import { DueDateLabel } from 'components/CampaignsAdmin/DueDateLabel';
 import { LocationCard } from './LocationCard';
 import { CampaignLocationInfo } from 'models/CampaignLocationInfo';
 import { PrintToPdf } from './pdf/PrintToPdf';

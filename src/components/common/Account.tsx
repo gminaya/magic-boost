@@ -1,5 +1,5 @@
 import { useHistory } from 'react-router';
-import { useAuth } from '../contexts/Auth';
+import { useAuth } from 'components/Auth/AuthProvider';
 import { Menu, Dropdown } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 export const Account = () => {

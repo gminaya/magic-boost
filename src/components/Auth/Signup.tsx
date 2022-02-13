@@ -1,28 +1,32 @@
+import { useAuth } from 'components/Auth/AuthProvider';
 import { Form, Input, Button, Row, Col } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Link, useHistory } from 'react-router-dom';
-import { useAuth } from '../contexts/Auth';
 
-interface LoginProps {
+interface SignupProps {
   email: string;
   password: string;
 }
-export const Login = () => {
+export const Signup = () => {
   const [form] = Form.useForm();
 
-  const { signIn } = useAuth();
+  const { signUp } = useAuth();
   const history = useHistory();
-  
-  async function handleSumit(e: LoginProps) {
 
+  async function handleSumit(e: SignupProps) {
+
+   
     const email = e.email;
     const password = e.password;
 
-    const { error } = await signIn({ email, password });
+   
+    const { error } = await signUp({ email, password });
+
     if (error) {
       alert('error signing in');
     } else {
-      
+   
+      alert('Please, confirm Email');
       history.push('/CampaignsAdmin');
     }
   }
@@ -31,7 +35,7 @@ export const Login = () => {
     <>
       <Row>
         <Col span={8} offset={8}>
-          <h1>LOGIN</h1>
+          <h1>SIGNUP</h1>
           <Form
             form={form}
             preserve={false}
@@ -61,12 +65,12 @@ export const Login = () => {
             </Form.Item>
             <Form.Item wrapperCol={{}}>
               <Button type="primary" htmlType="submit" style={{ float: 'right' }}>
-                LOGIN
+              SIGNUP
               </Button>
             </Form.Item>
           </Form>
           <p>
-            Dont have an account? <Link to="./signup">Sign Up</Link>
+            Already have an account? <Link to="./login">Log In</Link>
           </p>
         </Col>
       </Row>

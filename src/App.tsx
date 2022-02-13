@@ -1,18 +1,19 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Layout } from 'antd';
-import LocationsAdmin from './LocationsAdmin/LocationsAdmin';
-import CampaignAdmin from './CampaignsAdmin/CampaignAdmin';
-import { CampaignDetails } from './CampaignsAdmin/edit/CampaignDetails';
-import { NavBar } from 'commun/NavBar';
-import { NavigationBreadcrumbs } from 'commun/NavigationBreadcrumbs';
-import { Signup } from 'Auth/Signup';
-import { Login } from 'Auth/Login';
+import { LocationsAdmin } from 'components/LocationsAdmin/LocationsAdmin';
+import { CampaignAdmin } from 'components/CampaignsAdmin/CampaignAdmin';
+import { CampaignDetails } from 'components/CampaignsAdmin/edit/CampaignDetails';
+import { NavBar } from 'components/common/NavBar';
+import { NavigationBreadcrumbs } from 'components/common/NavigationBreadcrumbs';
+import { Signup } from 'components/Auth/Signup';
+import { Login } from 'components/Auth/Login';
 import 'antd/dist/antd.css';
 import './index.css';
-import { Map } from './Maps/Map';
-import { Report } from './CampaignsAdmin/report/Report';
-import { AuthProvider } from 'contexts/Auth';
-import { PrivateRoute } from 'Auth/PrivateRoute';
+import { Map } from 'components/Maps/Map';
+import { Report } from 'components/CampaignsAdmin/report/Report';
+import { AuthProvider } from 'components/Auth/AuthProvider';
+import { PrivateRoute } from 'components/Auth/PrivateRoute';
+
 const { Footer } = Layout;
 function App() {
   return (
