@@ -2,7 +2,6 @@ import { Form, Input, Button, Row, Col } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../contexts/Auth';
-import { useCallback } from 'react';
 
 interface LoginProps {
   email: string;
