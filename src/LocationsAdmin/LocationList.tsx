@@ -26,7 +26,7 @@ export const LocationList = () => {
       key: 'picture',
       render: (_: unknown, record: definitions['Locations']) => {
         return (
-          <Image src={ record.picture } height={ 20 } />
+          <Image src={ record.picture_url } height={ 20 } />
         );
       },
     },

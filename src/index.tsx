@@ -1,12 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import * as Sentry from '@sentry/react';
+import { BrowserTracing } from '@sentry/tracing';
+import { settings } from 'settings';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import 'dotenv/config';
-console.log(process.env);
 
+const currentEnvironment = process.env.NODE_ENV;
+
+//TODO: Move dsn to .env files and separate staging from prod
+Sentry.init({
+  dsn: settings.sentry.dsn,
+  integrations: [new BrowserTracing()],
+  environment: currentEnvironment,
+
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+});
 ReactDOM.render(
   <React.StrictMode>
     <App />
