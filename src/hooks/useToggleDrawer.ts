@@ -5,7 +5,7 @@ export const useToggleDrawer = () => {
 
   const toggleDrawer = useCallback(() => {
     setDrawerVisibility(!drawerVisibility);
-  }, []);
+  }, [drawerVisibility]);
 
   return {
     toggleDrawer,

@@ -13,6 +13,7 @@ import { Map } from 'components/Maps/Map';
 import { Report } from 'components/CampaignsAdmin/report/Report';
 import { AuthProvider } from 'components/Auth/AuthProvider';
 import { PrivateRoute } from 'components/Auth/PrivateRoute';
+
 const { Footer } = Layout;
 function App() {
   return (

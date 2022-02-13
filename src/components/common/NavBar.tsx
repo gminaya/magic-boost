@@ -14,7 +14,7 @@ export const NavBar = () => {
         <Menu.Item key="locations">
           <Link to="/LocationsAdmin">Locations</Link>
         </Menu.Item>
-        <Menu.Item key="locations">
+        <Menu.Item key="account">
           <Account />
         </Menu.Item>
       </Menu>
