@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { getSupabaseClient } from 'db/DatabaseClient';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const AuthContext = React.createContext<any>(!null);
 
 export function useAuth() {

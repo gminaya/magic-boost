@@ -1,7 +1,7 @@
 import { Route, Redirect } from 'react-router-dom';
-
 import { useAuth } from 'contexts/Auth';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 interface PrivateRouteProps {
   component: any;
   exact:any;

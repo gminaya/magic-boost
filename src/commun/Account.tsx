@@ -1,8 +1,7 @@
 import { useHistory } from 'react-router';
 import { useAuth } from '../contexts/Auth';
-import { Menu, Dropdown, Button, message, Space, Tooltip } from 'antd';
+import { Menu, Dropdown } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { useMemo } from 'react';
 export const Account = () => {
 
   const { user, signOut } = useAuth();
