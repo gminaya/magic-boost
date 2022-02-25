@@ -13,6 +13,7 @@
 
 # misc
 .DS_Store
+.env.old
 .env
 .env.production
 .env.staging

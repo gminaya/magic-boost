@@ -92,7 +92,7 @@ export function CampaignDetails() {
     locationCONF?.splice(Number(indexToRemove),1);
 
     updateLocationConfig(Number(id),locationCONF);
-
+    
   };
 
   /**
