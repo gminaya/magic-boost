@@ -22,9 +22,9 @@ export const Map = (props: MapProps) => {
   return (
     <div className="map-container">
       <GoogleMapReact
-        bootstrapURLKeys={{ key: settings.googpleMaps.apiKey }}
+        bootstrapURLKeys={{ key: settings.googleMaps.apiKey }}
         defaultCenter={cursorPosition}
-        defaultZoom={settings.googpleMaps.defaulZoom}
+        defaultZoom={settings.googleMaps.defaulZoom}
       >
         <MapMarker
           lat={18.4482008}

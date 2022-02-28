@@ -32,11 +32,11 @@ export const ReportTemplate = forwardRef<HTMLInputElement, PrintToPdfProps>((
             <div className='picture-cap'>
               <div className='location-picture '>
                 <figure>
-                  <img src={location.photoUrl} />
+                  <img src={location.campaignPhotoUrl} />
                 </figure>
               </div>
               <div className='location-map'>
-                <StaticGoogleMap size="410x500" className="img-fluid" apiKey={ settings.googpleMaps.apiKey }>
+                <StaticGoogleMap size="410x500" className="img-fluid" apiKey={ settings.googleMaps.apiKey }>
                   <Marker location="6.4488387,3.5496361" color="red" label="Pkmcndknmvcdkv" />
                 </StaticGoogleMap>
               </div>

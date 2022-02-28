@@ -1,11 +1,8 @@
-import { definitions } from './supabase';
-import { createClient } from '@supabase/supabase-js';
-import { settings } from 'settings';
+import { definitions } from './SupabaseTypes';
+import { getSupabaseClient } from './DatabaseClient';
 
-/** Gets a list of all locations */
 export const getLocations = async () => {
-  const { uri, apiKey } = settings.supabase;
-  const supabase = createClient(uri, apiKey);
+  const supabase = getSupabaseClient();
 
   const { data, error } = await supabase.from<definitions['Locations']>('Locations').select();
 
@@ -16,11 +13,19 @@ export const getLocations = async () => {
   return data;
 };
 
-/** Inserts a new location */
-export const insertNewLocation = async (name: string, address: string, lat: number, lon: number, format: string, picture: string, orientation: string) => {
-  const { uri, apiKey } = settings.supabase;
-  const supabase = createClient(uri, apiKey);
+export const insertNewLocation = async (
+  //TODO: Amhed: Set eslint or prettier rule to break apart params
+  name: string,
+  address: string,
+  lat: number,
+  lon: number,
+  format: string,
+  picture_url: string,
+  orientation: string
+) => {
+  const supabase = getSupabaseClient();
 
+  //TODO: Amhed: Cleanup definitions[] usage. We should use better types
   const { error } = await supabase.from<definitions['Locations']>('Locations').insert([
     {
       name,
@@ -28,7 +33,7 @@ export const insertNewLocation = async (name: string, address: string, lat: numb
       lat,
       lon,
       format,
-      picture,
+      picture_url,
       orientation,
     },
   ]);
@@ -41,10 +46,8 @@ export const insertNewLocation = async (name: string, address: string, lat: numb
   return true;
 };
 
-//Deletes a row based on it's ID
 export const deleteLocation = async (id: number) => {
-  const { uri, apiKey } = settings.supabase;
-  const supabase = createClient(uri, apiKey);
+  const supabase = getSupabaseClient();
 
   const { error } = await supabase.from('Locations').delete().eq('id', id);
 

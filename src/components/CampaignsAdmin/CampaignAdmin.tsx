@@ -1,16 +1,12 @@
-import { useState } from 'react';
 import { Divider, Button, Drawer } from 'antd';
 import { CampaignList } from './CampaignList';
 import { NewCampaignForm } from './NewCampaignForm';
+import { useToggleDrawer } from 'hooks/useToggleDrawer';
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
 import 'styles/pages/campaignAdmin.scss';
 
-function CampaignAdmin() {
-  const [drawerVisibility, setDrawerVisibility] = useState(false);
-
-  const toggleDrawer = () => {
-    setDrawerVisibility(!drawerVisibility);
-  };
+export const CampaignAdmin = () => {
+  const {drawerIsVisible, toggleDrawer} = useToggleDrawer();
 
   return (
     <>
@@ -19,38 +15,31 @@ function CampaignAdmin() {
         placement="left"
         closable={false}
         onClose={toggleDrawer}
-        visible={drawerVisibility}
+        visible={drawerIsVisible}
         key="left"
         width="90%"
         closeIcon={<CloseOutlined />}
       >
         <header className="drawer-title">
           <h1>
-            Creating a new campaign
+            New Campaign
           </h1>
         </header>
         <NewCampaignForm />
       </Drawer>
+
       <Divider className="title-divider" orientation="left">
         <h2>
-          CAMPAIGNS KINDOM
+          Campaigns
         </h2>
       </Divider>
-      <p className="page-description">
-        You can create, view or delete campaigns
-      </p>
+
       <Button type="primary" onClick={toggleDrawer} icon={<PlusOutlined />} size={'small'}>
         ADD NEW CAMPAING
       </Button>
-      <Divider className="title-divider" orientation="left">
-        <span className="span-text">
-          Listing all the campaigns
-        </span>
-      </Divider>
-      <div id="campaign-list"></div>
+
+      {/* TODO: Spacing! */}
       <CampaignList />
     </>
   );
-}
-
-export default CampaignAdmin;
+};

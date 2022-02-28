@@ -14,7 +14,7 @@ export const LocationCard = (location: LocationCardInfo) => {
 
   return (
     <div style={cardSizeProp} className="location-card">
-      <Image className="card-image" width="auto" height="100%" src={location.photoUrl} />
+      <Image className="card-image" width="auto" height="100%" src={location.picture_url} />
       <Badge.Ribbon className="badge-text" text="659,552 month views" color="#173057" placement="start">
         <div className="stats"></div>
       </Badge.Ribbon>

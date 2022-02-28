@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { Table, Button, Popconfirm, Space } from 'antd';
 import { DeleteOutlined, EyeOutlined,EditOutlined } from '@ant-design/icons';
 import { getCampaigns, deleteCampaign } from 'db/Campaigns';
-import { definitions } from 'db/supabase';
+import { definitions } from 'db/SupabaseTypes';
 import moment from 'moment';
 
 type CampaignsResult = Array<definitions['Campaigns']>;
@@ -34,7 +34,7 @@ export const CampaignList = () => {
       dataIndex: 'dueDate',
       key: 'dueDate',
       render: (_: unknown, record: definitions['Campaigns']) => {
-        return moment(record.dueDate).format('MMMM Do YYYY');
+        return moment(record.due_date).format('MMMM Do YYYY');
       },
     },
     {

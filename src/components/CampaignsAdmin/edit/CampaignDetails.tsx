@@ -8,9 +8,9 @@ import { DndProvider } from 'react-dnd';
 import { useCampaignById } from 'db/hooks/getCampaignDetailsByID';
 
 import { CampaignLocationInfo } from 'models/CampaignLocationInfo';
-import { supabase as supabaseClient } from 'db/helper';
-import { DueDateLabel } from 'CampaignsAdmin/DueDateLabel';
-import { DropPhotoZone } from 'CampaignsAdmin/DropPhotoZone';
+import { getSupabaseClient } from 'db/DatabaseClient';
+import { DueDateLabel } from 'components/CampaignsAdmin/DueDateLabel';
+import { DropPhotoZone } from 'components/CampaignsAdmin/DropPhotoZone';
 
 import 'styles/pages/campaignDetails.scss';
 
@@ -31,8 +31,9 @@ export function CampaignDetails() {
    *uploads selected image to supabase DB
    */
   const uploadImageToSupabase = async (file: File) => {
+    const client = getSupabaseClient();
     const filename = `${uuidv4()}.jpg`;
-    const { data, error } = await supabaseClient.storage.from('location-pictures').upload(`public/${filename}`, file, {
+    const { data, error } = await client.storage.from('location-pictures').upload(`public/${filename}`, file, {
       cacheControl: '3600',
       upsert: false,
       contentType: 'image/jpg',
@@ -49,7 +50,8 @@ export function CampaignDetails() {
    * Retrieves public uploaded image URL from supabase
    */
   const getUploadedImageURL = async (imagePath: string) => {
-    const { publicURL, error } = supabaseClient.storage.from('location-pictures').getPublicUrl(imagePath);
+    const client = getSupabaseClient();
+    const { publicURL, error } = client.storage.from('location-pictures').getPublicUrl(imagePath);
 
     if (error) {
       alert(error?.message);
@@ -66,7 +68,7 @@ export function CampaignDetails() {
   const updatePhotoUrlKey = (locationID: number, imageURL: string) => {
     const locationToUpdate = campaign?.locationInfo.find((loc) => loc.id === locationID);
     if (locationToUpdate) {
-      locationToUpdate.photoUrl = imageURL;
+      locationToUpdate.campaignPhotoUrl = imageURL;
     }
   };
 
@@ -74,7 +76,8 @@ export function CampaignDetails() {
    *updates campaing locationConfig on supabase
    */
   const updateLocationConfig = async (campaignID: number, locationCONF: CampaignLocationInfo[] | undefined) => {
-    const { data, error } = await supabaseClient
+    const client = getSupabaseClient();
+    const { data, error } = await client
       .from('Campaigns')
       .update({ location_config: JSON.stringify(locationCONF) })
       .eq('id', campaignID);
@@ -91,7 +94,7 @@ export function CampaignDetails() {
   const addBtnOnChange = async (file: File, locationID: number) => {
     const uploadedPath = await uploadImageToSupabase(file);
     if (uploadedPath) {
-      const path = uploadedPath.substr(uploadedPath.indexOf('/') + 1);
+      const path = uploadedPath.substring(uploadedPath.indexOf('/') + 1);
       const URL = await getUploadedImageURL(path);
       if (URL) {
         updatePhotoUrlKey(locationID, URL);
@@ -107,8 +110,9 @@ export function CampaignDetails() {
    * Removes photo file on supabase and updates locationInfo JSON
    */
   const removePhotoOnSupabase = async (locationID: number, imageURL: string) => {
-    const imagePath = imageURL.substr(imageURL.lastIndexOf('/') + 1);
-    const { data, error } = await supabaseClient.storage.from('location-pictures').remove([`public/${imagePath}`]);
+    const client = getSupabaseClient();
+    const imagePath = imageURL.substring(imageURL.lastIndexOf('/') + 1);
+    const { data, error } = await client.storage.from('location-pictures').remove([`public/${imagePath}`]);
 
     if (error) {
       throw error;
@@ -171,7 +175,7 @@ export function CampaignDetails() {
       dataIndex: 'viewPhoto',
       key: 'viewPhoto',
       render: (_: unknown, record: CampaignLocationInfo) => {
-        return <Image width={60} src={record.photoUrl} />;
+        return <Image width={60} src={record.campaignPhotoUrl} />;
       },
     },
     {
@@ -183,7 +187,7 @@ export function CampaignDetails() {
           <Popconfirm
             title="Are you sure to delete this photo 🧐?"
             onConfirm={async () => {
-              removePhotoOnSupabase(record.id, record.photoUrl);
+              removePhotoOnSupabase(record.id, record.campaignPhotoUrl);
             }}
             okText="DELETE"
             cancelText="CANCEL"
@@ -204,7 +208,7 @@ export function CampaignDetails() {
         <h1> {campaign?.name} </h1>
       </Divider>
       <span>
-        The status of this report is <DueDateLabel date={campaign?.dueDate} />
+        The status of this report is <DueDateLabel date={campaign?.due_date} />
       </span>
       <Table
         size="small"
