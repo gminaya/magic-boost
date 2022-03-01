@@ -14,10 +14,6 @@ import { DropPhotoZone } from 'components/CampaignsAdmin/DropPhotoZone';
 
 import 'styles/pages/campaignDetails.scss';
 
-interface CampaignDetails {
-  locationList: JSON;
-}
-
 type CampaignParams = {
   id: string;
 };
@@ -25,7 +21,6 @@ type CampaignParams = {
 export function CampaignDetails() {
   const { id } = useParams<CampaignParams>();
   const { campaign } = useCampaignById(Number(id));
-
 
   /**
    *uploads selected image to supabase DB
@@ -87,6 +82,18 @@ export function CampaignDetails() {
     }
     return data;
   };
+  
+  /**
+     * Remove location from campaign
+     */
+  const removeAddedLocation = (locationId:number, locationCONF: CampaignLocationInfo[] | undefined) => {
+    const indexToRemove = campaign?.locationInfo.findIndex(loc => loc.id === locationId);
+    
+    locationCONF?.splice(Number(indexToRemove),1);
+
+    updateLocationConfig(Number(id),locationCONF);
+    
+  };
 
   /**
    * Handle for OnChange on ADD button input
@@ -145,7 +152,7 @@ export function CampaignDetails() {
       title: 'ADD / CHANGE Photo',
       dataIndex: 'photoURL',
       key: 'photoURL',
-      className:'photo-input-td',
+      className: 'photo-input-td',
       render: (_: unknown, record: CampaignLocationInfo) => {
         return (
 
@@ -179,9 +186,9 @@ export function CampaignDetails() {
       },
     },
     {
-      title: 'Delete',
-      dataIndex: 'delete',
-      key: 'delete',
+      title: 'Remove Photo',
+      dataIndex: 'removePhoto',
+      key: 'removePhoto',
       render: (_: unknown, record: CampaignLocationInfo) => {
         return (
           <Popconfirm
@@ -193,7 +200,28 @@ export function CampaignDetails() {
             cancelText="CANCEL"
           >
             <Button type="primary" icon={<DeleteOutlined />} size={'small'}>
-              Remove
+              Remove Photo
+            </Button>
+          </Popconfirm>
+        );
+      },
+    },
+    {
+      title: 'Remove location',
+      dataIndex: 'removeLocation',
+      key: 'removeLocation',
+      render: (_: unknown, record: CampaignLocationInfo) => {
+        return (
+          <Popconfirm
+            title="Are you sure to delete this location 🧐?"
+            onConfirm={async () => {
+              removeAddedLocation(record.id, campaign?.locationInfo);
+            }}
+            okText="DELETE"
+            cancelText="CANCEL"
+          >
+            <Button type="primary" icon={<DeleteOutlined />} size={'small'}>
+              Remove Location
             </Button>
           </Popconfirm>
         );
