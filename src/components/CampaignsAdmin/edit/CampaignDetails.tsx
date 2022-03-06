@@ -1,18 +1,25 @@
+import { useState, useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { DeleteOutlined } from '@ant-design/icons';
-import { Table, Divider, Image, message, Popconfirm, Button } from 'antd';
+import { DeleteOutlined, SearchOutlined, ClearOutlined, PlusOutlined } from '@ant-design/icons';
+import { Table, Image, message, Popconfirm, Button, Modal, Input, PageHeader } from 'antd';
 import { useParams } from 'react-router-dom';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 
 import { useCampaignById } from 'db/hooks/getCampaignDetailsByID';
+import { useLocations } from 'db/hooks/getLocations';
 
 import { CampaignLocationInfo } from 'models/CampaignLocationInfo';
 import { getSupabaseClient } from 'db/DatabaseClient';
 import { DueDateLabel } from 'components/CampaignsAdmin/DueDateLabel';
 import { DropPhotoZone } from 'components/CampaignsAdmin/DropPhotoZone';
 
+import { ColumnsType } from 'antd/lib/table';
+import { FilterDropdownProps } from 'antd/lib/table/interface';
+
 import 'styles/pages/campaignDetails.scss';
+import { definitions } from 'db/SupabaseTypes';
+
 
 type CampaignParams = {
   id: string;
@@ -20,7 +27,113 @@ type CampaignParams = {
 
 export function CampaignDetails() {
   const { id } = useParams<CampaignParams>();
-  const { campaign } = useCampaignById(Number(id));
+  const { campaign, refreshCampaign } = useCampaignById(Number(id));
+  const { locations } = useLocations();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const handleAddLocation = async (newLocation: definitions['Locations']) => {
+    campaign?.locationInfo.push({ ...newLocation, campaignPhotoUrl: '' });
+    const update = await updateLocationConfig(Number(id), campaign?.locationInfo);
+  };
+
+  const showAddLocationModal = () => {
+    setIsModalVisible(true);
+  };
+  const handleModalOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleModalCancel = () => {
+    setIsModalVisible(false);
+  };
+  const actions = useMemo(() => {
+    const arr = [
+      <Button type="primary" onClick={showAddLocationModal} key='ARCHIVE'>ADD LOCATION</Button>,
+    ];
+    return arr;
+  }, [campaign]);
+  const addLocationColumns: ColumnsType<definitions['Locations']> = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Address',
+      dataIndex: 'address',
+      key: 'address',
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: FilterDropdownProps) => {
+        return <>
+          <Input
+            autoFocus
+            placeholder='Search by adress'
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            value={selectedKeys as any}
+            onChange={(e) => {
+              setSelectedKeys(e.target.value ? [e.target.value] : []);
+            }}
+            onPressEnter={() => {
+              confirm();
+            }}
+            onBlur={() => {
+              confirm();
+            }} />
+          <Button
+            type="primary"
+            icon={<SearchOutlined />}
+            size="large"
+            onClick={() => { confirm(); }} />
+          <Button
+            type="primary"
+            icon={<ClearOutlined />} size="large"
+            onClick={clearFilters} />
+        </>;
+      },
+      filterIcon: () => {
+        return <SearchOutlined />;
+      },
+      onFilter: (value, record) => {
+        if (!record.address) {
+          return false;
+        }
+
+        return record.address.toLowerCase().includes(value.toString().toLowerCase());
+      }
+    },
+    {
+      title: 'Add',
+      key: 'add',
+      render: (_: unknown, record: definitions['Locations']) => {
+        return (
+          <Button
+            type='primary'
+            onClick={() => {
+              handleAddLocation(record);
+
+            }}
+            icon={<PlusOutlined />}
+            size={'small'}
+          >
+            ADD
+          </Button>
+        );
+      },
+    },
+  ];
+
+  const AddLocationTable = () => {
+    return (
+      <Table
+        size="small"
+        style={{ margin: 5 }}
+        bordered
+        loading={locations == null}
+        dataSource={locations}
+        columns={addLocationColumns}
+        rowKey="id"
+      />
+    );
+  };
 
   /**
    *uploads selected image to supabase DB
@@ -80,19 +193,20 @@ export function CampaignDetails() {
     if (error) {
       alert(error);
     }
+    refreshCampaign();
     return data;
   };
-  
+
   /**
      * Remove location from campaign
      */
-  const removeAddedLocation = (locationId:number, locationCONF: CampaignLocationInfo[] | undefined) => {
+  const removeAddedLocation = (locationId: number, locationCONF: CampaignLocationInfo[] | undefined) => {
     const indexToRemove = campaign?.locationInfo.findIndex(loc => loc.id === locationId);
-    
-    locationCONF?.splice(Number(indexToRemove),1);
 
-    updateLocationConfig(Number(id),locationCONF);
-    
+    locationCONF?.splice(Number(indexToRemove), 1);
+
+    updateLocationConfig(Number(id), locationCONF);
+
   };
 
   /**
@@ -109,7 +223,7 @@ export function CampaignDetails() {
     }
     const updateLocationConfigResult = await updateLocationConfig(Number(id), campaign?.locationInfo);
     if (updateLocationConfigResult) {
-      photoStatusMessage('Photo uploaded ');
+      StatusMessage('Photo uploaded ');
     }
   };
 
@@ -129,7 +243,7 @@ export function CampaignDetails() {
 
       const updateResponse = await updateLocationConfig(Number(id), campaign?.locationInfo);
       if (updateResponse) {
-        photoStatusMessage('Photo removed');
+        StatusMessage('Photo removed');
       }
     }
   };
@@ -230,27 +344,31 @@ export function CampaignDetails() {
   ];
 
   return (
-    <>
-      <Divider orientation={'left'}>
-        <span>You are seeing the campaign locations info of:</span>
-        <h1> {campaign?.name} </h1>
-      </Divider>
-      <span>
-        The status of this report is <DueDateLabel date={campaign?.due_date} />
-      </span>
-      <Table
-        size="small"
-        style={{ margin: 5 }}
-        bordered
-        loading={campaign == null}
-        dataSource={campaign?.locationInfo}
-        columns={columns}
-        rowKey="id"
-      />
-
-    </>
+    <PageHeader
+      className='page-header'
+      ghost={false}
+      onBack={() => window.history.back()}
+      title={campaign?.name}
+      subTitle={<DueDateLabel date={campaign?.due_date} />}
+      extra={actions}
+    >
+      <div>
+        <Modal visible={isModalVisible} onOk={handleModalOk} onCancel={handleModalCancel} >
+          <AddLocationTable />
+        </Modal>
+        <Table
+          size="small"
+          style={{ margin: 5 }}
+          bordered
+          loading={campaign == null}
+          dataSource={campaign?.locationInfo}
+          columns={columns}
+          rowKey="id"
+        />
+      </div>
+    </PageHeader>
   );
 }
-const photoStatusMessage = (msj: string) => {
+const StatusMessage = (msj: string) => {
   message.success(msj);
 };

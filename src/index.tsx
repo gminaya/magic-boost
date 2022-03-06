@@ -11,7 +11,6 @@ import 'dotenv/config';
 
 const currentEnvironment = process.env.NODE_ENV;
 
-//TODO: Move dsn to .env files and separate staging from prod
 Sentry.init({
   dsn: settings.sentry.dsn,
   integrations: [new BrowserTracing()],
