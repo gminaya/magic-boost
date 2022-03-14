@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { DeleteOutlined, SearchOutlined, ClearOutlined, PlusOutlined } from '@ant-design/icons';
 import { Table, Image, message, Popconfirm, Button, Modal, Input, PageHeader } from 'antd';
@@ -31,10 +31,10 @@ export function CampaignDetails() {
   const { locations } = useLocations();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const handleAddLocation = async (newLocation: definitions['Locations']) => {
+  const handleAddLocation = useCallback(async (newLocation: definitions['Locations']) => {
     campaign?.locationInfo.push({ ...newLocation, campaignPhotoUrl: '' });
     const update = await updateLocationConfig(Number(id), campaign?.locationInfo);
-  };
+  }, [campaign]);
 
   const showAddLocationModal = () => {
     setIsModalVisible(true);
@@ -52,7 +52,7 @@ export function CampaignDetails() {
     ];
     return arr;
   }, [campaign]);
-  const addLocationColumns: ColumnsType<definitions['Locations']> = [
+  const addLocationColumns: ColumnsType<definitions['Locations']> = useMemo(() => [
     {
       title: 'Name',
       dataIndex: 'name',
@@ -119,7 +119,8 @@ export function CampaignDetails() {
         );
       },
     },
-  ];
+  ], [campaign]);
+
 
   const AddLocationTable = () => {
     return (
@@ -223,7 +224,7 @@ export function CampaignDetails() {
     }
     const updateLocationConfigResult = await updateLocationConfig(Number(id), campaign?.locationInfo);
     if (updateLocationConfigResult) {
-      StatusMessage('Photo uploaded ');
+      displayStatusMessage('Photo uploaded ');
     }
   };
 
@@ -243,7 +244,7 @@ export function CampaignDetails() {
 
       const updateResponse = await updateLocationConfig(Number(id), campaign?.locationInfo);
       if (updateResponse) {
-        StatusMessage('Photo removed');
+        displayStatusMessage('Photo removed');
       }
     }
   };
@@ -369,6 +370,6 @@ export function CampaignDetails() {
     </PageHeader>
   );
 }
-const StatusMessage = (msj: string) => {
+const displayStatusMessage = (msj: string) => {
   message.success(msj);
 };
