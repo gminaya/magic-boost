@@ -25,7 +25,7 @@ function App() {
           <Layout style={{ height: 'auto' }} className="layout">
             <div style={{ margin: '0 2%' }}>
               <Switch>
-                <Route path="/LocationsAdmin" exact component={LocationsAdmin} />
+                <PrivateRoute path="/LocationsAdmin" exact component={LocationsAdmin} />
                 <PrivateRoute exact path="/CampaignsAdmin" component={CampaignAdmin} />
                 <Route path="/CampaignsAdmin/edit/:id" component={CampaignDetails} />
                 <Route path="/CampaignsAdmin/report/:id" exact component={Report} />

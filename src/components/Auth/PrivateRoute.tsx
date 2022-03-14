@@ -4,7 +4,7 @@ import { useAuth } from 'components/Auth/AuthProvider';
 interface PrivateRouteProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component?: any;
-  exact: boolean;
+  exact?: boolean;
   path: string;
 }
 
